@@ -1,0 +1,4 @@
+.sidebarlayout{
+    display: flex;
+    flex-direction: row;
+}
