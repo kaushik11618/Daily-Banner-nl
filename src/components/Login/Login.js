@@ -12,12 +12,8 @@ export const Login = () => {
             <h2>Sign In</h2>
             <p>login here using your username and password</p>
           </header>
-
           <br></br>
           <div className="field-set">
-            <span className="input-item">
-              <i className="fa fa-user-circle"></i>
-            </span>
             <input
               className="form-input"
               id="txt-input"
@@ -26,9 +22,6 @@ export const Login = () => {
               required
             />
             <br></br>
-            <span className="input-item">
-              <i className="fa fa-key"></i>
-            </span>
             <input
               className="form-input"
               type="password"
@@ -37,20 +30,17 @@ export const Login = () => {
               name="password"
               required
             />
-            <span>
-              <i
-                className="fa fa-eye"
-                aria-hidden="true"
-                type="button"
-                id="eye"
-              ></i>
-            </span>
-            <br></br>
+
             <button className="log-in"> Log In </button>
           </div>
           <div className="other">
-            <button className="btn submits frgt-pass">Forgot Password</button>
-            <button className="btn submits sign-up" onClick={() => navigate("/register")}>
+            <button className="btn submits frgt-pass">
+              Forgot <br></br>Password
+            </button>
+            <button
+              className="btn submits sign-up"
+              onClick={() => navigate("/register")}
+            >
               Sign Up
               <i className="fa fa-user-plus" aria-hidden="true"></i>
             </button>

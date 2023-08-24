@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Abel|Abril+Fatface|Alegreya|Arima+Madurai|Dancing+Script|Dosis|Merriweather|Oleo+Script|Overlock|PT+Serif|Pacifico|Playball|Playfair+Display|Share|Unica+One|Vibur");
 form {
   width: 450px;
   min-height: 500px;
@@ -6,12 +7,13 @@ form {
   margin: 2% auto;
   box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
   padding: 2%;
-  background-image: linear-gradient(-225deg, #b4e9d9 50%, #fad3f2 50%);
+  background-image: linear-gradient(-225deg, #e3fdf5 50%, #ffe6fa 50%);
 }
 /* form Container */
 form .con {
   display: -webkit-flex;
   display: flex;
+  
 
   -webkit-justify-content: space-around;
   justify-content: space-around;
@@ -91,8 +93,16 @@ input[id="txt-input"] {
 input:focus {
   transform: translateX(-2px);
   border-radius: 5px;
+}field-set{
+  display:flex ;
+  flex-direction: column;
 }
 
+/* //////////////////////////////////////////// */
+/* //////////////////////////////////////////// */
+
+/* input[type="text"] {min-width: 250px;} */
+/* buttons  */
 button {
   display: inline-block;
   color: #252537;
@@ -114,26 +124,30 @@ button {
   margin: 7% auto;
   letter-spacing: 0.05em;
 }
-
+/* Submits */
 .submits {
   width: 48%;
-  display: inline-block;
+  float: left;
   margin-left: 2%;
 }
 
+/*       Forgot Password button FAF3DD  */
 .frgt-pass {
   background: transparent;
 }
 
+/*     Sign Up button  */
 .sign-up {
   background: #b8f2e6;
 }
 
+/* buttons hover */
 button:hover {
   transform: translatey(3px);
-  box-shadow: none; 
+  box-shadow: none;
 }
 
+/* buttons hover Animation */
 button:hover {
   animation: ani9 0.4s ease-in-out infinite alternate;
 }

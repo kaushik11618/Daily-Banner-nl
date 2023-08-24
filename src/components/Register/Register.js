@@ -1,30 +1,60 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 export const Register = () => {
-  let navigate = useNavigate("");
-  const [registerInput, setRegisterInput] = useState({
-    firstName: "",
-    lastName: "",
-    companyName: "",
-    address: "",
-    phoneNumber: "",
-    email: "",
-    facebookId: "",
-    twitterId: "",
-    instagramId: "",
-    linkedinId: "",
-  });
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setRegisterInput((prevInput) => ({
-      ...prevInput,
-      [name]: value,
-    }));
-  };
-  const handleSubmit = (event) => {
+  const navigate = useNavigate("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
+  const [companyname, setCompanyname] = useState("");
+  const [phonenumber, setPhonenumber] = useState("");
+  const [validationErrors, setValidationErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  useEffect(()=>{
+    if(localStorage.getItem('token') != "" && localStorage.getItem('token') != null){
+        navigate("/home");
+    }
+},[])
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/home");
+    const requestData = {
+      first_name: firstname,
+      last_name: lastname,
+      email: email,
+      password: password,
+      address: address,
+      company_name: companyname,
+      phoneNumber: parseInt(phonenumber),
+    };
+
+    try {
+      axios
+        .post("http://192.168.29.12:3000/api/auth/register", requestData, {
+          header: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((r) => {
+          setIsSubmitting(false);
+          localStorage.setItem("token", r.data.token);
+          navigate("/home");
+        })
+
+        .then((r) => {
+          setIsSubmitting(false);
+          localStorage.setItem("token", r.data.token);
+          navigate("/home");
+        })
+        .catch((e) => {
+          setIsSubmitting(false);
+         
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -34,83 +64,55 @@ export const Register = () => {
         </header>
 
         <br></br>
-        <div className="field-set">
+        <div className="">
           <input
-            onChange={handleInputChange}
+            type="text"
             className="form-input"
-            placeholder="First Name"
-            name="firstName"
-            value={registerInput.firstName}
-            required
+            placeholder="Firstname"
+            value={firstname}
+            onChange={(e) => setFirstname(e.target.value)}
           />
           <input
-            onChange={handleInputChange}
+            type="text"
             className="form-input"
-            placeholder="Last Name"
-            name="lastName"
-            value={registerInput.lastName}
-            required
+            placeholder="lastname"
+            value={lastname}
+            onChange={(e) => setLastname(e.target.value)}
           />
           <input
-            onChange={handleInputChange}
-            className="form-input"
-            placeholder="Company Name"
-            name="companyName"
-            value={registerInput.companyName}
-            required
-          />
-          <input
-            onChange={handleInputChange}
-            className="form-input"
-            placeholder="Address"
-            name="address"
-            value={registerInput.address}
-            required
-          />
-          <input
-            onChange={handleInputChange}
-            className="form-input"
-            placeholder="Phone Number"
-            name="phoneNumber"
-            value={registerInput.phoneNumber}
-            required
-          />
-          <input
-            onChange={handleInputChange}
+            type="email"
             className="form-input"
             placeholder="Email"
-            name="email"
-            type="email"
-            value={registerInput.email}
-            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            onChange={handleInputChange}
+            type="password"
             className="form-input"
-            placeholder="Facebook ID"
-            name="facebookId"
-            value={registerInput.facebookId}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <input
-            onChange={handleInputChange}
+            type="text"
             className="form-input"
-            placeholder="Twitter ID"
-            name="twitterId"
-            value={registerInput.twitterId}
+            placeholder="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
           />
           <input
-            onChange={handleInputChange}
+            type="text"
             className="form-input"
-            placeholder="Instagram ID"
-            name="instagramId"
-            value={registerInput.instagramId}
+            placeholder="Companyname"
+            value={companyname}
+            onChange={(e) => setCompanyname(e.target.value)}
           />
           <input
-            onChange={handleInputChange}
+            type="number"
             className="form-input"
-            placeholder="Linkedin ID"
-            name="linkedinId"
-            value={registerInput.linkedinId}
+            placeholder="Phonenumber"
+            value={phonenumber}
+            onChange={(e) => setPhonenumber(e.target.value)}
           />
           <button type="submit">Register</button>
         </div>
