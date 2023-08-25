@@ -1,5 +1,5 @@
-import { Button, Modal } from "antd";
 import React, { useState, useEffect } from "react";
+import { Button, Modal } from "antd";
 import axios from "axios";
 
 export const CategoryPopup = ({ modalOpen, setModalOpen }) => {
@@ -13,7 +13,7 @@ export const CategoryPopup = ({ modalOpen, setModalOpen }) => {
         const response = await axios.get(
           "http://192.168.29.12:3000/api/category"
         );
-        setDropdownOptions(response.data.map((item) => item.name));
+        setDropdownOptions(response.data);
       } catch (error) {
         console.error("Error fetching dropdown options:", error);
       }
@@ -24,8 +24,13 @@ export const CategoryPopup = ({ modalOpen, setModalOpen }) => {
   }, [modalOpen]);
 
   const handleAddCategory = async () => {
+    const selectedCategory = dropdownOptions.find(
+      (option) => option.id === selectedOption
+    );
+
     const requestData = {
       name: categoryName,
+      category_id: selectedCategory ? selectedCategory.id : null,
     };
 
     try {
@@ -34,26 +39,36 @@ export const CategoryPopup = ({ modalOpen, setModalOpen }) => {
         requestData
       );
 
-      console.log("Data posted:", response.data);
+      if (selectedCategory) {
+        console.log("Subcategory posted:", response.data);
+      } else {
+        console.log("Main category posted:", response.data);
+      }
+      setCategoryName("");
+      setSelectedOption("");
 
-      // Close the modal
       setModalOpen(false);
     } catch (error) {
-      console.error("Error posting data:", error);
+      console.error("Error posting:", error);
     }
   };
 
   return (
     <Modal
-      title="Add Category"
+      title="Add Category and Subcategory"
       open={modalOpen}
       onOk={handleAddCategory}
       onCancel={() => {
         setModalOpen(false);
       }}
       footer={[
-        <Button key="add" type="primary" onClick={handleAddCategory}>
-          Add
+        <Button
+          key="addCategoryAndSubcategory"
+          type="primary"
+          onClick={handleAddCategory}
+          disabled={!categoryName}
+        >
+          Add Category and Subcategory
         </Button>,
       ]}
     >
@@ -66,15 +81,15 @@ export const CategoryPopup = ({ modalOpen, setModalOpen }) => {
           value={categoryName}
           onChange={(e) => setCategoryName(e.target.value)}
         />
-        <div className="dropdown mt-5">
+        <div className="dropdown mt-3">
           <select
             value={selectedOption}
-            onChange={(e) => setSelectedOption(e.target.value)}
+            onChange={(e) => setSelectedOption(parseInt(e.target.value))}
           >
-            <option value="">Select an option</option>
-            {dropdownOptions.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
+            <option value="">Select a category</option>
+            {dropdownOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}
               </option>
             ))}
           </select>

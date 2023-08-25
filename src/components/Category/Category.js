@@ -10,13 +10,6 @@ function createData(id, Festival, Date, Desciption) {
   return { id, Festival, Date, Desciption };
 }
 
-const rows = [
-  createData(1, "Diwali", "23/01/2021", "hello "),
-  createData(2, "Navaratri", "23/09/2022", "navtratri"),
-  createData(3, "Holi", "12/03/201", "holi"),
-  createData(3, "Holi", "12/03/201", "holi"),
-
-];
 
 export const Category = () => {
   const [modalOpen, setModalOpen] = useState(false);
