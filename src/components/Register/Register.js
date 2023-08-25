@@ -13,18 +13,10 @@ export const Register = () => {
   const [linkedin, setLinkedin] = useState("");
   const [instagram, setInstagram] = useState("");
   const [twitter, setTwitter] = useState("");
-  const [facebook, setFacebook] = useState("")
+  const [facebook, setFacebook] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
-  const [validationErrors, setValidationErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  useEffect(() => {
-    if (
-      localStorage.getItem("token") != "" &&
-      localStorage.getItem("token") != null
-    ) {
-      navigate("/home");
-    }
-  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const requestData = {
@@ -35,7 +27,7 @@ export const Register = () => {
       address: address,
       company_name: companyname,
       phoneNumber: parseInt(phonenumber),
-      instagram:instagram,
+      instagram: instagram,
       linkedin,
       facebook,
       twitter,
@@ -50,14 +42,12 @@ export const Register = () => {
         })
         .then((r) => {
           setIsSubmitting(false);
-          localStorage.setItem("token", r.data.token);
-          navigate("/home");
+          navigate("/");
         })
 
         .then((r) => {
           setIsSubmitting(false);
-          localStorage.setItem("token", r.data.token);
-          navigate("/home");
+          navigate("/");
         })
         .catch((e) => {
           setIsSubmitting(false);
@@ -136,23 +126,39 @@ export const Register = () => {
                 </div>
                 <div className="input-box">
                   <span className="details">Linkedin ID</span>
-                  <input type="text" placeholder="Linkedin Id"   value={linkedin}
-                    onChange={(e) => setLinkedin(e.target.value)}/>
+                  <input
+                    type="text"
+                    placeholder="Linkedin Id"
+                    value={linkedin}
+                    onChange={(e) => setLinkedin(e.target.value)}
+                  />
                 </div>
                 <div className="input-box">
                   <span className="details">Instagram Id</span>
-                  <input type="text" placeholder="Instagram Id"   value={instagram}
-                    onChange={(e) => setInstagram(e.target.value)} />
+                  <input
+                    type="text"
+                    placeholder="Instagram Id"
+                    value={instagram}
+                    onChange={(e) => setInstagram(e.target.value)}
+                  />
                 </div>
                 <div className="input-box">
                   <span className="details">Facebook Id</span>
-                  <input type="text" placeholder="Facebokk ID"   value={facebook}
-                    onChange={(e) => setFacebook(e.target.value)}/>
+                  <input
+                    type="text"
+                    placeholder="Facebokk ID"
+                    value={facebook}
+                    onChange={(e) => setFacebook(e.target.value)}
+                  />
                 </div>
                 <div className="input-box">
                   <span className="details">Twitter Id</span>
-                  <input type="text" placeholder="Twitter Id"   value={twitter}
-                    onChange={(e) => setTwitter(e.target.value)} />
+                  <input
+                    type="text"
+                    placeholder="Twitter Id"
+                    value={twitter}
+                    onChange={(e) => setTwitter(e.target.value)}
+                  />
                 </div>
               </div>
               <div class="gender-details">
