@@ -13,18 +13,10 @@ export const Register = () => {
   const [linkedin, setLinkedin] = useState("");
   const [instagram, setInstagram] = useState("");
   const [twitter, setTwitter] = useState("");
-  const [facebook, setFacebook] = useState("")
+  const [facebook, setFacebook] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
-  const [validationErrors, setValidationErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  useEffect(() => {
-    if (
-        localStorage.getItem("token") != "" &&
-        localStorage.getItem("token") != null
-    ) {
-      navigate("/home");
-    }
-  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const requestData = {
@@ -35,7 +27,7 @@ export const Register = () => {
       address: address,
       company_name: companyname,
       phoneNumber: parseInt(phonenumber),
-      instagram:instagram,
+      instagram: instagram,
       linkedin,
       facebook,
       twitter,
@@ -43,137 +35,151 @@ export const Register = () => {
 
     try {
       axios
-          .post("http://192.168.29.12:3000/api/auth/register", requestData, {
-            header: {
-              "Content-Type": "application/json",
-            },
-          })
-          .then((r) => {
-            setIsSubmitting(false);
-            localStorage.setItem("token", r.data.token);
-            navigate("/home");
-          })
+        .post("http://192.168.29.12:3000/api/auth/register", requestData, {
+          header: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((r) => {
+          setIsSubmitting(false);
+          navigate("/");
+        })
 
-          .then((r) => {
-            setIsSubmitting(false);
-            localStorage.setItem("token", r.data.token);
-            navigate("/home");
-          })
-          .catch((e) => {
-            setIsSubmitting(false);
-          });
+        .then((r) => {
+          setIsSubmitting(false);
+          navigate("/");
+        })
+        .catch((e) => {
+          setIsSubmitting(false);
+        });
     } catch (err) {
       console.log(err);
     }
   };
   return (
-      <>
-        <div className="register">
-          <div className="register-container">
-            <div className="register-title">Registration</div>
-            <div className="content">
-              <form className="register-form" onSubmit={handleSubmit}>
-                <div className="user-details">
-                  <div className="input-box">
-                    <span className="details">First Name</span>
-                    <input
-                        type="text"
-                        placeholder="First Name"
-                        value={firstname}
-                        onChange={(e) => setFirstname(e.target.value)}
-                        required
-                    />
-                  </div>
-                  <div className="input-box">
-                    <span className="details">Last Name</span>
-                    <input
-                        type="text"
-                        placeholder="Last Name"
-                        value={lastname}
-                        onChange={(e) => setLastname(e.target.value)}
-                        required
-                    />
-                  </div>
-                  <div className="input-box">
-                    <span className="details">Email</span>
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                  </div>
-                  <div className="input-box">
-                    <span className="details">Password</span>
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                  </div>
-                  <div className="input-box">
-                    <span className="details">Company Name</span>
-                    <input
-                        type="text"
-                        placeholder="Company Name"
-                        value={companyname}
-                        onChange={(e) => setCompanyname(e.target.value)}
-                        required
-                    />
-                  </div>
-                  <div className="input-box">
-                    <span className="details">Phone Number</span>
-                    <input
-                        type="number"
-                        placeholder="Phone Number"
-                        value={phonenumber}
-                        onChange={(e) => setPhonenumber(e.target.value)}
-                        required
-                    />
-                  </div>
-                  <div className="input-box">
-                    <span className="details">Linkedin ID</span>
-                    <input type="text" placeholder="Linkedin Id"   value={linkedin}
-                           onChange={(e) => setLinkedin(e.target.value)}/>
-                  </div>
-                  <div className="input-box">
-                    <span className="details">Instagram Id</span>
-                    <input type="text" placeholder="Instagram Id"   value={instagram}
-                           onChange={(e) => setInstagram(e.target.value)} />
-                  </div>
-                  <div className="input-box">
-                    <span className="details">Facebook Id</span>
-                    <input type="text" placeholder="Facebokk ID"   value={facebook}
-                           onChange={(e) => setFacebook(e.target.value)}/>
-                  </div>
-                  <div className="input-box">
-                    <span className="details">Twitter Id</span>
-                    <input type="text" placeholder="Twitter Id"   value={twitter}
-                           onChange={(e) => setTwitter(e.target.value)} />
-                  </div>
+    <>
+      <div className="register">
+        <div className="register-container">
+          <div className="register-title">Registration</div>
+          <div className="content">
+            <form className="register-form" onSubmit={handleSubmit}>
+              <div className="user-details">
+                <div className="input-box">
+                  <span className="details">First Name</span>
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    value={firstname}
+                    onChange={(e) => setFirstname(e.target.value)}
+                    required
+                  />
                 </div>
-                <div class="gender-details">
-                  <div className="input-box">
-                    <span className="details">Address</span>
-                    <input
-                        type="text"
-                        placeholder="Address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        required
-                    />
-                  </div>
+                <div className="input-box">
+                  <span className="details">Last Name</span>
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    value={lastname}
+                    onChange={(e) => setLastname(e.target.value)}
+                    required
+                  />
                 </div>
-                <div className="rgister-btn">
-                  <input type="submit" />
+                <div className="input-box">
+                  <span className="details">Email</span>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
                 </div>
-              </form>
-            </div>
+                <div className="input-box">
+                  <span className="details">Password</span>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="input-box">
+                  <span className="details">Company Name</span>
+                  <input
+                    type="text"
+                    placeholder="Company Name"
+                    value={companyname}
+                    onChange={(e) => setCompanyname(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="input-box">
+                  <span className="details">Phone Number</span>
+                  <input
+                    type="number"
+                    placeholder="Phone Number"
+                    value={phonenumber}
+                    onChange={(e) => setPhonenumber(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="input-box">
+                  <span className="details">Linkedin ID</span>
+                  <input
+                    type="text"
+                    placeholder="Linkedin Id"
+                    value={linkedin}
+                    onChange={(e) => setLinkedin(e.target.value)}
+                  />
+                </div>
+                <div className="input-box">
+                  <span className="details">Instagram Id</span>
+                  <input
+                    type="text"
+                    placeholder="Instagram Id"
+                    value={instagram}
+                    onChange={(e) => setInstagram(e.target.value)}
+                  />
+                </div>
+                <div className="input-box">
+                  <span className="details">Facebook Id</span>
+                  <input
+                    type="text"
+                    placeholder="Facebokk ID"
+                    value={facebook}
+                    onChange={(e) => setFacebook(e.target.value)}
+                  />
+                </div>
+                <div className="input-box">
+                  <span className="details">Twitter Id</span>
+                  <input
+                    type="text"
+                    placeholder="Twitter Id"
+                    value={twitter}
+                    onChange={(e) => setTwitter(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div class="gender-details">
+                <div className="input-box">
+                  <span className="details">Address</span>
+                  <input
+                    type="text"
+                    placeholder="Address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="rgister-btn">
+                <input type="submit" />
+              </div>
+            </form>
           </div>
         </div>
-      </>
+      </div>
+    </>
   );
 };
