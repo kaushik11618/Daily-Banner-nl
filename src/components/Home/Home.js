@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {Sidebar}  from "../Sidebar/Sidebar";
-import { Topbar } from "../Topbar/Topbar";
+import { Sidebar } from "../Sidebar/Sidebar";
+import {Topbar}  from "../Topbar/Topbar";
 import { Festival } from "../Festival/Festival";
 import { About } from "../About/About.js";
 import "./Home.css";

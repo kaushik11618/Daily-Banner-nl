@@ -3,8 +3,7 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import React, { useState } from "react";
 import { IoAddCircleSharp } from "react-icons/io5";
-import { FestivalPopup } from "../FestivalPopup/FestivalPopup.js";
-import { ModalComponent } from "../Modal/ModalComponent.js";
+import { CategoryPopup} from "../Category/CategoryPopup.js";
 import "./Festival.css";
 function createData(id, Festival, Date, Desciption) {
   return { id, Festival, Date, Desciption };
@@ -19,36 +18,35 @@ const rows = [
 export const Festival = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOpen1, setModalOpen1] = useState(false);
-  const [isTextVisible, setTextVisibility] = useState(false);
-
-  const handleSwitchToggle = () => {
-    setTextVisibility(!isTextVisible);
-  };
 
   return (
     <>
       <div className="rigster-container">
-        <h1 className="title">Festival</h1>
+        <h1 className="title">Category</h1>
         <div className="actions"></div>
-        <ModalComponent modalOpen={modalOpen} setModalOpen={setModalOpen} />
-        <FestivalPopup modalOpen1={modalOpen1} setModalOpen1={setModalOpen1} />
+        <CategoryPopup modalOpen={modalOpen} setModalOpen={setModalOpen} />
         <div className="tableContainer">
           <table className="table" aria-label="simple table">
             <thead>
               <tr>
-                <th style={{display:"flex",flexDirection:"row" ,justifyContent:"space-between"}}>
+                <th
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <tr className="headerCell">Categories</tr>
                   <tr>
-                  <button
-                  className="addButton"
-                  onClick={() => setModalOpen(true)}
-                >
-                  <IoAddCircleSharp className="addButtonIcon" />
-                  <p>Add Categories</p>
-                </button>
+                    <button
+                      className="addButton"
+                      onClick={() => setModalOpen(true)}
+                    >
+                      <IoAddCircleSharp className="addButtonIcon" />
+                      <p>Add Categories</p>
+                    </button>
                   </tr>
                 </th>
-
               </tr>
             </thead>
             <TableBody>
@@ -60,16 +58,13 @@ export const Festival = () => {
                   <TableCell align="left" sx={{ fontSize: "14px" }}>
                     {row.Festival}
                   </TableCell>
-
                   <div className="form-check form-switch">
                     <input
-                      className="form-check-input fa-2xl"
+                      className="form-check-input"
                       type="checkbox"
                       role="switch"
                       id="flexSwitchCheckDefault"
-                      onChange={handleSwitchToggle}
                     />
-                    {isTextVisible && <p>This is the hidden text that becomes visible when the switch is on.</p>}
                   </div>
                 </TableRow>
               ))}
