@@ -69,10 +69,10 @@ export const Register = () => {
   return (
     <>
       <div className="register">
-        <div className="container">
-          <div className="title">Registration</div>
+        <div className="register-container">
+          <div className="register-title">Registration</div>
           <div className="content">
-            <form onSubmit={handleSubmit}>
+            <form className="register-form" onSubmit={handleSubmit}>
               <div className="user-details">
                 <div className="input-box">
                   <span className="details">First Name</span>

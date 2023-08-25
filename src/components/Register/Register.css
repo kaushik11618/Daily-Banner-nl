@@ -6,7 +6,7 @@
   padding: 10px;
   background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
-.container {
+.register-container {
   max-width: 700px;
   width: 100%;
   background-color: #fff;
@@ -14,12 +14,12 @@
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
-.container .title {
+.register-container .register-title {
   font-size: 25px;
   font-weight: 500;
   position: relative;
 }
-.container .title::before {
+.register-container .register-title::before {
   content: "";
   position: absolute;
   left: 0;
@@ -29,17 +29,17 @@
   border-radius: 5px;
   background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
-.content form .user-details {
+.content .register-form .user-details {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin: 20px 0 12px 0;
 }
-form .user-details .input-box {
+.register-form .user-details .input-box {
   margin-bottom: 15px;
   width: calc(100% / 2 - 20px);
 }
-form .input-box span.details {
+.register-form .input-box span.details {
   display: block;
   font-weight: 500;
   font-size: 16px;
@@ -75,23 +75,23 @@ form .input-box span.details {
   border-color: #9b59b6;
 }
 
-form .category {
+.register-form .category {
   display: flex;
   width: 80%;
   margin: 14px 0;
   justify-content: space-between;
 }
-form .category label {
+.register-form .category label {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-form .rgister-btn {
+.register-form .rgister-btn {
   height: 45px;
   margin: 35px 0;
 }
-form .rgister-btn input {
+.register-form .rgister-btn input {
   height: 100%;
   width: 100%;
   border-radius: 5px;
@@ -104,22 +104,22 @@ form .rgister-btn input {
   transition: all 0.3s ease;
   background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
-form .rgister-btn input:hover {
+.register-form .rgister-btn input:hover {
   /* transform: scale(0.99); */
   background: linear-gradient(-135deg, #71b7e6, #9b59b6);
 }
 @media (max-width: 584px) {
-  .container {
+  .register-container {
     max-width: 100%;
   }
-  form .user-details .input-box {
+  .register-form .user-details .input-box {
     margin-bottom: 15px;
     width: 100%;
   }
-  form .category {
+  .register-form .category {
     width: 100%;
   }
-  .content form .user-details {
+  .content .register-form .user-details {
     max-height: 300px;
     overflow-y: scroll;
   }
@@ -128,7 +128,7 @@ form .rgister-btn input:hover {
   }
 }
 @media (max-width: 459px) {
-  .container .content .category {
+  .register-container .content .category {
     flex-direction: column;
   }
 }
