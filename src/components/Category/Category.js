@@ -3,8 +3,8 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import React, { useState } from "react";
 import { IoAddCircleSharp } from "react-icons/io5";
-import { CategoryPopup} from "../Category/CategoryPopup.js";
-import "./Festival.css";
+import { CategoryPopup } from "../Modal/CategoryPopup";
+import "./Category.css";
 function createData(id, Festival, Date, Desciption) {
   return { id, Festival, Date, Desciption };
 }
@@ -15,13 +15,13 @@ const rows = [
   createData(3, "Holi", "12/03/201", "holi"),
 ];
 
-export const Festival = () => {
+export const Category = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOpen1, setModalOpen1] = useState(false);
 
   return (
     <>
-      <div className="rigster-container">
+      <div className="category-container">
         <h1 className="title">Category</h1>
         <div className="actions"></div>
         <CategoryPopup modalOpen={modalOpen} setModalOpen={setModalOpen} />

@@ -1,6 +1,5 @@
 /* Festival.css */
-
-.rigster-container {
+.category-container{
   display: flex;
   flex-direction: column;
   width: 80%;
