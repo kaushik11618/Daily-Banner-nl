@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Sidebar } from "../Sidebar/Sidebar";
 import {Topbar}  from "../Topbar/Topbar";
-import { Festival } from "../Festival/Festival";
+import { Category } from "../Category/Category";
 import { About } from "../About/About.js";
 import "./Home.css";
 import { useNavigate } from "react-router";
@@ -24,7 +24,7 @@ export const Home = () => {
       <Topbar />
       <div className="sidebarlayout">
         <Sidebar onLinkClick={handleLinkClick} />
-        {activeContent === "festival" && <Festival />}
+        {activeContent === "festival" && <Category />}
         {activeContent === "about" && <About />}
       </div>
     </>
