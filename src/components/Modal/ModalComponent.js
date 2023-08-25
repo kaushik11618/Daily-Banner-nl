@@ -15,17 +15,11 @@ export const ModalComponent = ({ modalOpen, setModalOpen }) => {
       footer={[<Button>Add Festival</Button>]}
     >
       <div>
-        <label>Name </label>
+        <label>Categories Name </label>
       </div>
-      <input placeholder="Festival Name" />
-      <div>
-        <label>Date </label>
-      </div>
-      <input type="date" />
-      <div>
-        <label>Description</label>
-      </div>
-      <textarea style={{ resize: "none" }} placeholder="Desciption" rows={3} />
+      <input placeholder="Categories Name" />
+     
+    
     </Modal>
   );
 };

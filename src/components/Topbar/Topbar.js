@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Topbar.css";
+
 export const Topbar = () => {
   const dropdownOptions = [
     "Option 1",
@@ -10,7 +11,9 @@ export const Topbar = () => {
     "Option 6",
     "Option 7",
   ];
+  
   const [selectedOption, setSelectedOption] = useState(null);
+
   return (
     <nav>
       <div className="dropdown">

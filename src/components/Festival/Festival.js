@@ -1,14 +1,11 @@
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import React, { useState } from "react";
 import { IoAddCircleSharp } from "react-icons/io5";
-import { ModalComponent } from "../Modal/ModalComponent.js";
 import { FestivalPopup } from "../FestivalPopup/FestivalPopup.js";
+import { ModalComponent } from "../Modal/ModalComponent.js";
+import "./Festival.css";
 function createData(id, Festival, Date, Desciption) {
   return { id, Festival, Date, Desciption };
 }
@@ -25,69 +22,52 @@ export const Festival = () => {
 
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <IoAddCircleSharp size={30} onClick={() => setModalOpen(true)} />
-          <ModalComponent modalOpen={modalOpen} setModalOpen={setModalOpen} />
-        </div>
+      <div className="rigster-container">
+        <h1 className="title">Festival</h1>
+        <div className="actions"></div>
+        <ModalComponent modalOpen={modalOpen} setModalOpen={setModalOpen} />
         <FestivalPopup modalOpen1={modalOpen1} setModalOpen1={setModalOpen1} />
-        <TableContainer component={Paper}>
-          <Table
-            sx={{ minWidth: 450, fontSize: "large" }}
-            aria-label="simple table"
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  align="left"
-                  sx={{ fontSize: "16px", fontWeight: "bold" }}
+        <div className="tableContainer">
+          <table className="table" aria-label="simple table">
+            <thead>
+              <tr>
+                <th style={{display:"flex",flexDirection:"row" ,justifyContent:"space-between"}}>
+                  <tr className="headerCell">Categories</tr>
+                  <tr>
+                <button
+                  className="addButton"
+                  onClick={() => setModalOpen(true)}
                 >
-                  Id
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{ fontSize: "16px", fontWeight: "bold" }}
-                >
-                  Festival Name
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{ fontSize: "16px", fontWeight: "bold" }}
-                >
-                  Date
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{ fontSize: "16px", fontWeight: "bold" }}
-                >
-                  Description
-                </TableCell>
-              </TableRow>
-            </TableHead>
+                  <IoAddCircleSharp className="addButtonIcon" />
+                  <p>Add Categories</p>
+                </button></tr>
+                </th>
+
+              </tr>
+            </thead>
             <TableBody>
               {rows.map((row) => (
                 <TableRow
-                  onClick={() => setModalOpen1(true)}
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="left" sx={{ fontSize: "14px" }}>
-                    {row.id}
-                  </TableCell>
-                  <TableCell align="left" sx={{ fontSize: "14px" }}>
                     {row.Festival}
                   </TableCell>
-                  <TableCell align="left" sx={{ fontSize: "14px" }}>
-                    {row.Date}
-                  </TableCell>
-                  <TableCell align="left" sx={{ fontSize: "14px" }}>
-                    {row.Desciption}
-                  </TableCell>
+
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      role="switch"
+                      id="flexSwitchCheckDefault"
+                    />
+                  </div>
                 </TableRow>
               ))}
             </TableBody>
-          </Table>
-        </TableContainer>
+          </table>
+        </div>
       </div>
     </>
   );

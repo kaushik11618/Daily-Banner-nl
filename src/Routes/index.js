@@ -5,7 +5,7 @@ import Login from "../components/Login/Login";
 import {Register} from "../components/Register/Register";
 
 export const router = createBrowserRouter([
-  { path: "/", element: <Login/> },
+  { path: "/", element: <Login/> }, 
   { path: "/register", element: <Register/> },
   { path: "/home", element: <Home/> },
 ]);
