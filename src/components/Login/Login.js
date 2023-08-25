@@ -45,17 +45,13 @@ const Login = () => {
           navigate("/home");
         })
 
-        .then((r) => {
-          setIsSubmitting(false);
-          localStorage.setItem("token", r.data.token);
-          navigate("/home");
-        })
-        .catch((e) => {
-          setIsSubmitting(false);
-        });
-    } catch (err) {
-      console.log(err);
-    }
+            
+              .catch((e) => {
+                  setIsSubmitting(false);
+              });
+      } catch (err) {
+          console.log(err);
+      }
   };
   return (
     <>

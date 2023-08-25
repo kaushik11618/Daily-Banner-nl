@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "./Register.css";
 export const Register = () => {
@@ -157,7 +157,7 @@ export const Register = () => {
                   />
                 </div>
               </div>
-              <div class="gender-details">
+              <div className="gender-details">
                 <div className="input-box">
                   <span className="details">Address</span>
                   <input
