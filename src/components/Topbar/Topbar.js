@@ -11,8 +11,36 @@ export const Topbar = () => {
     "Option 6",
     "Option 7",
   ];
-  
+
   const [selectedOption, setSelectedOption] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("http://192.168.29.12:3000/api/auth/profile", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          setCurrentUser(userData);
+        } else {
+          console.error("Failed to fetch user data");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    if (token) {
+      fetchUserData();
+    }
+  }, []);
 
   return (
     <nav>
@@ -29,6 +57,7 @@ export const Topbar = () => {
           ))}
         </select>
       </div>
+      <p>{currentUser ? `Welcome, ${currentUser.first_name}` : "Loading..."}</p>
     </nav>
   );
 };

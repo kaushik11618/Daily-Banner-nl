@@ -29,7 +29,8 @@ export const Sidebar = ({ onLinkClick }) => {
               bottom: "40px",
             }}
           >
-            Festival
+            Category
+          
           </strong>
         </h2>
         <h2 onClick={() => onLinkClick("about")}>

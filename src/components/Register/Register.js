@@ -27,10 +27,10 @@ export const Register = () => {
       address: address,
       company_name: companyname,
       phoneNumber: parseInt(phonenumber),
-      instagram: instagram,
-      linkedin,
-      facebook,
-      twitter,
+      instagram: instagram || null,
+      linkedin: linkedin || null,
+      facebook: facebook || null,
+      twitter: twitter || null,
     };
 
     try {
@@ -45,10 +45,6 @@ export const Register = () => {
           navigate("/");
         })
 
-        .then((r) => {
-          setIsSubmitting(false);
-          navigate("/");
-        })
         .catch((e) => {
           setIsSubmitting(false);
         });
