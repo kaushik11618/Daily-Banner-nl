@@ -47,11 +47,6 @@ const Login = () => {
                   navigate("/home");
               })
 
-              .then((r) => {
-                  setIsSubmitting(false);
-                  localStorage.setItem("token", r.data.token);
-                  navigate("/home");
-              })
               .catch((e) => {
                   setIsSubmitting(false);
               });

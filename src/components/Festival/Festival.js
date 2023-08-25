@@ -19,6 +19,11 @@ const rows = [
 export const Festival = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOpen1, setModalOpen1] = useState(false);
+  const [isTextVisible, setTextVisibility] = useState(false);
+
+  const handleSwitchToggle = () => {
+    setTextVisibility(!isTextVisible);
+  };
 
   return (
     <>
@@ -34,13 +39,14 @@ export const Festival = () => {
                 <th style={{display:"flex",flexDirection:"row" ,justifyContent:"space-between"}}>
                   <tr className="headerCell">Categories</tr>
                   <tr>
-                <button
+                  <button
                   className="addButton"
                   onClick={() => setModalOpen(true)}
                 >
                   <IoAddCircleSharp className="addButtonIcon" />
                   <p>Add Categories</p>
-                </button></tr>
+                </button>
+                  </tr>
                 </th>
 
               </tr>
@@ -55,13 +61,15 @@ export const Festival = () => {
                     {row.Festival}
                   </TableCell>
 
-                  <div class="form-check form-switch">
+                  <div className="form-check form-switch">
                     <input
-                      class="form-check-input"
+                      className="form-check-input fa-2xl"
                       type="checkbox"
                       role="switch"
                       id="flexSwitchCheckDefault"
+                      onChange={handleSwitchToggle}
                     />
+                    {isTextVisible && <p>This is the hidden text that becomes visible when the switch is on.</p>}
                   </div>
                 </TableRow>
               ))}
