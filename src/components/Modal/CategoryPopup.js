@@ -6,12 +6,13 @@ export const CategoryPopup = ({ modalOpen, setModalOpen }) => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
   const [categoryName, setCategoryName] = useState("");
-
+  const token = localStorage.getItem("token");
   useEffect(() => {
     async function fetchDropdownOptions() {
       try {
         const response = await axios.get(
-          "http://192.168.29.12:3000/api/category"
+          "http://192.168.29.12:3000/api/category",{
+          }
         );
         setDropdownOptions(response.data);
       } catch (error) {
@@ -36,7 +37,12 @@ export const CategoryPopup = ({ modalOpen, setModalOpen }) => {
     try {
       const response = await axios.post(
         "http://192.168.29.12:3000/api/category",
-        requestData
+        requestData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (selectedCategory) {
@@ -46,7 +52,6 @@ export const CategoryPopup = ({ modalOpen, setModalOpen }) => {
       }
       setCategoryName("");
       setSelectedOption("");
-
       setModalOpen(false);
     } catch (error) {
       console.error("Error posting:", error);
