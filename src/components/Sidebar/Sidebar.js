@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Sidebar.css";
 import {FaBars} from "react-icons/fa";
 import {MdOutlineFestival} from "react-icons/md";
@@ -9,8 +9,24 @@ import {useNavigate} from "react-router";
 export const Sidebar = ({onLinkClick}) => {
 
     const navigate = useNavigate()
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
+
     const toggle = () => setIsOpen(!isOpen);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 768) {
+                setIsOpen(false);
+            }
+            else {
+                setIsOpen(true)
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const token = localStorage.getItem('token')
     console.log(token)
@@ -34,7 +50,7 @@ export const Sidebar = ({onLinkClick}) => {
 
     return (
         <>
-            <div style={{width: isOpen ? "300px" : "50px"}} className="sidebar">
+            <div style={{width: isOpen ? "300px" : "50px"}} className="sidebar ">
                 <div className="top_section">
                     <h1 style={{display: isOpen ? "block" : "none"}} className="logo">
                         Dashboard
@@ -69,7 +85,8 @@ export const Sidebar = ({onLinkClick}) => {
                     </strong>
                 </h2>
                 <h2>
-                    &nbsp; <BiLogOut style={{fontSize: "30px"}}/>
+                    &nbsp; <BiLogOut style={{fontSize: "30px"}} onClick={handleLogout}
+                />
                     <button
                         style={{
                             display: isOpen ? "block" : "none",

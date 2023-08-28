@@ -24,7 +24,6 @@ const Login = () => {
       navigate("/home");
     }
   }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const loginData = {
@@ -44,8 +43,6 @@ const Login = () => {
           localStorage.setItem("token", r.data.token);
           navigate("/home");
         })
-
-            
               .catch((e) => {
                   setIsSubmitting(false);
               });
