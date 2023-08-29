@@ -15,7 +15,6 @@ export const Register = () => {
   const [twitter, setTwitter] = useState("");
   const [facebook, setFacebook] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -41,13 +40,10 @@ export const Register = () => {
           },
         })
         .then((r) => {
-          setIsSubmitting(false);
           navigate("/");
         })
 
-        .catch((e) => {
-          setIsSubmitting(false);
-        });
+        .catch((e) => {});
     } catch (err) {
       console.log(err);
     }

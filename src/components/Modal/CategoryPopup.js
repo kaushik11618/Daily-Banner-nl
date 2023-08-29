@@ -1,17 +1,24 @@
-import React, { useState, useEffect } from "react";
 import { Button, Modal } from "antd";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-export const CategoryPopup = ({ modalOpen, setModalOpen }) => {
+export const CategoryPopup = ({ modalOpen, setModalOpen, onCategoryAdded }) => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
   const [categoryName, setCategoryName] = useState("");
+
   const token = localStorage.getItem("token");
+
   useEffect(() => {
     async function fetchDropdownOptions() {
       try {
         const response = await axios.get(
-          "http://192.168.29.12:3000/api/category",{
+          "http://192.168.29.12:3000/api/category",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         setDropdownOptions(response.data);
@@ -43,12 +50,15 @@ export const CategoryPopup = ({ modalOpen, setModalOpen }) => {
             Authorization: `Bearer ${token}`,
           },
         }
-      );
+      );  
 
       if (selectedCategory) {
-        console.log("Subcategory posted:", response.data);
+        toast.success("Subcategory posted:", response.data);
       } else {
-        console.log("Main category posted:", response.data);
+        toast.success("Main category posted:", response.data);
+      }
+      if (typeof onCategoryAdded === "function") {
+        onCategoryAdded();
       }
       setCategoryName("");
       setSelectedOption("");

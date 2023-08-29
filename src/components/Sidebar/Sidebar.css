@@ -1,9 +1,9 @@
 .sidebar{
     background: #000;
     color: #fff;
-    height: 100vh;
-    width: 200px;
-    transition: all 0.5s;
+    height: 150vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 .top_section{
     display: flex;
@@ -16,7 +16,6 @@
 .bars{
     display: flex;
     font-size: 25px;
-    margin-left: 50px;
 }
 .link:hover{
     background:lightskyblue;

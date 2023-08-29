@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./Login.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -24,7 +24,6 @@ const Login = () => {
       navigate("/home");
     }
   }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const loginData = {
@@ -33,26 +32,24 @@ const Login = () => {
     };
 
     try {
-      axios
-        .post("http://192.168.29.12:3000/api/auth/login", loginData, {
-          header: {
+      const response = await axios.post(
+        "http://192.168.29.12:3000/api/auth/login",
+        loginData,
+        {
+          headers: {
             "Content-Type": "application/json",
           },
-        })
-        .then((r) => {
-          setIsSubmitting(false);
-          localStorage.setItem("token", r.data.token);
-          navigate("/home");
-        })
-
-            
-              .catch((e) => {
-                  setIsSubmitting(false);
-              });
-      } catch (err) {
-          console.log(err);
-      }
+        }
+      );
+      localStorage.setItem("token", response.data.token);
+      navigate("/home");
+      toast.success("Login successful!");
+    } catch (err) {
+      console.log(err);
+      toast.error("Please check your credentials.");
+    }
   };
+
   return (
     <>
       <div className="login">
@@ -84,11 +81,9 @@ const Login = () => {
                           onChange={handlePasswordChange}
                         />
                       </div>
-
                       <button className="btn btn-success btn-block shadow border-0 py-2 text-uppercase ">
                         Login
                       </button>
-
                       <h4 className="text-center mt-5">
                         Don't have an account?
                         <span className="">
