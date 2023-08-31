@@ -12,6 +12,7 @@ import "./Category.css";
 export const Category = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState();
   const token = localStorage.getItem("token");
   const deleteCategory = async (category_id) => {
     try {
@@ -40,10 +41,10 @@ export const Category = () => {
       .then((data) => setCategories(data))
       .catch((error) => console.error("Error fetching data:", error));
   };
-  const editCategory =(category_id)=>{
-    setModalOpen(true)
-    console.log(category_id);
-  }
+  const editCategory = (category_id, category_name) => {
+    setModalOpen(true);
+    setSelectedCategory(category_name);
+  };
   useEffect(() => {
     fetchCategories();
   }, [modalOpen]);
@@ -52,7 +53,12 @@ export const Category = () => {
       <div className="category-container">
         <h1 className="title">Category</h1>
         <div className="actions"></div>
-        <CategoryPopup modalOpen={modalOpen} setModalOpen={setModalOpen} />
+        <CategoryPopup
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
         <div className="tableContainer">
           <table className="table" aria-label="simple table">
             <thead>
@@ -102,7 +108,7 @@ export const Category = () => {
                       <BsFillPencilFill
                         style={{ marginTop: "13px", cursor: "pointer" }}
                         onClick={() => {
-                         editCategory(category.id)
+                          editCategory(category.id, category.name);
                         }}
                       />
                       <MdDeleteForever

@@ -3,7 +3,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-export const CategoryPopup = ({ modalOpen, setModalOpen, onCategoryAdded }) => {
+export const CategoryPopup = ({
+  modalOpen,
+  setModalOpen,
+  onCategoryAdded,
+  selectedCategory,
+  setSelectedCategory,
+}) => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
   const [categoryName, setCategoryName] = useState("");
@@ -22,6 +28,7 @@ export const CategoryPopup = ({ modalOpen, setModalOpen, onCategoryAdded }) => {
           }
         );
         setDropdownOptions(response.data);
+        setCategoryName(selectedCategory);
       } catch (error) {
         console.error("Error fetching dropdown options:", error);
       }
@@ -67,15 +74,17 @@ export const CategoryPopup = ({ modalOpen, setModalOpen, onCategoryAdded }) => {
       console.error("Error posting:", error);
     }
   };
-
+  const handleCloseModal = () => {
+    setSelectedCategory(""); // Clear the selected category name
+    setCategoryName(""); // Clear the category name field
+    setModalOpen(false); // Close the modal
+  };
   return (
     <Modal
       title="Add Category and Subcategory"
       open={modalOpen}
       onOk={handleAddCategory}
-      onCancel={() => {
-        setModalOpen(false);
-      }}
+      onCancel={handleCloseModal}
       footer={[
         <Button
           key="add"

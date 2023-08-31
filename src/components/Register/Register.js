@@ -126,7 +126,7 @@ export const Register = () => {
                   />
                 </div>
                 <div className="input-box">
-                  <span className="details">Instagram Id</span>
+                  <span className="details">Instagram ID</span>
                   <input
                     type="text"
                     placeholder="Instagram Id"
@@ -135,7 +135,7 @@ export const Register = () => {
                   />
                 </div>
                 <div className="input-box">
-                  <span className="details">Facebook Id</span>
+                  <span className="details">Facebook ID</span>
                   <input
                     type="text"
                     placeholder="Facebokk ID"
@@ -144,7 +144,7 @@ export const Register = () => {
                   />
                 </div>
                 <div className="input-box">
-                  <span className="details">Twitter Id</span>
+                  <span className="details">Twitter ID</span>
                   <input
                     type="text"
                     placeholder="Twitter Id"
