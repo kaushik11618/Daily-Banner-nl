@@ -50,7 +50,7 @@ export const CategoryPopup = ({ modalOpen, setModalOpen, onCategoryAdded }) => {
             Authorization: `Bearer ${token}`,
           },
         }
-      );  
+      );
 
       if (selectedCategory) {
         toast.success("Subcategory posted:", response.data);
@@ -78,12 +78,12 @@ export const CategoryPopup = ({ modalOpen, setModalOpen, onCategoryAdded }) => {
       }}
       footer={[
         <Button
-          key="addCategoryAndSubcategory"
+          key="add"
           type="primary"
           onClick={handleAddCategory}
           disabled={!categoryName}
         >
-          Add Category and Subcategory
+          Add
         </Button>,
       ]}
     >

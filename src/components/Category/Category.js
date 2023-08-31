@@ -6,14 +6,12 @@ import { BsFillPencilFill } from "react-icons/bs";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
 import { CategoryPopup } from "../Modal/CategoryPopup.js";
-import { EditPopup } from "../Modal/EditPopup.js";
 import Toggle from "../Toggle";
 import "./Category.css";
 
 export const Category = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [editModal, setEditModal] = useState(false);
   const token = localStorage.getItem("token");
   const deleteCategory = async (category_id) => {
     try {
@@ -26,6 +24,7 @@ export const Category = () => {
       setCategories((prevCategories) =>
         prevCategories.filter((category) => category.id !== category_id)
       );
+      fetchCategories();
     } catch (error) {
       console.error("Error deleting category:", error);
     }
@@ -41,7 +40,10 @@ export const Category = () => {
       .then((data) => setCategories(data))
       .catch((error) => console.error("Error fetching data:", error));
   };
-
+  const editCategory =(category_id)=>{
+    setModalOpen(true)
+    console.log(category_id);
+  }
   useEffect(() => {
     fetchCategories();
   }, [modalOpen]);
@@ -51,7 +53,6 @@ export const Category = () => {
         <h1 className="title">Category</h1>
         <div className="actions"></div>
         <CategoryPopup modalOpen={modalOpen} setModalOpen={setModalOpen} />
-        <EditPopup editModal={editModal} setEditModal={setEditModal}/>
         <div className="tableContainer">
           <table className="table" aria-label="simple table">
             <thead>
@@ -101,7 +102,7 @@ export const Category = () => {
                       <BsFillPencilFill
                         style={{ marginTop: "13px", cursor: "pointer" }}
                         onClick={() => {
-                          setEditModal(true);
+                         editCategory(category.id)
                         }}
                       />
                       <MdDeleteForever
