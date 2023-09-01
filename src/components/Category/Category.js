@@ -43,7 +43,7 @@ export const Category = () => {
   };
   const editCategory = (category_id, category_name) => {
     setModalOpen(true);
-    setSelectedCategory(category_name);
+setSelectedCategory({ id: category_id, name: category_name });
   };
   useEffect(() => {
     fetchCategories();

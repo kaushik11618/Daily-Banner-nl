@@ -28,7 +28,11 @@ export const CategoryPopup = ({
           }
         );
         setDropdownOptions(response.data);
-        setCategoryName(selectedCategory);
+        if (selectedCategory) {
+          setCategoryName(selectedCategory.name);
+        } else {
+          setCategoryName("");
+        }
       } catch (error) {
         console.error("Error fetching dropdown options:", error);
       }
@@ -36,34 +40,46 @@ export const CategoryPopup = ({
     if (modalOpen) {
       fetchDropdownOptions();
     }
-  }, [modalOpen]);
+  }, [modalOpen, selectedCategory]);
 
-  const handleAddCategory = async () => {
-    const selectedCategory = dropdownOptions.find(
+  const handleSaveCategory = async () => {
+    const selectedCategoryData = dropdownOptions.find(
       (option) => option.id === selectedOption
     );
 
     const requestData = {
       name: categoryName,
-      category_id: selectedCategory ? selectedCategory.id : null,
+      category_id: selectedCategoryData ? selectedCategoryData.id : null,
     };
 
     try {
-      const response = await axios.post(
-        "http://192.168.29.12:3000/api/category",
-        requestData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
       if (selectedCategory) {
-        toast.success("Subcategory posted:", response.data);
+        // Editing existing category
+        await axios.patch(
+          `http://192.168.29.12:3000/api/category/${selectedCategory.id}`,
+          requestData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        toast.success("Category updated successfully!");
+        setSelectedCategory("");
       } else {
-        toast.success("Main category posted:", response.data);
+        // Adding new category
+        await axios.post(
+          "http://192.168.29.12:3000/api/category",
+          requestData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        toast.success("Category added successfully!");
       }
+
       if (typeof onCategoryAdded === "function") {
         onCategoryAdded();
       }
@@ -71,25 +87,26 @@ export const CategoryPopup = ({
       setSelectedOption("");
       setModalOpen(false);
     } catch (error) {
-      console.error("Error posting:", error);
+      console.error("Error saving category:", error);
     }
   };
+
   const handleCloseModal = () => {
-    setSelectedCategory(""); // Clear the selected category name
-    setCategoryName(""); // Clear the category name field
-    setModalOpen(false); // Close the modal
+    setSelectedCategory("");
+    setCategoryName("");
+    setModalOpen(false);
   };
   return (
     <Modal
       title="Add Category and Subcategory"
       open={modalOpen}
-      onOk={handleAddCategory}
+      onOk={handleSaveCategory}
       onCancel={handleCloseModal}
       footer={[
         <Button
           key="add"
           type="primary"
-          onClick={handleAddCategory}
+          onClick={handleSaveCategory}
           disabled={!categoryName}
         >
           Add
