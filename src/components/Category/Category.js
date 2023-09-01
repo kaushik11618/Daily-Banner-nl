@@ -1,11 +1,10 @@
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import React, { useEffect, useState } from "react";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { useEffect, useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
 import { CategoryPopup } from "../Modal/CategoryPopup.js";
+import { SubCategoryList } from "../SubCategory/SubCategory.js";
 import Toggle from "../Toggle";
 import "./Category.css";
 
@@ -13,7 +12,17 @@ export const Category = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState();
+  const [expandedCategory, setExpandedCategory] = useState(null);
   const token = localStorage.getItem("token");
+
+  const toggleCategoryExpansion = (categoryId) => {
+    if (expandedCategory === categoryId) {
+      setExpandedCategory(null); // Collapse the clicked category if it's already expanded
+    } else {
+      setExpandedCategory(categoryId); // Expand the clicked category
+    }
+  };
+
   const deleteCategory = async (category_id) => {
     try {
       await fetch(`http://192.168.29.12:3000/api/category/${category_id}`, {
@@ -32,7 +41,7 @@ export const Category = () => {
   };
 
   const fetchCategories = () => {
-    fetch("http://192.168.29.12:3000/api/category", {
+    fetch("http://192.168.29.12:3000/api/category/all", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -41,13 +50,16 @@ export const Category = () => {
       .then((data) => setCategories(data))
       .catch((error) => console.error("Error fetching data:", error));
   };
+
   const editCategory = (category_id, category_name) => {
     setModalOpen(true);
-setSelectedCategory({ id: category_id, name: category_name });
+    setSelectedCategory({ id: category_id, name: category_name });
   };
+
   useEffect(() => {
     fetchCategories();
   }, [modalOpen]);
+
   return (
     <>
       <div className="category-container">
@@ -83,48 +95,67 @@ setSelectedCategory({ id: category_id, name: category_name });
                 </th>
               </tr>
             </thead>
-            <TableBody>
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                flexDirection: "column",
+              }}
+            >
               {categories.map((category) => (
-                <TableRow
+                <Accordion
                   key={category.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  style={{ cursor: "pointer" }}
                 >
-                  <TableCell
+                  <AccordionSummary
                     align="left"
-                    sx={{
-                      fontSize: "14px",
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
+                    style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    {category.name}
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                      <Toggle
-                        categoryStatus={category.status}
-                        categoryId={category.id}
-                        ontoggle={fetchCategories}
-                      />
-                      <BsFillPencilFill
-                        style={{ marginTop: "13px", cursor: "pointer" }}
-                        onClick={() => {
-                          editCategory(category.id, category.name);
-                        }}
-                      />
-                      <MdDeleteForever
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-around",
+                      }}
+                    >
+                      <div onClick={() => toggleCategoryExpansion(category.id)}>
+                        {category.name}
+                      </div>
+                      <div
                         style={{
-                          marginTop: "10px",
-                          marginLeft: "10px",
-                          cursor: "pointer",
+                          display: "flex",
                         }}
-                        size={20}
-                        onClick={() => deleteCategory(category.id)}
-                      />
+                      >
+                        <Toggle
+                          categoryStatus={category.status}
+                          categoryId={category.id}
+                          ontoggle={fetchCategories}
+                        />
+                        <BsFillPencilFill
+                          size={15}
+                          style={{ marginTop: "15px", cursor: "pointer" }}
+                          onClick={() => {
+                            editCategory(category.id, category.name);
+                          }}
+                        />
+                        <MdDeleteForever
+                          style={{
+                            marginTop: "10px",
+                            marginLeft: "10px",
+                            cursor: "pointer",
+                          }}
+                          size={20}
+                          onClick={() => deleteCategory(category.id)}
+                        />
+                      </div>
                     </div>
-                  </TableCell>
-                </TableRow>
+                  </AccordionSummary>
+                  <AccordionDetails in={expandedCategory === category.id}>
+                    <SubCategoryList categoryId={category.id} />
+                  </AccordionDetails>
+                </Accordion>
               ))}
-            </TableBody>
+            </div>
           </table>
         </div>
       </div>
