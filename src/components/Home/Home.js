@@ -3,6 +3,8 @@ import {useNavigate} from "react-router";
 import {About} from "../About/About.js";
 import {Category} from "../Category/Category";
 import {Sidebar} from "../Sidebar/Sidebar";
+import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
+import { ProfilePopup } from "../ProfilePopup/ProfilePopup.js";
 import {Topbar} from "../Topbar/Topbar";
 import "./Home.css";
 
@@ -30,6 +32,9 @@ export const Home = () => {
     if (activeContent === "about") {
       navigate("/about");
     }
+    if (activeContent === "profile") {
+      navigate("/profile");
+    }
   }, [activeContent]);
 
   const handleLinkClick = (content) => {
@@ -38,11 +43,12 @@ export const Home = () => {
 
   return (
     <>
-      <Topbar />
+      <Topbar onLinkClick={handleLinkClick} />
       <div className="sidebarlayout">
         <Sidebar onLinkClick={handleLinkClick} />
         {activeContent === "category" && <Category />}
         {activeContent === "about" && <About />}
+        {activeContent === "profile" && <ProfileEdit/>}
       </div>
     </>
   );

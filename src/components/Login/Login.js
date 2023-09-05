@@ -18,8 +18,8 @@ const Login = () => {
 
   useEffect(() => {
     if (
-      localStorage.getItem("token") != "" &&
-      localStorage.getItem("token") != null
+      localStorage.getItem("token") !== "" &&
+      localStorage.getItem("token") !== null
     ) {
       navigate("/home");
     }
