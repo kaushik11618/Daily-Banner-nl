@@ -1,39 +1,49 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { MdDeleteForever } from "react-icons/md";
+import * as React from "react";
+import {useEffect, useState} from "react"; // Import useEffect
+import {MdDeleteForever, MdEdit} from "react-icons/md";
 
-export const SubCategoryList = ({ categoryId }) => {
-  const [subCategories, setSubCategories] = useState([]);
-  const token = localStorage.getItem("token");
-  useEffect(() => {
-    async function fetchSubCategories() {
-      try {
-        const response = await axios.post(
-          "http://192.168.29.12:3000/api/sub-category",
-          { id: categoryId },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setSubCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching sub-categories:", error);
-      }
-    }
+export const SubCategoryList = ({categoryId, subcategory}) => {
 
-    fetchSubCategories();
-  }, [categoryId]);
 
-  return (
-    <div>
-      {subCategories.map((subCategory) => (
-        <div key={subCategory.id} style={{display:"flex",justifyContent:"space-between"}}>
-          <p style={{color:"black"}}>{subCategory.name}</p>
-          <MdDeleteForever />
+    const [subCategories, setSubCategories] = useState([]);
+    const token = localStorage.getItem("token");
+
+    // Use useEffect to set subCategories when the component mounts
+    useEffect(() => {
+        setSubCategories(subcategory);
+    }, [subcategory]);
+
+    const handleDelete = async (subCategoryId) => {
+        console.log(subCategoryId)
+        try {
+            await axios.delete(`http://192.168.29.12:3000/api/category/${subCategoryId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            // Update the state after successful deletion
+            setSubCategories((prevSubCategories) =>
+                prevSubCategories.filter((subCategory) => subCategory.id !== subCategoryId)
+            );
+        } catch (error) {
+            console.error("Error deleting sub-category:", error);
+        }
+    };
+
+    return (
+        <div>
+            {subCategories.map((item) => (
+                <div key={item.id}>
+                    <p className='text-dark ms-5 text-start '>{item.name}</p>
+                    <div style={{display: "flex", justifyContent: 'flex-end', position: 'relative', bottom: '25px'}}>
+                        <MdEdit size={18}
+                        />
+                        <MdDeleteForever className='ms-4' onClick={() => handleDelete(item.id)} size={18}/>
+                    </div>
+                </div>
+            ))}
         </div>
-      ))}
-    </div>
-  );
+    );
 };

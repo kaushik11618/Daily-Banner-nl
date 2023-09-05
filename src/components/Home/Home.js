@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { About } from "../About/About.js";
-import { Category } from "../Category/Category";
-import { Sidebar } from "../Sidebar/Sidebar";
-import { Topbar } from "../Topbar/Topbar";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
+import {About} from "../About/About.js";
+import {Category} from "../Category/Category";
+import {Sidebar} from "../Sidebar/Sidebar";
+import {Topbar} from "../Topbar/Topbar";
 import "./Home.css";
 
 export const Home = () => {
   const navigate = useNavigate();
-  const [activeContent, setActiveContent] = useState("category");
+  const [activeContent, setActiveContent] = useState(window.location.pathname.replace("/", ""));
 
   useEffect(() => {
     if (

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { FormControlLabel, Switch } from "@mui/material";
-import { MdDeleteForever } from "react-icons/md";
-function Toggle({ categoryStatus, categoryId, ontoggle }) {
+import React, {useState} from "react";
+import {Collapse, FormControlLabel, Switch} from "@mui/material";
+
+function Toggle({categoryStatus, categoryId, ontoggle}) {
   const [isInfoVisible, setIsInfoVisible] = useState(false);
-  const checked = categoryStatus === "active" ? true : false;
+  const checked = categoryStatus === "active" ? false : true;
 
   const toggleInfo = async (e) => {
     e.preventDefault();
@@ -28,16 +28,26 @@ function Toggle({ categoryStatus, categoryId, ontoggle }) {
     }
   };
 
+
   return (
-    <div>
-      <FormControlLabel
-        control={<Switch checked={checked} />}
-        onClick={toggleInfo}
-        style={{ position: "relative" }}
-      >
-        {isInfoVisible ? "Hide Info" : "Show Info"}
-      </FormControlLabel>
-    </div>
+      <div>
+        <FormControlLabel
+            control={<Switch checked={checked}/>}
+            onClick={toggleInfo}
+            className='ms-5 mt-2'
+        >
+          {isInfoVisible ? "Hide Info" : "Show Info"}
+
+        </FormControlLabel>
+
+        <Collapse in={isInfoVisible}>
+          {/* Your dropdown content goes here */}
+          <div className="dropdown">
+            {/* Dropdown content */}
+            {/* ... */}
+          </div>
+        </Collapse>
+      </div>
   );
 }
 

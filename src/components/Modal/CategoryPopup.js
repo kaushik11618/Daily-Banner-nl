@@ -1,9 +1,9 @@
-  import { Button, Modal } from "antd";
-  import axios from "axios";
-  import React, { useEffect, useState } from "react";
-  import { toast } from "react-toastify";
+import {Button, Modal} from "antd";
+import axios from "axios";
+import React, {useEffect, useState} from "react";
+import {toast} from "react-toastify";
 
-  export const CategoryPopup = ({
+export const CategoryPopup = ({
     modalOpen,
     setModalOpen,
     onCategoryAdded,
@@ -100,7 +100,6 @@
       <Modal
         title="Add Category and Subcategory"
         open={modalOpen}
-        onOk={handleSaveCategory}
         onCancel={handleCloseModal}
         footer={[
           <Button

@@ -5,20 +5,87 @@
     overflow-y: hidden;
     overflow-x: hidden;
 }
-.top_section{
+
+.top_section {
     display: flex;
-    align-items:center;
-    padding:20px 15px;
+    align-items: center;
+    padding: 20px 15px;
 }
-.logo{
+
+.logo {
     font-size: 30px;
 }
-.bars{
+
+@media only screen and (max-width: 500px) {
+    .logo {
+        display: none;
+        font-size: 25px;
+
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .logo {
+        display: none;
+        font-size: 23px;
+
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .logo {
+        display: none;
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .logo {
+        font-size: 0;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .link {
+        font-size: 0;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .log {
+        font-size: 0;
+        display: none;
+    }
+}
+
+.bars {
     display: flex;
     font-size: 25px;
 }
-.link:hover{
-    background:lightskyblue;
+
+@media only screen and (max-width: 400px) {
+    .bars {
+        position: relative;
+        right: 15px;
+        font-size: 25px;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .bars {
+        font-size: 25px;
+        position: relative;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .ct {
+
+    }
+}
+
+.link:hover {
+    background: lightskyblue;
     color: #000;
     transition: all 0.5s;
 }
