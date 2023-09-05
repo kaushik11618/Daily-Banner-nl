@@ -57,8 +57,8 @@ select {
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 120px; /* Set a fixed height for the dropdown */
-  overflow-y: auto; /* Enable scrollbar if content overflows */
+  max-height: 120px; 
+  overflow-y: auto; 
 }
 
 .slider-list li {
@@ -77,4 +77,10 @@ select {
 button {
   display: block;
   margin-top: 0.5rem;
+}
+.popup-container {
+  position: absolute;
+  top: 6%;
+  right: 0;
+  z-index: 1;
 }

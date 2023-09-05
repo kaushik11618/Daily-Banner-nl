@@ -1,6 +1,5 @@
-import React, { useState } from "react";
 import { FormControlLabel, Switch } from "@mui/material";
-import { MdDeleteForever } from "react-icons/md";
+import React, { useState } from "react";
 function Toggle({ categoryStatus, categoryId, ontoggle }) {
   const [isInfoVisible, setIsInfoVisible] = useState(false);
   const checked = categoryStatus === "active" ? true : false;

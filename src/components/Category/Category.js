@@ -17,26 +17,29 @@ export const Category = () => {
 
   const toggleCategoryExpansion = (categoryId) => {
     if (expandedCategory === categoryId) {
-      setExpandedCategory(null); // Collapse the clicked category if it's already expanded
+      setExpandedCategory(null);
     } else {
-      setExpandedCategory(categoryId); // Expand the clicked category
+      setExpandedCategory(categoryId);
     }
   };
 
   const deleteCategory = async (category_id) => {
-    try {
-      await fetch(`http://192.168.29.12:3000/api/category/${category_id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setCategories((prevCategories) =>
-        prevCategories.filter((category) => category.id !== category_id)
-      );
-      fetchCategories();
-    } catch (error) {
-      console.error("Error deleting category:", error);
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this category?"
+    );
+    if (shouldDelete) {
+      try {
+        await fetch(`http://192.168.29.12:3000/api/category/${category_id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        fetchCategories();
+      } catch (error) {
+        console.error("Error deleting category:", error);
+      }
     }
   };
 
@@ -59,7 +62,6 @@ export const Category = () => {
   useEffect(() => {
     fetchCategories();
   }, [modalOpen]);
-
   return (
     <>
       <div className="category-container">
@@ -151,7 +153,7 @@ export const Category = () => {
                     </div>
                   </AccordionSummary>
                   <AccordionDetails in={expandedCategory === category.id}>
-                    <SubCategoryList categoryId={category.id} />
+                    <SubCategoryList categoryId={category.id} subcategories={category.subCategories} />
                   </AccordionDetails>
                 </Accordion>
               ))}

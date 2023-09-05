@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { About } from "../About/About.js";
 import { Category } from "../Category/Category";
+import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
+import { ProfilePopup } from "../ProfilePopup/ProfilePopup.js";
 import { Sidebar } from "../Sidebar/Sidebar";
 import { Topbar } from "../Topbar/Topbar";
 import "./Home.css";
 
 export const Home = () => {
   const navigate = useNavigate();
-  const [activeContent, setActiveContent] = useState("category");
+  const [activeContent, setActiveContent] = useState(window.location.pathname.replace("/",""));
 
   useEffect(() => {
     if (
@@ -30,6 +32,9 @@ export const Home = () => {
     if (activeContent === "about") {
       navigate("/about");
     }
+    if (activeContent === "profile") {
+      navigate("/profile");
+    }
   }, [activeContent]);
 
   const handleLinkClick = (content) => {
@@ -38,11 +43,12 @@ export const Home = () => {
 
   return (
     <>
-      <Topbar />
+      <Topbar onLinkClick={handleLinkClick} />
       <div className="sidebarlayout">
         <Sidebar onLinkClick={handleLinkClick} />
         {activeContent === "category" && <Category />}
         {activeContent === "about" && <About />}
+        {activeContent === "profile" && <ProfileEdit/>}
       </div>
     </>
   );
