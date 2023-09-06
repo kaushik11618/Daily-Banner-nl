@@ -20,7 +20,6 @@
   position: relative;
 }
 .register-container .register-title::before {
-  content: "";
   position: absolute;
   left: 0;
   bottom: 0;
@@ -71,10 +70,6 @@
 .user-details .input-box input:focus {
   border-color: #9b59b6;
 }
-.gender-details .input-box input:focus {
-  border-color: #9b59b6;
-}
-
 .register-form .category {
   display: flex;
   width: 80%;

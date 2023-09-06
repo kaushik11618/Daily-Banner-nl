@@ -1,63 +1,68 @@
 
-  .edit-btn {
-    position: absolute;
-    right: 20px;
-  }
-  .profile-edit-inputs {
-    display: grid;
-    margin-top: 40px;
-    gap: 20px;
-  }
-  
-  .profile-edit-inputs label {
-    display: flex;
-    font-family: system-ui;
-    margin-bottom: -15px;
-  }
-  
-  .edit-input {
-    width: 300px;
-    height: 40px;
-  }
-  .save-container {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .save-btn {
-    width: 300px;
-    height: 50px;
-    cursor: pointer;
-    background-color: #0073b1;
-    border-radius: 30px;
-    outline: none;
-    border: none;
-    font-family: system-ui;
-    font-weight: 600;
-    color: #ffffff;
-    font-size: 18px;
-    margin-top: 20px;
-  }
-  
-  .close-icon {
-    cursor: pointer;
-  }
-  .common-textArea {
-    padding: 10px;
-    background-color: white;
-    outline: none;
-    border: 1px solid #212121;
-    color: #212121;
-    border-radius: 3px;
-    font-family: system-ui;
-    font-size: 16px;
-    margin: -1px 0px;
-  }
-  
-  .common-textArea:focus {
-    outline: 1px solid #0072b1;
-  }
-  .common-textArea::placeholder {
-    font-family: system-ui;
-    font-size: 16px;
-  }
+.profile-edit-inputs {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-top: 40px;
+  gap: 20px;
+}
+
+.input-content{
+  display: flex;
+  flex-direction: column;
+}
+.input-content label {
+  display: flex;
+  font-family: system-ui;
+}
+
+.edit-input {
+  font-size: 16px;
+  width: 300px;
+  height: 40px;
+}
+.save-container {
+  display: flex;
+  justify-content: center;
+}
+
+.save-btn {
+  width: 300px;
+  height: 50px;
+  cursor: pointer;
+  background-color: #0073b1;
+  border-radius: 30px;
+  outline: none;
+  border: none;
+  font-family: system-ui;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 18px;
+  margin-top: 20px;
+}
+.textArea-content{
+  display:flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.common-textArea {
+  padding: 10px;
+  background-color: white;
+  outline: none;
+  border: 1px solid #212121;
+  color: #212121;
+  border-radius: 3px;
+  font-family: system-ui;
+  font-size: 16px;
+  margin: -1px 0px;
+  resize: none;
+}
+
+.edit-input:focus{
+  outline: 1px solid #0072b1;
+}
+.common-textArea:focus {
+  outline: 1px solid #0072b1;
+}
+.common-textArea::placeholder {
+  font-size: 16px;
+}

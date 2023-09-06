@@ -1,7 +1,7 @@
-import {Button, Modal} from "antd";
+import { Button, Modal } from "antd";
 import axios from "axios";
-import React, {useEffect, useState} from "react";
-import {toast} from "react-toastify";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export const CategoryPopup = ({
   modalOpen,
@@ -12,6 +12,7 @@ export const CategoryPopup = ({
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
   const [categoryName, setCategoryName] = useState("");
+  const [isEditingSubcategory, setIsEditingSubcategory] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -29,8 +30,12 @@ export const CategoryPopup = ({
         setDropdownOptions(response.data);
         if (selectedCategory) {
           setCategoryName(selectedCategory.name);
+          setIsEditingSubcategory(!!selectedCategory.category_id);
+          setSelectedOption(selectedCategory.category_id || "");
         } else {
           setCategoryName("");
+          setIsEditingSubcategory(false);
+          setSelectedOption("");
         }
       } catch (error) {
         console.error("Error fetching dropdown options:", error);
@@ -53,7 +58,7 @@ export const CategoryPopup = ({
 
     try {
       if (selectedCategory) {
-        await axios.patch(
+        const response = await axios.patch(
           `http://192.168.29.12:3000/api/category/${selectedCategory.id}`,
           requestData,
           {
@@ -62,24 +67,25 @@ export const CategoryPopup = ({
             },
           }
         );
-        toast.success("Category updated successfully!");
-        setSelectedCategory("");
-      } else {
-        await axios.post(
-            "http://192.168.29.12:3000/api/category",
-            requestData,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-        );
-        if (selectedCategoryData) {
-          toast.success("Sub-Category added successfully!");
-        } else {
-          toast.success("Category added successfully!");
+        if (response.status === 200) {
+          const apiMessage = response.data.message;
+          toast.success(apiMessage);
+          setSelectedCategory("");
         }
-
+      } else {
+        const response = await axios.post(
+          "http://192.168.29.12:3000/api/category",
+          requestData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.status === 201) {
+          console.log(response.data.message);
+          toast.success(response.data.message);
+        }
       }
       setCategoryName("");
       setSelectedOption("");
@@ -101,13 +107,13 @@ export const CategoryPopup = ({
       onCancel={handleCloseModal}
       footer={[
         <Button
-            key="add"
-            type="primary"
-            onClick={handleSaveCategory}
-            disabled={!categoryName}
+          key="add"
+          type="primary"
+          onClick={handleSaveCategory}
+          disabled={!categoryName}
         >
           Add
-        </Button>
+        </Button>,
       ]}
     >
       <div className="d-flex flex-column">
