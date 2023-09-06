@@ -3,7 +3,7 @@ import * as React from "react";
 import { useEffect, useState } from "react"; // Import useEffect
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 
-export const SubCategoryList = ({ subcategory,editCategory }) => {
+export const SubCategoryList = ({ subcategory, editCategory }) => {
   const [subCategories, setSubCategories] = useState([]);
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -11,22 +11,27 @@ export const SubCategoryList = ({ subcategory,editCategory }) => {
   }, [subcategory]);
 
   const handleDelete = async (subCategoryId) => {
-    try {
-      await axios.delete(
-        `http://192.168.29.12:3000/api/category/${subCategoryId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setSubCategories((prevSubCategories) =>
-        prevSubCategories.filter(
-          (subCategory) => subCategory.id !== subCategoryId
-        )
-      );
-    } catch (error) {
-      console.error("Error deleting sub-category:", error);
+    const conformDelete = window.confirm(
+      "are your you want to delete this category"
+    );
+    if (conformDelete) {
+      try {
+        await axios.delete(
+          `http://192.168.29.12:3000/api/category/${subCategoryId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setSubCategories((prevSubCategories) =>
+          prevSubCategories.filter(
+            (subCategory) => subCategory.id !== subCategoryId
+          )
+        );
+      } catch (error) {
+        console.error("Error deleting sub-category:", error);
+      }
     }
   };
 
@@ -46,7 +51,7 @@ export const SubCategoryList = ({ subcategory,editCategory }) => {
             <MdEdit
               size={18}
               onClick={() => {
-                editCategory(item.id, item.name,item.category_id);
+                editCategory(item.id, item.name, item.category_id);
               }}
             />
             <MdDeleteForever

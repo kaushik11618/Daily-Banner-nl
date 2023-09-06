@@ -1,4 +1,6 @@
+import { message } from "antd";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import "./ProfileEdit.css";
 
 export const ProfileEdit = () => {
@@ -19,7 +21,6 @@ export const ProfileEdit = () => {
 
         if (response.ok) {
           const userData = await response.json();
-          console.log("userData", userData);
           setCurrentUser(userData);
         } else {
           console.error("Failed to fetch user data");
@@ -33,7 +34,6 @@ export const ProfileEdit = () => {
       fetchUserData();
     }
   }, []);
-  console.log(currentUser);
   const upadateProfile = async () => {
     try {
       const updatedUserData = {
@@ -61,26 +61,29 @@ export const ProfileEdit = () => {
       );
 
       if (response.ok) {
-        console.log("Profile updated successfully");
+        const apiMessage = await response.json();
+        toast.success(apiMessage.message);
       } else {
-        console.error("Failed to update profile");
+        const errorMessage = await response.json();
+        toast.error(errorMessage.message);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
+      toast.error("An error occurred while updating your profile.");
     }
   };
-
   const getInput = (event) => {
     let { name, value } = event.target;
     let input = { [name]: value };
     setCurrentUser({ ...currentUser, ...input });
   };
   return (
-    <div className="profile-card">
+    <form className="profile-card">
       <div className="profile-edit-inputs">
         <div className="input-content">
           <label>First Name</label>
           <input
+            required
             onChange={getInput}
             className="edit-input"
             placeholder="first Name"
@@ -91,6 +94,7 @@ export const ProfileEdit = () => {
         <div className="input-content">
           <label>Last Name</label>
           <input
+            required
             onChange={getInput}
             className="edit-input"
             placeholder="Last Name"
@@ -101,6 +105,7 @@ export const ProfileEdit = () => {
         <div className="input-content">
           <label>Phone Number</label>
           <input
+            required
             onChange={getInput}
             className="edit-input"
             placeholder="Phone Number"
@@ -111,6 +116,7 @@ export const ProfileEdit = () => {
         <div className="input-content">
           <label>Company</label>
           <input
+            required
             onChange={getInput}
             className="edit-input"
             placeholder="Company"
@@ -162,6 +168,7 @@ export const ProfileEdit = () => {
       <div className="textArea-content">
         <label>Address</label>
         <textarea
+          required
           onChange={getInput}
           className="common-textArea"
           placeholder="Address"
@@ -174,6 +181,6 @@ export const ProfileEdit = () => {
           Save
         </button>
       </div>
-    </div>
+    </form>
   );
 };

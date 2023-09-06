@@ -25,19 +25,24 @@ export const Category = () => {
   };
 
   const deleteCategory = async (category_id) => {
-    try {
-      await fetch(`http://192.168.29.12:3000/api/category/${category_id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setCategories((prevCategories) =>
-        prevCategories.filter((category) => category.id !== category_id)
-      );
-      fetchCategories();
-    } catch (error) {
-      console.error("Error deleting category:", error);
+    const conformDelete = window.confirm(
+      "are your you want to delete this category"
+    );
+    if (conformDelete) {
+      try {
+        await fetch(`http://192.168.29.12:3000/api/category/${category_id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setCategories((prevCategories) =>
+          prevCategories.filter((category) => category.id !== category_id)
+        );
+        fetchCategories();
+      } catch (error) {
+        console.error("Error deleting category:", error);
+      }
     }
   };
 

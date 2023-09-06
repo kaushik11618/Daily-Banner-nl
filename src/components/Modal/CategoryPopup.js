@@ -12,7 +12,7 @@ export const CategoryPopup = ({
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
   const [categoryName, setCategoryName] = useState("");
-  const [isEditingSubcategory, setIsEditingSubcategory] = useState(false); // Add a state to track if editing a subcategory
+  const [isEditingSubcategory, setIsEditingSubcategory] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -30,8 +30,8 @@ export const CategoryPopup = ({
         setDropdownOptions(response.data);
         if (selectedCategory) {
           setCategoryName(selectedCategory.name);
-          setIsEditingSubcategory(!!selectedCategory.category_id); // Set isEditingSubcategory based on whether category_id is present
-          setSelectedOption(selectedCategory.category_id || ""); // Set selectedOption based on category_id
+          setIsEditingSubcategory(!!selectedCategory.category_id);
+          setSelectedOption(selectedCategory.category_id || "");
         } else {
           setCategoryName("");
           setIsEditingSubcategory(false);
@@ -47,14 +47,18 @@ export const CategoryPopup = ({
   }, [modalOpen, selectedCategory]);
 
   const handleSaveCategory = async () => {
+    const selectedCategoryData = dropdownOptions.find(
+      (option) => option.id === selectedOption
+    );
+
     const requestData = {
       name: categoryName,
-      category_id: isEditingSubcategory ? selectedOption : null, // Use selectedOption when editing subcategory
+      category_id: selectedCategoryData ? selectedCategoryData.id : null,
     };
 
     try {
       if (selectedCategory) {
-        await axios.patch(
+        const response = await axios.patch(
           `http://192.168.29.12:3000/api/category/${selectedCategory.id}`,
           requestData,
           {
@@ -63,10 +67,13 @@ export const CategoryPopup = ({
             },
           }
         );
-        toast.success(isEditingSubcategory ? "Subcategory updated successfully!" : "Category updated successfully!");
-        setSelectedCategory("");
+        if (response.status === 200) {
+          const apiMessage = response.data.message;
+          toast.success(apiMessage);
+          setSelectedCategory("");
+        }
       } else {
-        await axios.post(
+        const response = await axios.post(
           "http://192.168.29.12:3000/api/category",
           requestData,
           {
@@ -75,11 +82,13 @@ export const CategoryPopup = ({
             },
           }
         );
-        toast.success(isEditingSubcategory ? "Subcategory added successfully!" : "Category added successfully!");
+        if (response.status === 201) {
+          console.log(response.data.message);
+          toast.success(response.data.message);
+        }
       }
       setCategoryName("");
       setSelectedOption("");
-      setIsEditingSubcategory(false); // Reset isEditingSubcategory
       setModalOpen(false);
     } catch (error) {
       console.error("Error saving category:", error);
@@ -89,14 +98,11 @@ export const CategoryPopup = ({
   const handleCloseModal = () => {
     setSelectedCategory("");
     setCategoryName("");
-    setSelectedOption("");
-    setIsEditingSubcategory(false); // Reset isEditingSubcategory
     setModalOpen(false);
   };
-
   return (
     <Modal
-      title={isEditingSubcategory ? "Edit Subcategory" : "Add Category"}
+      title="Add Category and Subcategory"
       open={modalOpen}
       onCancel={handleCloseModal}
       footer={[
@@ -106,51 +112,32 @@ export const CategoryPopup = ({
           onClick={handleSaveCategory}
           disabled={!categoryName}
         >
-          {isEditingSubcategory ? "Save Subcategory" : "Add"}
+          Add
         </Button>,
       ]}
     >
       <div className="d-flex flex-column">
         <div>
-          <label>{isEditingSubcategory ? "Subcategory Name" : "Category Name"}</label>
+          <label>Category Name</label>
         </div>
         <input
-          placeholder={isEditingSubcategory ? "Subcategory Name" : "Category Name"}
+          placeholder="Category Name"
           value={categoryName}
           onChange={(e) => setCategoryName(e.target.value)}
         />
-        
-        {isEditingSubcategory ? (
-          <div className="mt-3">
-            <div className="dropdown mt-3">
-            <select
-              value={selectedOption}
-              onChange={(e) => setSelectedOption(e.target.value)}
-            >
-              <option value="">Select a category</option>
-              {dropdownOptions.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          </div>
-        ) : (
-          <div className="dropdown mt-3">
-            <select
-              value={selectedOption}
-              onChange={(e) => setSelectedOption(e.target.value)}
-            >
-              <option value="">Select a category</option>
-              {dropdownOptions.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+        <div className="dropdown mt-3">
+          <select
+            value={selectedOption}
+            onChange={(e) => setSelectedOption(parseInt(e.target.value))}
+          >
+            <option value="">Select a category</option>
+            {dropdownOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </Modal>
   );
