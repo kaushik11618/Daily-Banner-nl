@@ -3,7 +3,7 @@ import * as React from "react";
 import {useEffect, useState} from "react"; // Import useEffect
 import {MdDeleteForever, MdEdit} from "react-icons/md";
 
-export const SubCategoryList = ({categoryId, subcategory}) => {
+export const SubCategoryList = ({categoryId, subcategory, editCategory}) => {
 
 
     const [subCategories, setSubCategories] = useState([]);
@@ -38,8 +38,12 @@ export const SubCategoryList = ({categoryId, subcategory}) => {
                 <div key={item.id}>
                     <p className='text-dark ms-5 text-start '>{item.name}</p>
                     <div style={{display: "flex", justifyContent: 'flex-end', position: 'relative', bottom: '25px'}}>
-                        <MdEdit size={18}
+                        <MdEdit size={18} style={{cursor: 'pointer'}}
+                                onClick={() => {
+                                    editCategory(item.id, item.name, item.category_id)
+                                }}
                         />
+                        {console.log(item.category_id)}
                         <MdDeleteForever className='ms-4' onClick={() => handleDelete(item.id)} size={18}/>
                     </div>
                 </div>

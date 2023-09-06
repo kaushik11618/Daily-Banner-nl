@@ -25,19 +25,24 @@ export const Category = () => {
     };
 
     const deleteCategory = async (category_id) => {
-        try {
-            await fetch(`http://192.168.29.12:3000/api/category/${category_id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setCategories((prevCategories) =>
-                prevCategories.filter((category) => category.id !== category_id)
-            );
-            fetchCategories();
-        } catch (error) {
-            console.error("Error deleting category:", error);
+        const Delete = window.confirm("Are You Sure Delete Category")
+        if (Delete) {
+            try {
+
+                await fetch(`http://192.168.29.12:3000/api/category/${category_id}`, {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setCategories((prevCategories) =>
+                    prevCategories.filter((category) => category.id !== category_id)
+                );
+                fetchCategories();
+            } catch (error) {
+                console.error("Error deleting category:", error);
+            }
+
         }
     };
 
@@ -52,11 +57,11 @@ export const Category = () => {
             .catch((error) => console.error("Error fetching data:", error));
     };
 
-    const editCategory = (category_id, category_name) => {
+    const editCategory = (id, category_name, category_id) => {
         setModalOpen(true);
-        setSelectedCategory({id: category_id, name: category_name});
+        setSelectedCategory({id: id, name: category_name, category_id: category_id});
     };
-
+    console.log(selectedCategory)
     useEffect(() => {
         fetchCategories();
     }, [modalOpen]);
@@ -126,7 +131,9 @@ export const Category = () => {
                                         </AccordionSummary>
                                         <AccordionDetails in={expandedCategory === category.id}>
                                             <SubCategoryList categoryId={category.id}
-                                                             subcategory={category.subCategories}/>
+                                                             subcategory={category.subCategories}
+                                                             editCategory={editCategory}
+                                            />
                                         </AccordionDetails>
                                     </Accordion>
                                     <div style={{display: 'flex'}}>
@@ -137,14 +144,14 @@ export const Category = () => {
                                         />
                                         <MdEdit
                                             onClick={() => {
-                                                editCategory(category.id, category.name)
+                                                editCategory(category.id, category.name, category.subCategories.category_id)
                                             }}
-                                            size={25}
+                                            size={25} style={{cursor: 'pointer'}}
                                             className='mt-3'
                                         />
 
                                         <MdDeleteForever
-                                            size={25}
+                                            size={25} style={{cursor: 'pointer'}}
                                             className='mt-3 ms-3'
                                             onClick={() => deleteCategory(category.id)}
                                         />

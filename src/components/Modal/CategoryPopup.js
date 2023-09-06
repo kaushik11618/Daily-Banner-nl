@@ -1,12 +1,11 @@
-import { Button, Modal } from "antd";
+import {Button, Modal} from "antd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import React, {useEffect, useState} from "react";
+import {toast} from "react-toastify";
 
 export const CategoryPopup = ({
   modalOpen,
   setModalOpen,
-  onCategoryAdded,
   selectedCategory,
   setSelectedCategory,
 }) => {
@@ -67,15 +66,20 @@ export const CategoryPopup = ({
         setSelectedCategory("");
       } else {
         await axios.post(
-          "http://192.168.29.12:3000/api/category",
-          requestData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+            "http://192.168.29.12:3000/api/category",
+            requestData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
         );
-        toast.success("Category added successfully!");
+        if (selectedCategoryData) {
+          toast.success("Sub-Category added successfully!");
+        } else {
+          toast.success("Category added successfully!");
+        }
+
       }
       setCategoryName("");
       setSelectedOption("");
@@ -97,13 +101,13 @@ export const CategoryPopup = ({
       onCancel={handleCloseModal}
       footer={[
         <Button
-          key="add"
-          type="primary"
-          onClick={handleSaveCategory}
-          disabled={!categoryName}
+            key="add"
+            type="primary"
+            onClick={handleSaveCategory}
+            disabled={!categoryName}
         >
           Add
-        </Button>,
+        </Button>
       ]}
     >
       <div className="d-flex flex-column">

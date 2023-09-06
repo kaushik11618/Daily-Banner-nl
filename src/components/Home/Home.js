@@ -3,10 +3,10 @@ import {useNavigate} from "react-router";
 import {About} from "../About/About.js";
 import {Category} from "../Category/Category";
 import {Sidebar} from "../Sidebar/Sidebar";
-import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
-import { ProfilePopup } from "../ProfilePopup/ProfilePopup.js";
+import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
 import {Topbar} from "../Topbar/Topbar";
 import "./Home.css";
+import ChangePassword from "../ChangePassword/ChangePassword";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -35,6 +35,9 @@ export const Home = () => {
     if (activeContent === "profile") {
       navigate("/profile");
     }
+    if (activeContent === "password") {
+      navigate("/password");
+    }
   }, [activeContent]);
 
   const handleLinkClick = (content) => {
@@ -49,6 +52,7 @@ export const Home = () => {
         {activeContent === "category" && <Category />}
         {activeContent === "about" && <About />}
         {activeContent === "profile" && <ProfileEdit/>}
+        {activeContent === "password" && <ChangePassword/>}
       </div>
     </>
   );
