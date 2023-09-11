@@ -1,9 +1,9 @@
-import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
-import {useEffect, useState} from "react";
-import {IoAddCircleSharp} from "react-icons/io5";
-import {MdDeleteForever, MdEdit} from "react-icons/md";
-import {CategoryPopup} from "../Modal/CategoryPopup.js";
-import {SubCategoryList} from "../SubCategory/SubCategory.js";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { useEffect, useState } from "react";
+import { IoAddCircleSharp } from "react-icons/io5";
+import { MdDeleteForever, MdEdit } from "react-icons/md";
+import { CategoryPopup } from "../Modal/CategoryPopup.js";
+import { SubCategoryList } from "../SubCategory/SubCategory.js";
 import "./Category.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Toggle from "../Toggle";
@@ -87,7 +87,15 @@ export const Category = () => {
               <h1 className="headerCell">Categories</h1>
               <button className="addButton" onClick={() => setModalOpen(true)}>
                 <IoAddCircleSharp className="addButtonIcon" />
-                <p>Add Categories</p>
+                <p
+                  style={{
+                    marginTop: "10px",
+                    fontSize: "14px",
+                    alignItems: "center",
+                  }}
+                >
+                  Add Categories
+                </p>
               </button>
             </div>
 
@@ -145,6 +153,7 @@ export const Category = () => {
                       ontoggle={fetchCategories}
                     />
                     <MdEdit
+                      type="button"
                       onClick={() => {
                         editCategory(
                           category.id,
@@ -156,6 +165,7 @@ export const Category = () => {
                       className="mt-3"
                     />
                     <MdDeleteForever
+                      type="button"
                       size={25}
                       className="mt-3 ms-3"
                       onClick={() => deleteCategory(category.id)}

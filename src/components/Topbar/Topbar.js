@@ -1,30 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ProfilePopup } from "../ProfilePopup/ProfilePopup";
 import "./Topbar.css";
 
 export const Topbar = ({ onLinkClick }) => {
-  const dropdownOptions = [
-    "Option 1",
-    "Option 2",
-    "Option 3",
-    "Option 4",
-    "Option 5",
-    "Option 6",
-    "Option 7",
-  ];
-
-  const [selectedOption, setSelectedOption] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [popupVisible, setPopupVisible] = useState(false);
-  const [isPopupOpen, setPopupOpen] = useState(false);
   const displayPopup = () => {
     setPopupVisible(!popupVisible);
   };
-  const togglePopup = () => {
-    setPopupOpen(!popupVisible);
-  };
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    const token = localStorage.getItem("token");
     const fetchUserData = async () => {
       try {
         const response = await fetch(
@@ -47,36 +32,42 @@ export const Topbar = ({ onLinkClick }) => {
         console.error("Error fetching user data:", error);
       }
     };
-
     if (token) {
       fetchUserData();
     }
-  }, []);
+  }, [token]);
 
   return (
     <nav>
-      <div className="dropdown">
-        <select
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
+      <div
+        style={{
+          color: "white",
+          cursor: "pointer",
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <button
+          style={{
+            border:"1px solid white",
+            borderRadius:"50px",
+            padding:"5px",
+            width:"150px",
+            backgroundColor:"transparent",
+            color: "white",
+            cursor: "pointer",
+          }}
+          onClick={displayPopup}
         >
-          <option value="">Select an Company</option>
-          {dropdownOptions.map((option, index) => (
-            <option key={index} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
+          {currentUser ? `Welcome, ${currentUser.first_name}` : "Loading..."}
+        </button>
       </div>
-      <p style={{ color: "white", cursor: "pointer" }} onClick={displayPopup}>
-        {currentUser ? `Welcome, ${currentUser.first_name}` : "Loading..."}
-      </p>
       {popupVisible ? (
         <div className="popup-container">
           <ProfilePopup
             currentUser={currentUser}
             onLinkClick={onLinkClick}
-            onClose={togglePopup}
+            closePopup={() => setPopupVisible(false)}
           />
         </div>
       ) : (
