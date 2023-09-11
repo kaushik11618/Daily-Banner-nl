@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as React from "react";
-import {useEffect, useState} from "react"; // Import useEffect
+import {useEffect, useState} from "react";
 import {MdDeleteForever, MdEdit} from "react-icons/md";
 
 export const SubCategoryList = ({ subcategory, editCategory }) => {
@@ -48,19 +48,16 @@ export const SubCategoryList = ({ subcategory, editCategory }) => {
                 bottom: "25px",
               }}
           >
-            {/*<Toggle*/}
-            {/*    categoryStatus={category.status}*/}
-            {/*    categoryId={category.id}*/}
-            {/*    ontoggle={fetchCategories}*/}
-            {/*/>*/}
             <MdEdit
+                type='button'
                 size={18}
                 onClick={() => {
                   editCategory(item.id, item.name, item.category_id);
                 }}
             />
             <MdDeleteForever
-                className="ms-4"
+                type='button'
+                className="ms-4 pointer"
                 onClick={() => handleDelete(item.id)}
                 size={18}
             />

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./Sidebar.css";
-import { FaBars } from "react-icons/fa";
-import { BiLogOut, BiSolidCategory } from "react-icons/bi";
-import { FcDebian } from "react-icons/fc";
-import { useNavigate } from "react-router";
+import {FaBars} from "react-icons/fa";
+import {BiLogOut, BiSolidCategory} from "react-icons/bi";
+import {FcDebian} from "react-icons/fc";
+import {useNavigate} from "react-router";
 
 export const Sidebar = ({ onLinkClick }) => {
   const navigate = useNavigate();
@@ -47,12 +47,12 @@ export const Sidebar = ({ onLinkClick }) => {
     <>
       <div style={{ width: isOpen ? "280px" : "50px" }} className="sidebar ">
         <div className="top_section">
-          <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
-            Dashboard
+          <h1 style={{display: isOpen ? "block" : "none", marginTop: '80px'}} className="logo">
+              Dashboard
           </h1>
-          <div style={{ marginLeft: isOpen ? "30px" : "5px" ,cursor:"pointer" }} className="bars">
-            <FaBars onClick={toggle} />
-          </div>
+            <div style={{marginLeft: isOpen ? "30px" : "5px", cursor: "pointer", marginTop: '75px'}} className="bars">
+                <FaBars onClick={toggle}/>
+            </div>
         </div>
         <h2 onClick={() => onLinkClick("category")} className="link" role="button">
           &nbsp; <BiSolidCategory style={{ fontSize: "30px" }} />

@@ -67,7 +67,7 @@ export const Category = () => {
   return (
     <>
       <div className="category-container">
-        <h1 className="title mt-5">Category</h1>
+        <h1 className="title">Category</h1>
         <div className="actions"></div>
         <CategoryPopup
           modalOpen={modalOpen}
@@ -140,25 +140,28 @@ export const Category = () => {
                   </Accordion>
                   <div style={{ display: "flex" }}>
                     <Toggle
-                      categoryStatus={category.status}
-                      categoryId={category.id}
-                      ontoggle={fetchCategories}
+                        size={20}
+                        categoryStatus={category.status}
+                        categoryId={category.id}
+                        ontoggle={fetchCategories}
                     />
                     <MdEdit
-                      onClick={() => {
-                        editCategory(
-                          category.id,
-                          category.name,
-                          category.subCategories.category_id
-                        );
-                      }}
-                      size={25}
-                      className="mt-3"
+                        type='button'
+                        onClick={() => {
+                          editCategory(
+                              category.id,
+                              category.name,
+                              category.subCategories.category_id
+                          );
+                        }}
+                        size={20}
+                        className="mt-3"
                     />
                     <MdDeleteForever
-                      size={25}
-                      className="mt-3 ms-3"
-                      onClick={() => deleteCategory(category.id)}
+                        type='button'
+                        size={20}
+                        className="mt-3 ms-3"
+                        onClick={() => deleteCategory(category.id)}
                     />
                   </div>
                 </div>

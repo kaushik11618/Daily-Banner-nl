@@ -32,8 +32,9 @@ export const ProfileEdit = () => {
         if (token) {
             fetchUserData();
         }
-    }, []);
-    const upadateProfile = async () => {
+    }, [token]);
+    const upadateProfile = async (event) => {
+        event.preventDefault()
         try {
             const updatedUserData = {
                 first_name: currentUser.first_name,
@@ -82,7 +83,7 @@ export const ProfileEdit = () => {
                 <div className="profile-container">
                     <div className="profile-title">Profile</div>
                     <div className="content mt-3">
-                        <form className="profile-form" onClick={upadateProfile}>
+                        <form className="profile-form" onSubmit={upadateProfile}>
                             <div className="user-details">
                                 <div className="input-box1">
                                     <span className="details">First Name</span>
@@ -166,14 +167,14 @@ export const ProfileEdit = () => {
                                 <textarea
                                     required
                                     onChange={getInput}
-                                    className="common-textArea w-100 p-5 mt-2"
+                                    className="common-textArea w-100 p-3 mt-2"
                                     placeholder="Address"
                                     name="address"
                                     value={currentUser.address}
                                 />
                             </div>
                             <div className="save-container">
-                                <button className="save-btn btn-primary p-3 w-25 text-center" onClick={upadateProfile}>
+                                <button className="save-btn btn-primary p-3 w-25 text-center">
                                     Save
                                 </button>
                             </div>

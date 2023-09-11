@@ -5,7 +5,7 @@ export const ProfilePopup = ({currentUser, onLinkClick, onClose}) => {
     return (
         <div style={{width: '300px'}}>
             <div
-                className="w-100 border border-secondary h-auto d-flex justify-content-center flex-column bg-dark text-light">
+                className="w-100 border border-secondary rounded d-flex justify-content-center flex-column bg-dark text-light">
                 <h3 className="text-uppercased d-flex justify-content-center flex-column mt-4 text-center"> &nbsp;Wel-Come
                     to <strong>{currentUser.first_name} {currentUser.last_name}&nbsp;</strong>
                     <h4 className='text-uppercased d-flex flex-column mt-4'> Here You Can <br/>Edit Your Profile

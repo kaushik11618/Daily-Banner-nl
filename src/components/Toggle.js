@@ -33,7 +33,7 @@ function Toggle({categoryStatus, categoryId, ontoggle}) {
         <FormControlLabel
             control={<Switch checked={checked}/>}
             onClick={toggleInfo}
-            className='ms-5 mt-2'
+            className='ms-5 mt-1'
         >
           {isInfoVisible ? "Hide Info" : "Show Info"}
 

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { ProfilePopup } from "../ProfilePopup/ProfilePopup";
+import React, {useEffect, useState} from "react";
+import {ProfilePopup} from "../ProfilePopup/ProfilePopup";
 import "./Topbar.css";
 
 export const Topbar = ({ onLinkClick }) => {
@@ -56,19 +56,17 @@ export const Topbar = ({ onLinkClick }) => {
   return (
     <nav>
       <div className="dropdown">
-        <select
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
-        >
-          <option value="">Select an Company</option>
-          {dropdownOptions.map((option, index) => (
-            <option key={index} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
       </div>
-      <p style={{ color: "white", cursor: "pointer" }} onClick={displayPopup}>
+      <p style={{
+        color: "white",
+        cursor: "pointer",
+        border: '1px solid white',
+        fontSize: '15px',
+        borderRadius: '20px',
+        width: '150px',
+        textAlign: 'center',
+        padding: '5px'
+      }} onClick={displayPopup}>
         {currentUser ? `Welcome, ${currentUser.first_name}` : "Loading..."}
       </p>
       {popupVisible ? (

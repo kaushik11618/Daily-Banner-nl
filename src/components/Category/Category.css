@@ -6,8 +6,9 @@
 
 .title {
   display: flex;
-  font-size: 24px;
-  margin-bottom: 16px;
+  font-size: 34px;
+  margin-top: 100px;
+  margin-bottom: 10px;
   align-items: center;
   justify-content: center;
 }
@@ -74,84 +75,3 @@ p {
 .control {
   display: flex;
 }
-
-/*@media (max-width: 1650px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 1100px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 1550px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 1000px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 1450px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 950px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 1350px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 800px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 1200px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 700px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 1100px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 550px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 950px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 440px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 835px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 390px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 780px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 400px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 690px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 300px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 550px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 230px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 480px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 160px;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 385px) {*/
-/*  .control {*/
-/*    position: relative;*/
-/*    left: 100px;*/
-/*  }*/
-/*}*/
-
-
