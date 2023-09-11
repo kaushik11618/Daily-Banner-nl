@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as React from "react";
-import { useEffect, useState } from "react"; // Import useEffect
-import { MdDeleteForever, MdEdit } from "react-icons/md";
+import {useEffect, useState} from "react"; // Import useEffect
+import {MdDeleteForever, MdEdit} from "react-icons/md";
 
 export const SubCategoryList = ({ subcategory, editCategory }) => {
   const [subCategories, setSubCategories] = useState([]);
@@ -41,23 +41,28 @@ export const SubCategoryList = ({ subcategory, editCategory }) => {
         <div key={item.id}>
           <p className="text-dark ms-5 text-start ">{item.name}</p>
           <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              position: "relative",
-              bottom: "25px",
-            }}
-          >
-            <MdEdit
-              size={18}
-              onClick={() => {
-                editCategory(item.id, item.name, item.category_id);
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                position: "relative",
+                bottom: "25px",
               }}
+          >
+            {/*<Toggle*/}
+            {/*    categoryStatus={category.status}*/}
+            {/*    categoryId={category.id}*/}
+            {/*    ontoggle={fetchCategories}*/}
+            {/*/>*/}
+            <MdEdit
+                size={18}
+                onClick={() => {
+                  editCategory(item.id, item.name, item.category_id);
+                }}
             />
             <MdDeleteForever
-              className="ms-4"
-              onClick={() => handleDelete(item.id)}
-              size={18}
+                className="ms-4"
+                onClick={() => handleDelete(item.id)}
+                size={18}
             />
           </div>
         </div>

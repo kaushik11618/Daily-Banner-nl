@@ -1,10 +1,9 @@
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { IoAddCircleSharp } from "react-icons/io5";
-import { MdDeleteForever, MdEdit } from "react-icons/md";
-import { CategoryPopup } from "../Modal/CategoryPopup.js";
-import { SubCategoryList } from "../SubCategory/SubCategory.js";
+import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import {useEffect, useState} from "react";
+import {IoAddCircleSharp} from "react-icons/io5";
+import {MdDeleteForever, MdEdit} from "react-icons/md";
+import {CategoryPopup} from "../Modal/CategoryPopup.js";
+import {SubCategoryList} from "../SubCategory/SubCategory.js";
 import "./Category.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Toggle from "../Toggle";
@@ -68,7 +67,7 @@ export const Category = () => {
   return (
     <>
       <div className="category-container">
-        <h1 className="title">Category</h1>
+        <h1 className="title mt-5">Category</h1>
         <div className="actions"></div>
         <CategoryPopup
           modalOpen={modalOpen}

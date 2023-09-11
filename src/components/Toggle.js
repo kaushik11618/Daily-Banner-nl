@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Collapse, FormControlLabel, Switch} from "@mui/material";
+import {FormControlLabel, Switch} from "@mui/material";
 
 function Toggle({categoryStatus, categoryId, ontoggle}) {
   const [isInfoVisible, setIsInfoVisible] = useState(false);
@@ -28,7 +28,6 @@ function Toggle({categoryStatus, categoryId, ontoggle}) {
     }
   };
 
-
   return (
       <div>
         <FormControlLabel
@@ -39,14 +38,6 @@ function Toggle({categoryStatus, categoryId, ontoggle}) {
           {isInfoVisible ? "Hide Info" : "Show Info"}
 
         </FormControlLabel>
-
-        <Collapse in={isInfoVisible}>
-          {/* Your dropdown content goes here */}
-          <div className="dropdown">
-            {/* Dropdown content */}
-            {/* ... */}
-          </div>
-        </Collapse>
       </div>
   );
 }
