@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as React from "react";
-import {useEffect, useState} from "react";
-import {MdDeleteForever, MdEdit} from "react-icons/md";
+import { useEffect, useState } from "react"; // Import useEffect
+import { MdDeleteForever, MdEdit } from "react-icons/md";
 
 export const SubCategoryList = ({ subcategory, editCategory }) => {
   const [subCategories, setSubCategories] = useState([]);
@@ -39,27 +39,32 @@ export const SubCategoryList = ({ subcategory, editCategory }) => {
     <div>
       {subCategories.map((item) => (
         <div key={item.id}>
-          <p className="text-dark ms-5 text-start ">{item.name}</p>
+          <p className="text-dark ms-5 text-start fs-5 fw-bold ">{item.name}</p>
           <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                position: "relative",
-                bottom: "25px",
-              }}
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              position: "relative",
+              bottom: "25px",
+            }}
           >
+            {/*<Toggle*/}
+            {/*    categoryStatus={category.status}*/}
+            {/*    categoryId={category.id}*/}
+            {/*    ontoggle={fetchCategories}*/}
+            {/*/>*/}
             <MdEdit
-                type='button'
-                size={18}
-                onClick={() => {
-                  editCategory(item.id, item.name, item.category_id);
-                }}
+              type="button"
+              size={18}
+              onClick={() => {
+                editCategory(item.id, item.name, item.category_id);
+              }}
             />
             <MdDeleteForever
-                type='button'
-                className="ms-4 pointer"
-                onClick={() => handleDelete(item.id)}
-                size={18}
+              type="button"
+              className="ms-4 "
+              onClick={() => handleDelete(item.id)}
+              size={18}
             />
           </div>
         </div>

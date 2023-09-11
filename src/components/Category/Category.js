@@ -1,9 +1,9 @@
-import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
-import {useEffect, useState} from "react";
-import {IoAddCircleSharp} from "react-icons/io5";
-import {MdDeleteForever, MdEdit} from "react-icons/md";
-import {CategoryPopup} from "../Modal/CategoryPopup.js";
-import {SubCategoryList} from "../SubCategory/SubCategory.js";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { useEffect, useState } from "react";
+import { IoAddCircleSharp } from "react-icons/io5";
+import { MdDeleteForever, MdEdit } from "react-icons/md";
+import { CategoryPopup } from "../Modal/CategoryPopup.js";
+import { SubCategoryList } from "../SubCategory/SubCategory.js";
 import "./Category.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Toggle from "../Toggle";
@@ -67,7 +67,7 @@ export const Category = () => {
   return (
     <>
       <div className="category-container">
-        <h1 className="title">Category</h1>
+        <h1 className="title mt-5">Category</h1>
         <div className="actions"></div>
         <CategoryPopup
           modalOpen={modalOpen}
@@ -87,7 +87,15 @@ export const Category = () => {
               <h1 className="headerCell">Categories</h1>
               <button className="addButton" onClick={() => setModalOpen(true)}>
                 <IoAddCircleSharp className="addButtonIcon" />
-                <p>Add Categories</p>
+                <p
+                  style={{
+                    marginTop: "10px",
+                    fontSize: "14px",
+                    alignItems: "center",
+                  }}
+                >
+                  Add Categories
+                </p>
               </button>
             </div>
 
@@ -140,28 +148,27 @@ export const Category = () => {
                   </Accordion>
                   <div style={{ display: "flex" }}>
                     <Toggle
-                        size={20}
-                        categoryStatus={category.status}
-                        categoryId={category.id}
-                        ontoggle={fetchCategories}
+                      categoryStatus={category.status}
+                      categoryId={category.id}
+                      ontoggle={fetchCategories}
                     />
                     <MdEdit
-                        type='button'
-                        onClick={() => {
-                          editCategory(
-                              category.id,
-                              category.name,
-                              category.subCategories.category_id
-                          );
-                        }}
-                        size={20}
-                        className="mt-3"
+                      type="button"
+                      onClick={() => {
+                        editCategory(
+                          category.id,
+                          category.name,
+                          category.subCategories.category_id
+                        );
+                      }}
+                      size={25}
+                      className="mt-3"
                     />
                     <MdDeleteForever
-                        type='button'
-                        size={20}
-                        className="mt-3 ms-3"
-                        onClick={() => deleteCategory(category.id)}
+                      type="button"
+                      size={25}
+                      className="mt-3 ms-3"
+                      onClick={() => deleteCategory(category.id)}
                     />
                   </div>
                 </div>
