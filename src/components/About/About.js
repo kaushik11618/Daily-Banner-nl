@@ -2,6 +2,6 @@ import React from 'react'
 
 export const About = () => {
   return (
-    <><h1 style={{marginTop: '100px'}}>About</h1></>
+    <><h1 className='mt-5'>About</h1></>
   )
 }
