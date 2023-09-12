@@ -1,4 +1,35 @@
+.fixed-container {
+  position: relative;
+  width: 100%;
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #fff;
+}
+
 .sidebarlayout {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  margin-top: 45px;
+}
+
+.sidebar {
+  position: fixed;
+  height: -webkit-fill-available;
+}
+
+.content-wrapper {
+  width: 100%;
+  padding: 20px;
+  transition: margin-left 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+  .content-wrapper {
+    margin-left: 0;
+  }
 }

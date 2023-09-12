@@ -1,11 +1,12 @@
-import React, {useState} from "react";
-import {toast} from "react-toastify";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 import "./ChangePassword.css";
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   const token = localStorage.getItem("token");
 
@@ -35,12 +36,12 @@ const ChangePassword = () => {
       toast.error("All fields are required");
       return;
     }
-    
+
     const requestBody = {
       current_password: currentPassword,
       new_password: newPassword,
     };
-  
+
     fetch("http://192.168.29.12:3000/api/auth/change-password", {
       method: "PATCH",
       headers: {
@@ -56,13 +57,12 @@ const ChangePassword = () => {
           setNewPassword("");
           setConfirmPassword("");
         } else {
-          console.error("Failed to change password");
+          toast.error("Failed to change password");
         }
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-    console.log(requestBody);
   };
 
   return (

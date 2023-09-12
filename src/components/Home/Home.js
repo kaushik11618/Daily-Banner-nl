@@ -1,21 +1,24 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router";
-import {About} from "../About/About.js";
-import {Category} from "../Category/Category";
-import {Sidebar} from "../Sidebar/Sidebar";
-import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
-import {Topbar} from "../Topbar/Topbar";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { About } from "../About/About.js";
+import { Category } from "../Category/Category";
+import { Sidebar } from "../Sidebar/Sidebar";
+import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
+import { Topbar } from "../Topbar/Topbar";
 import "./Home.css";
 import ChangePassword from "../ChangePassword/ChangePassword";
 
 export const Home = () => {
   const navigate = useNavigate();
-  const [activeContent, setActiveContent] = useState(window.location.pathname.replace("/", ""));
+  const [isOpen, setIsOpen] = useState(true);
+  const [activeContent, setActiveContent] = useState(
+    window.location.pathname.replace("/", "")
+  );
 
   useEffect(() => {
     if (
-        localStorage.getItem("token") === "" ||
-        localStorage.getItem("token") === null
+      localStorage.getItem("token") === "" ||
+      localStorage.getItem("token") === null
     ) {
       navigate("/");
     } else {
@@ -23,7 +26,7 @@ export const Home = () => {
         setActiveContent("category");
       }
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (activeContent === "category") {
@@ -38,22 +41,32 @@ export const Home = () => {
     if (activeContent === "password") {
       navigate("/password");
     }
-  }, [activeContent]);
+  }, [activeContent, navigate]);
 
   const handleLinkClick = (content) => {
     setActiveContent(content);
   };
 
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-      <>
-        <Topbar onLinkClick={handleLinkClick}/>
-        <div className="sidebarlayout">
-          <Sidebar onLinkClick={handleLinkClick}/>
-          {activeContent === "category" && <Category/>}
-          {activeContent === "about" && <About/>}
-          {activeContent === "profile" && <ProfileEdit/>}
-          {activeContent === "password" && <ChangePassword/>}
+    <>
+      <div className="fixed-container">
+        <div className="topbar">
+          <Topbar onLinkClick={handleLinkClick} />
         </div>
-      </>
+        <div className="sidebarlayout">
+          <Sidebar onLinkClick={handleLinkClick} isOpen={isOpen} toggleSidebar={toggleSidebar} />
+          <div className="content-wrapper" style={{ marginLeft: isOpen ? "280px" : "30px" }}>
+            {activeContent === "category" && <Category />}
+            {activeContent === "about" && <About />}
+            {activeContent === "profile" && <ProfileEdit />}
+            {activeContent === "password" && <ChangePassword />}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
