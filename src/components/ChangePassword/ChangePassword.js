@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { toast } from "react-toastify";
+import React, {useState} from "react";
+import {toast} from "react-toastify";
 import "./ChangePassword.css";
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
 
   const token = localStorage.getItem("token");
 
@@ -29,11 +28,11 @@ const ChangePassword = () => {
 
   const handlePasswordChange = () => {
     if (newPassword !== confirmPassword) {
-      setError("New password and confirm password do not match");
+      toast.error("New password and confirm password do not match");
       return;
     }
     if (!currentPassword || !newPassword || !confirmPassword) {
-      setError("All fields are required");
+      toast.error("All fields are required");
       return;
     }
     

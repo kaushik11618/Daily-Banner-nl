@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { About } from "../About/About.js";
-import { Category } from "../Category/Category";
-import { Sidebar } from "../Sidebar/Sidebar";
-import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
-import { Topbar } from "../Topbar/Topbar";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
+import {About} from "../About/About.js";
+import {Category} from "../Category/Category";
+import {Sidebar} from "../Sidebar/Sidebar";
+import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
+import {Topbar} from "../Topbar/Topbar";
 import "./Home.css";
 import ChangePassword from "../ChangePassword/ChangePassword";
 
 export const Home = () => {
   const navigate = useNavigate();
-  const [activeContent, setActiveContent] = useState(
-    window.location.pathname.replace("/", "")
-  );
+  const [activeContent, setActiveContent] = useState(window.location.pathname.replace("/", ""));
 
   useEffect(() => {
     if (
-      localStorage.getItem("token") === "" ||
-      localStorage.getItem("token") === null
+        localStorage.getItem("token") === "" ||
+        localStorage.getItem("token") === null
     ) {
       navigate("/");
     } else {
@@ -25,7 +23,7 @@ export const Home = () => {
         setActiveContent("category");
       }
     }
-  }, [navigate]);
+  }, []);
 
   useEffect(() => {
     if (activeContent === "category") {
@@ -40,30 +38,22 @@ export const Home = () => {
     if (activeContent === "password") {
       navigate("/password");
     }
-  }, [activeContent, navigate]);
+  }, [activeContent]);
 
   const handleLinkClick = (content) => {
     setActiveContent(content);
   };
 
   return (
-    <>
-      <div className="fixed-container">
-        <div className="topbar">
-          <Topbar onLinkClick={handleLinkClick} />
-        </div>
+      <>
+        <Topbar onLinkClick={handleLinkClick}/>
         <div className="sidebarlayout">
-          <div className="sidebar">
-            <Sidebar onLinkClick={handleLinkClick} />
-          </div>
-          <div className="content-wrapper">
-            {activeContent === "category" && <Category />}
-            {activeContent === "about" && <About />}
-            {activeContent === "profile" && <ProfileEdit />}
-            {activeContent === "password" && <ChangePassword />}
-          </div>
+          <Sidebar onLinkClick={handleLinkClick}/>
+          {activeContent === "category" && <Category/>}
+          {activeContent === "about" && <About/>}
+          {activeContent === "profile" && <ProfileEdit/>}
+          {activeContent === "password" && <ChangePassword/>}
         </div>
-      </div>
-    </>
+      </>
   );
 };

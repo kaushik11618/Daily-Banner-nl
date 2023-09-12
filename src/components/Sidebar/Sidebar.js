@@ -5,15 +5,15 @@ import {BiLogOut, BiSolidCategory} from "react-icons/bi";
 import {FcDebian} from "react-icons/fc";
 import {useNavigate} from "react-router";
 
-export const Sidebar = ({ onLinkClick }) => {
-  const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(true);
-  const toggle = () => setIsOpen(!isOpen);
+export const Sidebar = ({onLinkClick}) => {
+    const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(true);
+    const toggle = () => setIsOpen(!isOpen);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setIsOpen(false);
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 768) {
+                setIsOpen(false);
       } else {
         setIsOpen(true);
       }
@@ -46,23 +46,23 @@ export const Sidebar = ({ onLinkClick }) => {
   return (
     <>
       <div style={{ width: isOpen ? "280px" : "50px" }} className="sidebar ">
-        <div className="top_section">
-          <h1 style={{display: isOpen ? "block" : "none", marginTop: '80px'}} className="logo">
-              Dashboard
-          </h1>
-            <div style={{marginLeft: isOpen ? "30px" : "5px", cursor: "pointer", marginTop: '75px'}} className="bars">
-                <FaBars onClick={toggle}/>
-            </div>
-        </div>
-        <h2 onClick={() => onLinkClick("category")} className="link" role="button">
-          &nbsp; <BiSolidCategory style={{ fontSize: "30px" }} />
-          <strong
-            style={{
-              display: isOpen ? "block" : "none",
-              marginInlineStart: "50px",
-              position: "relative",
-              bottom: "25px",
-            }}
+          <div className="top_section">
+              <h1 style={{display: isOpen ? "block" : "none", marginTop: '80px'}} className="logo">
+                  Dashboard
+              </h1>
+              <div style={{marginLeft: isOpen ? "30px" : "5px", cursor: "pointer", marginTop: '80px'}} className="bars">
+                  <FaBars onClick={toggle}/>
+              </div>
+          </div>
+          <h2 onClick={() => onLinkClick("category")} className="link" role="button">
+              &nbsp; <BiSolidCategory style={{fontSize: "30px"}}/>
+              <strong
+                  style={{
+                      display: isOpen ? "block" : "none",
+                      marginInlineStart: "50px",
+                      position: "relative",
+                      bottom: "25px",
+                  }}
           >
             Category
           </strong>

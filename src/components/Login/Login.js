@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./Login.css";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import {Link, useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
+
 const Login = () => {
   const navigate = useNavigate("");
 
@@ -53,7 +54,7 @@ const Login = () => {
   return (
     <>
       <div className="login">
-        <div className=" h-100">
+        <div className=" ">
           <div className="row h-100 justify-content-center align-items-center">
             <form className="col-md-9" onSubmit={handleSubmit}>
               <div className="AppForm shadow-lg">
@@ -63,7 +64,7 @@ const Login = () => {
                       <h1 className="text-center mb-5 text-light">Login</h1>
                       <div className="form-group position-relative mb-4">
                         <input
-                          type="text"
+                            type="text"
                           className="form-control border-top-0 border-right-0 border-left-0 rounded-0 shadow-none"
                           id="username"
                           placeholder="Username"
