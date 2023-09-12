@@ -1,9 +1,14 @@
 import axios from "axios";
-import * as React from "react";
-import { useEffect, useState } from "react"; // Import useEffect
+import React from "react";
+import { useEffect, useState } from "react";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
+import Toggle from "../Toggle";
 
-export const SubCategoryList = ({ subcategory, editCategory }) => {
+export const SubCategoryList = ({
+  subcategory,
+  editCategory,
+  fetchCategories,
+}) => {
   const [subCategories, setSubCategories] = useState([]);
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -38,21 +43,28 @@ export const SubCategoryList = ({ subcategory, editCategory }) => {
   return (
     <div>
       {subCategories.map((item) => (
-        <div key={item.id}>
-          <p className="text-dark ms-5 text-start fs-5 fw-bold ">{item.name}</p>
+        <div
+          key={item.id}
+          style={{
+            alignItems: "center",
+            justifyContent: "space-between",
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <p className="text-dark text-start fs-5 fw-bold ">{item.name}</p>
           <div
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              position: "relative",
-              bottom: "25px",
+              alignItems: "center",
             }}
           >
-            {/*<Toggle*/}
-            {/*    categoryStatus={category.status}*/}
-            {/*    categoryId={category.id}*/}
-            {/*    ontoggle={fetchCategories}*/}
-            {/*/>*/}
+            <Toggle
+              categoryStatus={item.status}
+              categoryId={item.id}
+              ontoggle={fetchCategories}
+            />
             <MdEdit
               type="button"
               size={18}
@@ -62,7 +74,7 @@ export const SubCategoryList = ({ subcategory, editCategory }) => {
             />
             <MdDeleteForever
               type="button"
-              className="ms-4 "
+              className="ms-4"
               onClick={() => handleDelete(item.id)}
               size={18}
             />

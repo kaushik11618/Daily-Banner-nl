@@ -24,11 +24,12 @@
 
 .content-wrapper {
   width: 100%;
-  margin-left: 260px;
   padding: 20px;
+  transition: margin-left 0.3s;
 }
+
 @media screen and (max-width: 768px) {
   .content-wrapper {
-    margin-left: 30px;
+    margin-left: 0;
   }
 }

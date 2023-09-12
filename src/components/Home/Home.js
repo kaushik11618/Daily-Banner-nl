@@ -10,6 +10,7 @@ import ChangePassword from "../ChangePassword/ChangePassword";
 
 export const Home = () => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(true); 
   const [activeContent, setActiveContent] = useState(
     window.location.pathname.replace("/", "")
   );
@@ -46,6 +47,10 @@ export const Home = () => {
     setActiveContent(content);
   };
 
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
       <div className="fixed-container">
@@ -53,10 +58,8 @@ export const Home = () => {
           <Topbar onLinkClick={handleLinkClick} />
         </div>
         <div className="sidebarlayout">
-          <div className="sidebar">
-            <Sidebar onLinkClick={handleLinkClick} />
-          </div>
-          <div className="content-wrapper">
+          <Sidebar onLinkClick={handleLinkClick} isOpen={isOpen} toggleSidebar={toggleSidebar} />
+          <div className="content-wrapper" style={{ marginLeft: isOpen ? "280px" : "30px" }}>
             {activeContent === "category" && <Category />}
             {activeContent === "about" && <About />}
             {activeContent === "profile" && <ProfileEdit />}
