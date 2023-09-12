@@ -51,7 +51,7 @@ export const Home = () => {
     setIsOpen(!isOpen);
   };
 
-  return (
+  return (  
     <>
       <div className="fixed-container">
         <div className="topbar">

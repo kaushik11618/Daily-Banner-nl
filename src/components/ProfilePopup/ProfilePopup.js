@@ -1,7 +1,6 @@
 import React from "react";
 
 export const ProfilePopup = ({currentUser, onLinkClick, onClose}) => {
-    console.log(currentUser);
     return (
         <div style={{width: '300px'}}>
             <div

@@ -32,14 +32,13 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
       if (window.innerWidth <= 768) {
         toggleSidebar(false);
       } else {
-        toggleSidebar(true);
       }
     };
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [toggleSidebar]);
+  }, []);
 
   return (
     <div style={{ width: isOpen ? "280px" : "50px" }} className="sidebar">
