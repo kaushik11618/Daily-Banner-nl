@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BiLogOut, BiSolidCategory } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
 import { FcDebian } from "react-icons/fc";
@@ -8,6 +8,7 @@ import "./Sidebar.css";
 export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [userRole, setUserRole] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -30,16 +31,33 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        toggleSidebar(false);
-      } else {
+        toggleSidebar();
       }
     };
     window.addEventListener("resize", handleResize);
+
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch(
+          "http://192.168.29.12:3000/api/auth/profile",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const userData = await response.json();
+          setUserRole(userData.role);
+        }
+      } catch (error) {}
+    };
+    fetchUserProfile();
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
-
+  }, [token]);
   return (
     <div style={{ width: isOpen ? "280px" : "50px" }} className="sidebar">
       <div className="top_section">
@@ -57,6 +75,7 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
         onClick={() => onLinkClick("category")}
         className="link"
         role="button"
+        style={{ display: userRole === "admin" ? "block" : "none" }}
       >
         &nbsp; <BiSolidCategory style={{ fontSize: "30px" }} />
         <strong

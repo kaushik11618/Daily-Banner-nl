@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import axios from "axios";
-import {Link, useNavigate} from "react-router-dom";
-import {toast} from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate("");
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleEmailChange = (e) => {
@@ -44,10 +43,13 @@ const Login = () => {
       );
       localStorage.setItem("token", response.data.token);
       navigate("/home");
-      toast.success("Login successful!");
+      if (response.data.message) {
+        toast.success(response.data.message);
+      } else {
+        toast.error("Login failed. Please check your credentials.");
+      }
     } catch (err) {
-      console.log(err);
-      toast.error("Please check your credentials.");
+      toast.error("An error occurred while logging in.");
     }
   };
 
@@ -64,7 +66,7 @@ const Login = () => {
                       <h1 className="text-center mb-5 text-light">Login</h1>
                       <div className="form-group position-relative mb-4">
                         <input
-                            type="text"
+                          type="text"
                           className="form-control border-top-0 border-right-0 border-left-0 rounded-0 shadow-none"
                           id="username"
                           placeholder="Username"

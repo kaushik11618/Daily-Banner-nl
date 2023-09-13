@@ -1,78 +1,68 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
-*{
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap");
+* {
   padding: 0;
   margin: 0;
   outline: none;
 }
-body{
-  font-family: 'Roboto', sans-serif !important;
+body {
+  font-family: "Roboto", sans-serif !important;
   color: #3a3e42 !important;
 }
-.login{
+.login {
   margin-top: 250px;
 }
-.AppForm .AppFormLeft h1{
+.AppForm .AppFormLeft h1 {
   font-size: 35px;
 }
-.AppForm .AppFormLeft input:focus{
+.AppForm .AppFormLeft input:focus {
   border-color: #ced4da;
 }
-.AppForm .AppFormLeft input::placeholder{
+.AppForm .AppFormLeft input::placeholder {
   font-size: 15px;
 }
-.AppForm .AppFormLeft i{
+.AppForm .AppFormLeft i {
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
 }
-.AppForm .AppFormLeft a{
-  color: #3a3e42 ;
+.AppForm .AppFormLeft a {
+  color: #3a3e42;
 }
-.AppForm .AppFormLeft button{
-  background: linear-gradient(45deg,#8D334C,#CF6964);
+.AppForm .AppFormLeft button {
+  background: linear-gradient(45deg, #8d334c, #cf6964);
   border-radius: 30px;
 }
-.AppForm .AppFormLeft p span{
+.AppForm .AppFormLeft p span {
   color: #007bff;
 }
-.AppForm .AppFormRight{
-  background-image: url('https://i.ibb.co/tDLqQtj/bg.jpg');
+.AppForm .AppFormRight {
+  background-image: url("https://i.ibb.co/tDLqQtj/bg.jpg");
   height: 450px;
   background-size: cover;
   background-position: center;
 }
-.AppForm .AppFormRight:after{
+.AppForm .AppFormRight:after {
   content: "";
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg,#8D334C,#CF6964);
+  background: linear-gradient(45deg, #8d334c, #cf6964);
   opacity: 0.5;
 }
-.AppForm .AppFormRight h2{
+.AppForm .AppFormRight h2 {
   z-index: 1;
 }
-.AppForm .AppFormRight h2::after{
+.AppForm .AppFormRight h2::after {
   content: "";
   position: absolute;
   width: 100%;
   height: 2px;
   background-color: #fff;
   bottom: 0;
-  left:50%;
+  left: 50%;
   transform: translateX(-50%);
 }
-.AppForm .AppFormRight p{ 
+.AppForm .AppFormRight p {
   z-index: 1;
 }
-
-
-
-
-
-
-
-
-
-

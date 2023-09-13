@@ -1,9 +1,9 @@
-import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
-import {useEffect, useState} from "react";
-import {IoAddCircleSharp} from "react-icons/io5";
-import {MdDeleteForever, MdEdit} from "react-icons/md";
-import {CategoryPopup} from "../Modal/CategoryPopup.js";
-import {SubCategoryList} from "../SubCategory/SubCategory.js";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { useEffect, useState } from "react";
+import { IoAddCircleSharp } from "react-icons/io5";
+import { MdDeleteForever, MdEdit } from "react-icons/md";
+import { CategoryPopup } from "../Modal/CategoryPopup.js";
+import { SubCategoryList } from "../SubCategory/SubCategory.js";
 import "./Category.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Toggle from "../Toggle";

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import "./Register.css";
 export const Register = () => {
   const navigate = useNavigate("");
@@ -33,21 +34,28 @@ export const Register = () => {
     };
 
     try {
-      axios
-        .post("http://192.168.29.12:3000/api/auth/register", requestData, {
-          header: {
+      const response = await axios.post(
+        "http://192.168.29.12:3000/api/auth/register",
+        requestData,
+        {
+          headers: {
             "Content-Type": "application/json",
           },
-        })
-        .then((r) => {
-          navigate("/");
-        })
+        }
+      );
 
-        .catch((e) => {});
+      if (response.data.message) {
+        toast.success(response.data.message);
+        navigate("/");
+      } else {
+        toast.error("Registration failed. Please check your data.");
+      }
     } catch (err) {
       console.log(err);
+      toast.error("An error occurred during registration.");
     }
   };
+
   return (
     <>
       <div className="register">
