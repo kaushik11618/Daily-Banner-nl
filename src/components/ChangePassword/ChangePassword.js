@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { toast } from "react-toastify";
+import React, {useState} from "react";
+import {toast} from "react-toastify";
 import "./ChangePassword.css";
 
 const ChangePassword = () => {
