@@ -1,6 +1,6 @@
 import React from "react";
 
-export const ProfilePopup = ({ currentUser, onLinkClick, onClose }) => {
+export const ProfilePopup = ({ currentUser, onLinkClick, onClose ,fetchUserProfile}) => {
   return (
     <div style={{ width: "300px" }}>
       <div className="w-100 border mt-4 border-secondary rounded d-flex justify-content-center flex-column bg-dark text-light">
@@ -11,7 +11,6 @@ export const ProfilePopup = ({ currentUser, onLinkClick, onClose }) => {
             {currentUser.first_name} {currentUser.last_name}&nbsp;
           </strong>
           <h4 className="text-uppercased d-flex flex-column mt-4">
-            {" "}
             Here You Can <br />
             Edit Your Profile and <br />
             Change your Password

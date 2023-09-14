@@ -2,37 +2,9 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "./ProfileEdit.css";
 
-export const ProfileEdit = () => {
-  const [currentUser, setCurrentUser] = useState([]);
+export const ProfileEdit = ({ fetchUserProfile, currentUser,setCurrentUser}) => {
+  const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem("token");
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-          "http://192.168.29.12:3000/api/auth/profile",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (response.ok) {
-          const userData = await response.json();
-          setCurrentUser(userData);
-        } else {
-          console.error("Failed to fetch user data");
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    if (token) {
-      fetchUserData();
-    }
-  }, [token]);
   const upadateProfile = async (event) => {
     event.preventDefault();
     try {
@@ -59,10 +31,10 @@ export const ProfileEdit = () => {
           body: JSON.stringify(updatedUserData),
         }
       );
-
       if (response.ok) {
         const apiMessage = await response.json();
         toast.success(apiMessage.message);
+        fetchUserProfile();
       } else {
         const errorMessage = await response.json();
         toast.error(errorMessage.message);
@@ -72,11 +44,24 @@ export const ProfileEdit = () => {
       toast.error("An error occurred while updating your profile.");
     }
   };
+
   const getInput = (event) => {
     let { name, value } = event.target;
     let input = { [name]: value };
     setCurrentUser({ ...currentUser, ...input });
+
   };
+  useEffect(() => {
+    if (!currentUser && isLoading) {
+      fetchUserProfile();
+      setIsLoading(false);
+    }
+  }, [currentUser, fetchUserProfile, isLoading]);
+
+  if (!currentUser) {
+    return <div>Loading...</div>; 
+  }
+
   return (
     <>
       <div className=" container profile">

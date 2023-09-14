@@ -1,5 +1,4 @@
 import { Button, Modal } from "antd";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -19,26 +18,34 @@ export const CategoryPopup = ({
   useEffect(() => {
     async function fetchDropdownOptions() {
       try {
-        const response = await axios.get(
-          "http://192.168.29.12:3000/api/category",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        const response = await fetch("http://192.168.29.12:3000/api/category", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setDropdownOptions(data);
+
+          if (selectedCategory) {
+            setCategoryName(selectedCategory.name);
+            setIsEditingSubcategory(!!selectedCategory.category_id);
+            setSelectedOption(selectedCategory.category_id || "");
+          } else {
+            setCategoryName("");
+            setIsEditingSubcategory(false);
+            setSelectedOption("");
           }
-        );
-        setDropdownOptions(response.data);
-        if (selectedCategory) {
-          setCategoryName(selectedCategory.name);
-          setIsEditingSubcategory(!!selectedCategory.category_id);
-          setSelectedOption(selectedCategory.category_id || "");
         } else {
-          setCategoryName("");
-          setIsEditingSubcategory(false);
-          setSelectedOption("");
+          console.error("Error fetching dropdown options");
         }
       } catch (error) {
-        console.error("Error fetching dropdown options:", error);
+        console.error(
+          "An error occurred while fetching dropdown options:",
+          error
+        );
       }
     }
     if (modalOpen) {
@@ -58,33 +65,37 @@ export const CategoryPopup = ({
 
     try {
       if (selectedCategory) {
-        const response = await axios.patch(
+        const response = await fetch(
           `http://192.168.29.12:3000/api/category/${selectedCategory.id}`,
-          requestData,
           {
+            method: "PATCH",
             headers: {
               Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
             },
+            body: JSON.stringify(requestData),
           }
         );
+
         if (response.status === 200) {
-          const apiMessage = response.data.message;
+          const data = await response.json();
+          const apiMessage = data.message;
           toast.success(apiMessage);
           setSelectedCategory("");
         }
       } else {
-        const response = await axios.post(
-          "http://192.168.29.12:3000/api/category",
-          requestData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch("http://192.168.29.12:3000/api/category", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestData),
+        });
+
         if (response.status === 201) {
-          console.log(response.data.message);
-          toast.success(response.data.message);
+          const data = await response.json();
+          toast.success(data.message);
         }
       }
       setCategoryName("");
