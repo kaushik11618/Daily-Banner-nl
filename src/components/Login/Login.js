@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./Login.css";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate("");
@@ -32,25 +31,25 @@ const Login = () => {
     };
 
     try {
-      const response = await axios.post(
-        "http://192.168.29.12:3000/api/auth/login",
-        loginData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const response = await fetch("http://192.168.29.12:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+        navigate("/home");
+        if (data.message) {
+          toast.success(data.message);
+        } else {
+          toast.error("Login failed. Please check your credentials.");
         }
-      );
-      localStorage.setItem("token", response.data.token);
-      navigate("/home");
-      if (response.data.message) {
-        toast.success(response.data.message);
       } else {
-        toast.error("Login failed. Please check your credentials.");
       }
-    } catch (err) {
-      toast.error("An error occurred while logging in.");
-    }
+    } catch (err) {}
   };
 
   return (

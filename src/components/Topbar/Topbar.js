@@ -1,41 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ProfilePopup } from "../ProfilePopup/ProfilePopup";
 import "./Topbar.css";
 
-export const Topbar = ({ onLinkClick }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+export const Topbar = ({ onLinkClick ,currentUser}) => {
   const [popupVisible, setPopupVisible] = useState(false);
   const displayPopup = () => {
     setPopupVisible(!popupVisible);
   };
-  const token = localStorage.getItem("token");
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-          "http://192.168.29.12:3000/api/auth/profile",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (response.ok) {
-          const userData = await response.json();
-          setCurrentUser(userData);
-        } else {
-          console.error("Failed to fetch user data");
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-    if (token) {
-      fetchUserData();
-    }
-  }, [token]);
 
   return (
     <nav>

@@ -6,7 +6,7 @@ import "./App.css";
 function App() {
   return (
     <div className="App">
-      <ToastContainer />
+      <ToastContainer className="toast-message" />
       <RouterProvider router={router} />
     </div>
   );

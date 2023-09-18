@@ -34,24 +34,29 @@ export const Register = () => {
     };
 
     try {
-      const response = await axios.post(
+      const response = await fetch(
         "http://192.168.29.12:3000/api/auth/register",
-        requestData,
         {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify(requestData),
         }
       );
 
-      if (response.data.message) {
-        toast.success(response.data.message);
-        navigate("/");
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data.message) {
+          toast.success(data.message);
+          navigate("/");
+        } else {
+          toast.error("Registration failed. Please check your data.");
+        }
       } else {
-        toast.error("Registration failed. Please check your data.");
       }
     } catch (err) {
-      console.log(err);
       toast.error("An error occurred during registration.");
     }
   };

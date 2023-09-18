@@ -1,53 +1,60 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router";
-import {About} from "../About/About.js";
-import {Category} from "../Category/Category";
-import {Sidebar} from "../Sidebar/Sidebar";
-import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
-import {Topbar} from "../Topbar/Topbar";
-import "./Home.css";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { About } from "../About/About.js";
+import { Category } from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
-
+import Comapny from "../Company/Comapny.js";
+import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
+import { Sidebar } from "../Sidebar/Sidebar";
+import { Topbar } from "../Topbar/Topbar";
+import "./Home.css";
+let isMounted = true;
 export const Home = () => {
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
   const [activeContent, setActiveContent] = useState(
     window.location.pathname.replace("/", "")
   );
   const [userRole, setUserRole] = useState("");
-
-  useEffect(() => {
+  const [isLoading, setIsLoading] = useState(true);
+  const fetchUserProfile = async () => {
     const token = localStorage.getItem("token");
 
-    const fetchUserProfile = async () => {
-      try {
-        const response = await fetch(
-          "http://192.168.29.12:3000/api/auth/profile",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+    try {
+      const response = await fetch(
+        "http://192.168.29.12:3000/api/auth/profile",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (isMounted) {
         if (response.ok) {
           const userData = await response.json();
           setUserRole(userData.role);
+          setCurrentUser(userData);
         }
-      } catch (error) {}
-    };
-
-    fetchUserProfile();
-  }, []);
-
+        setIsLoading(false);
+      }
+    } catch (error) {
+      if (isMounted) {
+        setIsLoading(false);
+      }
+    }
+  };
   useEffect(() => {
     if (activeContent === "category") {
       if (userRole === "admin") {
         navigate("/category");
       } else {
-        // If the user is not an admin, navigate to "/home" and avoid rendering "Category."
         navigate("/home");
-        return;
+      }
+    } else if (activeContent === "company") {
+      if (userRole === "user") {
+        navigate("/company");
       }
     } else if (activeContent === "about") {
       navigate("/about");
@@ -56,7 +63,9 @@ export const Home = () => {
     } else if (activeContent === "password") {
       navigate("/password");
     }
-  }, [activeContent, navigate, userRole]);
+
+    fetchUserProfile();
+  }, [activeContent, navigate]);
 
   const handleLinkClick = (content) => {
     setActiveContent(content);
@@ -70,7 +79,7 @@ export const Home = () => {
     <>
       <div className="fixed-container">
         <div className="topbar">
-          <Topbar onLinkClick={handleLinkClick} />
+          <Topbar onLinkClick={handleLinkClick} currentUser={currentUser} />
         </div>
         <div className="sidebarlayout">
           <Sidebar
@@ -85,8 +94,15 @@ export const Home = () => {
             {userRole === "admin" && activeContent === "category" && (
               <Category />
             )}
+            {userRole === "user" && activeContent === "company" && <Comapny />}
             {activeContent === "about" && <About />}
-            {activeContent === "profile" && <ProfileEdit />}
+            {activeContent === "profile" && (
+              <ProfileEdit
+                fetchUserProfile={fetchUserProfile}
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+              />
+            )}
             {activeContent === "password" && <ChangePassword />}
           </div>
         </div>
@@ -94,4 +110,3 @@ export const Home = () => {
     </>
   );
 };
-
