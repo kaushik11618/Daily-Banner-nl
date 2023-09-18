@@ -1,7 +1,6 @@
 import axios from "axios";
-import React from "react";
-import { useEffect, useState } from "react";
-import { MdDeleteForever, MdEdit } from "react-icons/md";
+import React, {useEffect, useState} from "react";
+import {MdDeleteForever, MdEdit} from "react-icons/md";
 import Toggle from "../Toggle";
 
 export const SubCategoryList = ({
@@ -22,18 +21,18 @@ export const SubCategoryList = ({
     if (conformDelete) {
       try {
         await axios.delete(
-          `http://192.168.29.12:3000/api/category/${subCategoryId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+            `http://192.168.29.12:3000/api/category/${subCategoryId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
         );
-        setSubCategories((prevSubCategories) =>
-          prevSubCategories.filter(
-            (subCategory) => subCategory.id !== subCategoryId
-          )
-        );
+        // setSubCategories((prevSubCategories) =>
+        //   prevSubCategories.filter(
+        //     (subCategory) => subCategory.id !== subCategoryId
+        //   )
+        // );
       } catch (error) {
         console.error("Error deleting sub-category:", error);
       }

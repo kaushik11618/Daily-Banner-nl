@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { About } from "../About/About.js";
-import { Category } from "../Category/Category";
-import { Sidebar } from "../Sidebar/Sidebar";
-import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
-import { Topbar } from "../Topbar/Topbar";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
+import {About} from "../About/About.js";
+import {Category} from "../Category/Category";
+import {Sidebar} from "../Sidebar/Sidebar";
+import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
+import {Topbar} from "../Topbar/Topbar";
 import "./Home.css";
 import ChangePassword from "../ChangePassword/ChangePassword";
 
@@ -94,3 +94,4 @@ export const Home = () => {
     </>
   );
 };
+
