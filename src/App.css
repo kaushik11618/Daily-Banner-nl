@@ -2,3 +2,7 @@
 p {
   color: black;
 }
+.toast-message {
+  color: #fff;
+  font-size: 16px;
+}

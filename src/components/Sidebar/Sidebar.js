@@ -71,24 +71,44 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
           <FaBars onClick={toggleSidebar} />
         </div>
       </div>
-      <h2
-        onClick={() => onLinkClick("category")}
-        className="link"
-        role="button"
-        style={{ display: userRole === "admin" ? "block" : "none" }}
-      >
-        &nbsp; <BiSolidCategory style={{ fontSize: "30px" }} />
-        <strong
-          style={{
-            display: isOpen ? "block" : "none",
-            marginInlineStart: "50px",
-            position: "relative",
-            bottom: "25px",
-          }}
+      {userRole === "admin" ? (
+        <h2
+          onClick={() => onLinkClick("category")}
+          className="link"
+          role="button"
+          style={{ display: userRole === "admin" ? "block" : "none" }}
         >
-          Category
-        </strong>
-      </h2>
+          &nbsp; <BiSolidCategory style={{ fontSize: "30px" }} />
+          <strong
+            style={{
+              display: isOpen ? "block" : "none",
+              marginInlineStart: "50px",
+              position: "relative",
+              bottom: "25px",
+            }}
+          >
+            Category
+          </strong>
+        </h2>
+      ) : (
+        <h2
+          onClick={() => onLinkClick("company")}
+          className="link"
+          role="button"
+        >
+          &nbsp; <BiSolidCategory style={{ fontSize: "30px" }} />
+          <strong
+            style={{
+              display: isOpen ? "block" : "none",
+              marginInlineStart: "50px",
+              position: "relative",
+              bottom: "25px",
+            }}
+          >
+            company
+          </strong>
+        </h2>
+      )}
       <h2 onClick={() => onLinkClick("about")} className="link" role="button">
         &nbsp; <FcDebian style={{ fontSize: "30px" }} className="ct" />
         <strong

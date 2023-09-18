@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { About } from "../About/About.js";
 import { Category } from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
+import Comapny from "../Company/Comapny.js";
 import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
 import { Sidebar } from "../Sidebar/Sidebar";
 import { Topbar } from "../Topbar/Topbar";
@@ -45,26 +46,26 @@ export const Home = () => {
     }
   };
   useEffect(() => {
-    if (!isLoading) {
-      if (activeContent === "category") {
-        if (userRole === "admin") {
-          navigate("/category");
-        } else {
-          navigate("/home");
-        }
-      } else if (activeContent === "about") {
-        navigate("/about");
-      } else if (activeContent === "profile") {
-        navigate("/profile");
-      } else if (activeContent === "password") {
-        navigate("/password");
+    if (activeContent === "category") {
+      if (userRole === "admin") {
+        navigate("/category");
+      } else {
+        navigate("/home");
       }
+    } else if (activeContent === "company") {
+      if (userRole === "user") {
+        navigate("/company");
+      }
+    } else if (activeContent === "about") {
+      navigate("/about");
+    } else if (activeContent === "profile") {
+      navigate("/profile");
+    } else if (activeContent === "password") {
+      navigate("/password");
     }
+
     fetchUserProfile();
-    return () => {
-      isMounted = false;
-    };
-  }, [activeContent, navigate, isLoading]);
+  }, [activeContent, navigate]);
 
   const handleLinkClick = (content) => {
     setActiveContent(content);
@@ -93,6 +94,7 @@ export const Home = () => {
             {userRole === "admin" && activeContent === "category" && (
               <Category />
             )}
+            {userRole === "user" && activeContent === "company" && <Comapny />}
             {activeContent === "about" && <About />}
             {activeContent === "profile" && (
               <ProfileEdit

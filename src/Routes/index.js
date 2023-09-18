@@ -9,6 +9,7 @@ export const router = createBrowserRouter([
   { path: "/register", element: <Register /> },
   { path: "/home/", element: <Home /> },
   { path: "/category", element: <Home /> },
+  { path: "/company", element: <Home /> },
   { path: "/about", element: <Home /> },
   { path: "/profile", element: <Home /> },
   {path: "/password", element: <Home/>}
