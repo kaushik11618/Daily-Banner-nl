@@ -1,4 +1,3 @@
-export default Comapny;
 import React, {useEffect, useState} from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -8,7 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from 'axios';
 import {MdDeleteForever} from "react-icons/md";
 
-export default function Company() {
+export default function Company({onLinkClick}) {
     const [companyData, setCompanyData] = useState([]);
 
     const token = localStorage.getItem("token");
@@ -54,6 +53,9 @@ export default function Company() {
 
     return (
         <>
+            <button onClick={() => onLinkClick('addCompany')}>
+                Add
+            </button>
             <div>
                 {companyData.map((company, index) => (
                     <div key={index}>
