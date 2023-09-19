@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router";
-import {About} from "../About/About.js";
-import {Category} from "../Category/Category";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { About } from "../About/About.js";
+import { Category } from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
-import Company from "../Company/Company.js";
-import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
-import {Sidebar} from "../Sidebar/Sidebar";
-import {Topbar} from "../Topbar/Topbar";
+import Comapny from "../Company/Comapny.js";
+import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
+import { Sidebar } from "../Sidebar/Sidebar";
+import { Topbar } from "../Topbar/Topbar";
 import "./Home.css";
-
 let isMounted = true;
 export const Home = () => {
   const navigate = useNavigate();
@@ -75,6 +74,10 @@ export const Home = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+  const handleAddCompanySuccess = () => {
+    setActiveContent("company"); // Change the active content to "company"
+    navigate("/company"); // Navigate to the "company" page
+  };
 
   return (
     <>
@@ -93,10 +96,12 @@ export const Home = () => {
             style={{ marginLeft: isOpen ? "280px" : "30px" }}
           >
             {userRole === "admin" && activeContent === "category" && (
-                <Category/>
+              <Category />
             )}
-            {userRole === "user" && activeContent === "company" && <Company/>}
-            {activeContent === "about" && <About/>}
+            {userRole === "user" && activeContent === "company" && (
+              <Comapny onLinkClick={handleLinkClick}/>
+            )}
+            {activeContent === "about" && <About />}
             {activeContent === "profile" && (
               <ProfileEdit
                 fetchUserProfile={fetchUserProfile}
@@ -105,6 +110,7 @@ export const Home = () => {
               />
             )}
             {activeContent === "password" && <ChangePassword />}
+            {activeContent === "addCompany" && <AddCompany  handleAddCompanySuccess={handleAddCompanySuccess} />}
           </div>
         </div>
       </div>
