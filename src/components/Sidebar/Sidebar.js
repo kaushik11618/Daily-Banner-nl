@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { BiLogOut, BiSolidCategory } from "react-icons/bi";
-import { FaBars } from "react-icons/fa";
-import { FcDebian } from "react-icons/fc";
-import { useNavigate } from "react-router";
+import React, {useEffect, useState} from "react";
+import {BiLogOut, BiSolidCategory} from "react-icons/bi";
+import {FaBars} from "react-icons/fa";
+import {FcDebian} from "react-icons/fc";
+import {useNavigate} from "react-router";
 import "./Sidebar.css";
 
 export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
@@ -105,7 +105,7 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
               bottom: "25px",
             }}
           >
-            company
+            Company
           </strong>
         </h2>
       )}

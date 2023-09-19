@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { About } from "../About/About.js";
-import { Category } from "../Category/Category";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
+import {About} from "../About/About.js";
+import {Category} from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
-import Comapny from "../Company/Comapny.js";
-import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
-import { Sidebar } from "../Sidebar/Sidebar";
-import { Topbar } from "../Topbar/Topbar";
+import Company from "../Company/Company.js";
+import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
+import {Sidebar} from "../Sidebar/Sidebar";
+import {Topbar} from "../Topbar/Topbar";
 import "./Home.css";
+
 let isMounted = true;
 export const Home = () => {
   const navigate = useNavigate();
@@ -92,10 +93,10 @@ export const Home = () => {
             style={{ marginLeft: isOpen ? "280px" : "30px" }}
           >
             {userRole === "admin" && activeContent === "category" && (
-              <Category />
+                <Category/>
             )}
-            {userRole === "user" && activeContent === "company" && <Comapny />}
-            {activeContent === "about" && <About />}
+            {userRole === "user" && activeContent === "company" && <Company/>}
+            {activeContent === "about" && <About/>}
             {activeContent === "profile" && (
               <ProfileEdit
                 fetchUserProfile={fetchUserProfile}

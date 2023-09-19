@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 import "./Login.css";
 
 const Login = () => {
@@ -23,6 +23,7 @@ const Login = () => {
       navigate("/home");
     }
   }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const loginData = {
