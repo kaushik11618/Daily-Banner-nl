@@ -1,62 +1,67 @@
-import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "./Register.css";
-export const Register = () => {
-  const navigate = useNavigate("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+const AddCompany = ({ handleAddCompanySuccess}) => {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [companyname, setCompanyname] = useState("");
-  const [linkedin, setLinkedin] = useState("");
-  const [instagram, setInstagram] = useState("");
-  const [twitter, setTwitter] = useState("");
-  const [facebook, setFacebook] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pinCode, setPinCode] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [linkedin, setLinkedin] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [image, setImage] = useState(null);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const requestData = {
-      first_name: firstname,
-      last_name: lastname,
-      email: email,
-      password: password,
-      address: address,
-      company_name: companyname,
-      phoneNumber: parseInt(phonenumber),
-      instagram: instagram || null,
-      linkedin: linkedin || null,
-      facebook: facebook || null,
-      twitter: twitter || null,
-    };
+  const handleImageChange = async (e) => {
+    e.preventDefault();
+    const selectedImage = e.target.files[0]; 
+    setImage(selectedImage);
+  };
+
+  const submitDataToAPI = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("phoneNumber", parseInt(phonenumber));
+    formData.append("state", state);
+    formData.append("city", city);
+    formData.append("image", image);
+    formData.append("pinCode", parseInt(pinCode));
+    formData.append("email", email);
+    formData.append("address", address);
+    formData.append("instagram", instagram);
+    formData.append("linkedin", linkedin);
+    formData.append("facebook", facebook);
+    formData.append("twitter", twitter);
 
     try {
       const response = await fetch(
-        "http://192.168.29.12:3000/api/auth/register",
+        "http://192.168.29.12:3000/api/company/add",
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(requestData),
+          body: formData,
         }
       );
       if (response.ok) {
         const data = await response.json();
-
         if (data.message) {
           toast.success(data.message);
-          navigate("/");
+          handleAddCompanySuccess()
         } else {
           toast.error("Registration failed. Please check your data.");
         }
       } else {
       }
-    } catch (err) {
-      toast.error("An error occurred during registration.");
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -64,27 +69,17 @@ export const Register = () => {
     <>
       <div className="register">
         <div className="register-container">
-          <div className="register-title">Registration</div>
+          <div className="register-title">Company Registration</div>
           <div className="content">
-            <form className="register-form" onSubmit={handleSubmit}>
+            <form className="register-form" onSubmit={submitDataToAPI}>
               <div className="user-details">
                 <div className="input-box">
-                  <span className="details">First Name</span>
+                  <span className="details">Name</span>
                   <input
                     type="text"
-                    placeholder="First Name"
-                    value={firstname}
-                    onChange={(e) => setFirstname(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">Last Name</span>
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    value={lastname}
-                    onChange={(e) => setLastname(e.target.value)}
+                    placeholder="company Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                   />
                 </div>
@@ -99,22 +94,32 @@ export const Register = () => {
                   />
                 </div>
                 <div className="input-box">
-                  <span className="details">Password</span>
+                  <span className="details">state</span>
                   <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    type="state"
+                    placeholder="state"
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}
                     required
                   />
                 </div>
                 <div className="input-box">
-                  <span className="details">Company Name</span>
+                  <span className="details">Pincode</span>
+                  <input
+                    type="number"
+                    placeholder="Pincde"
+                    value={pinCode}
+                    onChange={(e) => setPinCode(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="input-box">
+                  <span className="details">City</span>
                   <input
                     type="text"
-                    placeholder="Company Name"
-                    value={companyname}
-                    onChange={(e) => setCompanyname(e.target.value)}
+                    placeholder="City"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
                     required
                   />
                 </div>
@@ -164,6 +169,14 @@ export const Register = () => {
                     onChange={(e) => setTwitter(e.target.value)}
                   />
                 </div>
+                <div className="input-box">
+                  <span className="details">Twitter ID</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange} 
+                  />
+                </div>
               </div>
               <div className="gender-details">
                 <div className="input-box">
@@ -173,7 +186,7 @@ export const Register = () => {
                     placeholder="Address"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    required
+                    // required
                   />
                 </div>
               </div>
@@ -187,3 +200,5 @@ export const Register = () => {
     </>
   );
 };
+
+export default AddCompany;

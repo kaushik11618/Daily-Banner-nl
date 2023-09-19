@@ -1,11 +1,20 @@
-import React from 'react'
+import React from "react";
+import { Navigate, useNavigate } from "react-router";
 
-const Comapny = () => {
+const Comapny = ({ onLinkClick,handleAddCompanySuccess }) => {
+  const navigate = useNavigate();
+
   return (
-    <div>
-      hello
+    <div className="company">
+      <button
+        onClick={() => {
+          onLinkClick("addCompany");
+        }}
+      >
+        Add Companay
+      </button>
     </div>
-  )
-}
+  );
+};
 
-export default Comapny
+export default Comapny;

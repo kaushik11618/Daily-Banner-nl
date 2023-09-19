@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { About } from "../About/About.js";
 import { Category } from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
+import AddCompany from "../Company/AddCompany.js";
 import Comapny from "../Company/Comapny.js";
 import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
 import { Sidebar } from "../Sidebar/Sidebar";
@@ -62,6 +63,8 @@ export const Home = () => {
       navigate("/profile");
     } else if (activeContent === "password") {
       navigate("/password");
+    } else if (activeContent === "addCompany") {
+      navigate("/addCompany");
     }
 
     fetchUserProfile();
@@ -73,6 +76,10 @@ export const Home = () => {
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+  const handleAddCompanySuccess = () => {
+    setActiveContent("company"); // Change the active content to "company"
+    navigate("/company"); // Navigate to the "company" page
   };
 
   return (
@@ -94,7 +101,9 @@ export const Home = () => {
             {userRole === "admin" && activeContent === "category" && (
               <Category />
             )}
-            {userRole === "user" && activeContent === "company" && <Comapny />}
+            {userRole === "user" && activeContent === "company" && (
+              <Comapny onLinkClick={handleLinkClick}/>
+            )}
             {activeContent === "about" && <About />}
             {activeContent === "profile" && (
               <ProfileEdit
@@ -104,6 +113,7 @@ export const Home = () => {
               />
             )}
             {activeContent === "password" && <ChangePassword />}
+            {activeContent === "addCompany" && <AddCompany  handleAddCompanySuccess={handleAddCompanySuccess} />}
           </div>
         </div>
       </div>

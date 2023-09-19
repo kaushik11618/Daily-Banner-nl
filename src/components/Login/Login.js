@@ -15,14 +15,14 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  useEffect(() => {
-    if (
-      localStorage.getItem("token") !== "" &&
-      localStorage.getItem("token") !== null
-    ) {
-      navigate("/home");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (
+  //     localStorage.getItem("token") !== "" &&
+  //     localStorage.getItem("token") !== null
+  //   ) {
+  //     navigate("/home");
+  //   }
+  // }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const loginData = {
