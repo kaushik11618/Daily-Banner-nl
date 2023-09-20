@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {BiLogOut, BiSolidCategory} from "react-icons/bi";
-import {FaBars} from "react-icons/fa";
-import {FcDebian} from "react-icons/fc";
-import {useNavigate} from "react-router";
+import React, { useEffect, useState } from "react";
+import { BiLogOut, BiSolidCategory } from "react-icons/bi";
+import { FaBars } from "react-icons/fa";
+import { FcDebian } from "react-icons/fc";
+import { useNavigate } from "react-router";
 import "./Sidebar.css";
 
 export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
@@ -108,6 +108,23 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
             Company
           </strong>
         </h2>
+      )}
+      {userRole === "admin" ? (
+        <h2 onClick={() => onLinkClick("user")} className="link" role="button">
+          &nbsp; <FcDebian style={{ fontSize: "30px" }} className="ct" />
+          <strong
+            style={{
+              display: isOpen ? "block" : "none",
+              marginInlineStart: "50px",
+              position: "relative",
+              bottom: "25px",
+            }}
+          >
+            user
+          </strong>
+        </h2>
+      ) : (
+        <></>
       )}
       <h2 onClick={() => onLinkClick("about")} className="link" role="button">
         &nbsp; <FcDebian style={{ fontSize: "30px" }} className="ct" />

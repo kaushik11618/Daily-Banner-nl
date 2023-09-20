@@ -3,12 +3,13 @@ import { useNavigate } from "react-router";
 import { About } from "../About/About.js";
 import { Category } from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
+import AddCompany from "../Company/AddCompany";
+import Company from "../Company/Company";
 import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
 import { Sidebar } from "../Sidebar/Sidebar";
 import { Topbar } from "../Topbar/Topbar";
+import { UserMenu } from "../UserMenu";
 import "./Home.css";
-import Company from "../Company/Company";
-import AddCompany from "../Company/AddCompany";
 
 let isMounted = true;
 export const Home = () => {
@@ -54,6 +55,10 @@ export const Home = () => {
       } else {
         navigate("/home");
       }
+    } else if (activeContent === "user") {
+      if (userRole === "admin") {
+        navigate("/user");
+      }
     } else if (activeContent === "company") {
       if (userRole === "user") {
         navigate("/company");
@@ -80,8 +85,8 @@ export const Home = () => {
     setIsOpen(!isOpen);
   };
   const handleAddCompanySuccess = () => {
-    setActiveContent("company"); 
-    navigate("/company"); 
+    setActiveContent("company");
+    navigate("/company");
   };
 
   return (
@@ -103,6 +108,7 @@ export const Home = () => {
             {userRole === "admin" && activeContent === "category" && (
               <Category />
             )}
+            {userRole === "admin" && activeContent === "user" && <UserMenu />}
             {userRole === "user" && activeContent === "company" && (
               <Company onLinkClick={handleLinkClick} />
             )}
@@ -116,10 +122,13 @@ export const Home = () => {
             )}
             {activeContent === "password" && <ChangePassword />}
             {activeContent === "addCompany" && (
-              <AddCompany  handleAddCompanySuccess={handleAddCompanySuccess}/>
+              <AddCompany handleAddCompanySuccess={handleAddCompanySuccess} />
             )}
             {activeContent.startsWith("editCompany") && (
-              <AddCompany  handleAddCompanySuccess={handleAddCompanySuccess} editCompanyId={activeContent.split("/")[1]} />
+              <AddCompany
+                handleAddCompanySuccess={handleAddCompanySuccess}
+                editCompanyId={activeContent.split("/")[1]}
+              />
             )}
           </div>
         </div>
