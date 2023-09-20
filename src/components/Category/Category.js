@@ -98,7 +98,6 @@ export const Category = () => {
                 </p>
               </button>
             </div>
-
             <div
               style={{
                 display: "flex",
@@ -152,7 +151,7 @@ export const Category = () => {
                       categoryStatus={category.status}
                       toggleID={category.id}
                       ontoggle={fetchCategories}
-                      toggleType="category" 
+                      toggleType="category"
                     />
                     <MdEdit
                       type="button"

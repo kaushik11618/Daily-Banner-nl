@@ -12,7 +12,7 @@ function Toggle({ categoryStatus, toggleID, ontoggle, toggleType }) {
 
     let newStatus = categoryStatus === "active" ? "inactive" : "active";
     let confirmationMessage = `Are you sure you want to ${
-      newStatus === "active" ? "activate" : "deactivate"
+      newStatus === "active" ? "Activate" : "Inactivate"
     }?`;
 
     const userConfirmed = window.confirm(confirmationMessage);
