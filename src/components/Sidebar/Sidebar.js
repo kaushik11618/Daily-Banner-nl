@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {BiLogOut, BiSolidCategory} from "react-icons/bi";
+import {BiLogOut, BiSolidCategory, BiSolidUserPlus} from "react-icons/bi";
 import {FaBars} from "react-icons/fa";
-import {FcDebian} from "react-icons/fc";
+import {FcAbout} from "react-icons/fc";
 import {useNavigate} from "react-router";
 import "./Sidebar.css";
 
 export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const [userRole, setUserRole] = useState("");
+    const [userRole, setUserRole] = useState("");
+    const [showData, setShowData] = useState()
 
   const handleLogout = async () => {
     try {
@@ -58,6 +59,7 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, [token]);
+
   return (
     <div style={{ width: isOpen ? "280px" : "50px" }} className="sidebar">
       <div className="top_section">
@@ -99,28 +101,50 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
           &nbsp; <BiSolidCategory style={{ fontSize: "30px" }} />
           <strong
             style={{
-              display: isOpen ? "block" : "none",
-              marginInlineStart: "50px",
-              position: "relative",
-              bottom: "25px",
+                display: isOpen ? "block" : "none",
+                marginInlineStart: "50px",
+                position: "relative",
+                bottom: "25px",
             }}
           >
-            Company
+              Company
           </strong>
         </h2>
       )}
-      <h2 onClick={() => onLinkClick("about")} className="link" role="button">
-        &nbsp; <FcDebian style={{ fontSize: "30px" }} className="ct" />
-        <strong
-          style={{
-            display: isOpen ? "block" : "none",
-            marginInlineStart: "50px",
-            position: "relative",
-            bottom: "25px",
-          }}
-        >
-          About
-        </strong>
+        {userRole === 'admin' ? (
+            <h2
+                onClick={() => onLinkClick("user")}
+                className="link"
+                role="button"
+                style={{display: userRole === "admin" ? "block" : "none"}}
+            >
+                &nbsp; <BiSolidUserPlus style={{fontSize: "30px"}}/>
+                <strong
+                    style={{
+                        display: isOpen ? "block" : "none",
+                        marginInlineStart: "50px",
+                        position: "relative",
+                        bottom: "25px",
+                    }}
+                >
+                    UserMenu
+                </strong>
+            </h2>
+        ) : (
+            <></>
+        )}
+        <h2 onClick={() => onLinkClick("about")} className="link" role="button">
+            &nbsp; <FcAbout style={{fontSize: "30px"}} className="ct"/>
+            <strong
+                style={{
+                    display: isOpen ? "block" : "none",
+                    marginInlineStart: "50px",
+                    position: "relative",
+                    bottom: "25px",
+                }}
+            >
+                About
+            </strong>
       </h2>
       <h2 role="button">
         &nbsp;{" "}

@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { About } from "../About/About.js";
-import { Category } from "../Category/Category";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
+import {About} from "../About/About.js";
+import {Category} from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
-import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
-import { Sidebar } from "../Sidebar/Sidebar";
-import { Topbar } from "../Topbar/Topbar";
+import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
+import {Sidebar} from "../Sidebar/Sidebar";
+import {Topbar} from "../Topbar/Topbar";
 import "./Home.css";
 import Company from "../Company/Company";
 import AddCompany from "../Company/AddCompany";
+import UserMenu from "../UserMenu";
 
 let isMounted = true;
 export const Home = () => {
@@ -54,6 +55,10 @@ export const Home = () => {
       } else {
         navigate("/home");
       }
+    } else if (activeContent === "user") {
+      if (userRole === "admin") {
+        navigate("/user");
+      }
     } else if (activeContent === "company") {
       if (userRole === "user") {
         navigate("/company");
@@ -80,8 +85,8 @@ export const Home = () => {
     setIsOpen(!isOpen);
   };
   const handleAddCompanySuccess = () => {
-    setActiveContent("company"); 
-    navigate("/company"); 
+    setActiveContent("company");
+    navigate("/company");
   };
 
   return (
@@ -92,27 +97,30 @@ export const Home = () => {
         </div>
         <div className="sidebarlayout">
           <Sidebar
-            onLinkClick={handleLinkClick}
-            isOpen={isOpen}
-            toggleSidebar={toggleSidebar}
+              onLinkClick={handleLinkClick}
+              isOpen={isOpen}
+              toggleSidebar={toggleSidebar}
           />
           <div
-            className="content-wrapper"
-            style={{ marginLeft: isOpen ? "280px" : "30px" }}
+              className="content-wrapper"
+              style={{marginLeft: isOpen ? "280px" : "30px"}}
           >
             {userRole === "admin" && activeContent === "category" && (
-              <Category />
+                <Category/>
+            )}
+            {userRole === "admin" && activeContent === "user" && (
+                <UserMenu/>
             )}
             {userRole === "user" && activeContent === "company" && (
-              <Company onLinkClick={handleLinkClick} />
+                <Company onLinkClick={handleLinkClick}/>
             )}
-            {activeContent === "about" && <About />}
+            {activeContent === "about" && <About/>}
             {activeContent === "profile" && (
-              <ProfileEdit
-                fetchUserProfile={fetchUserProfile}
-                currentUser={currentUser}
-                setCurrentUser={setCurrentUser}
-              />
+                <ProfileEdit
+                    fetchUserProfile={fetchUserProfile}
+                    currentUser={currentUser}
+                    setCurrentUser={setCurrentUser}
+                />
             )}
             {activeContent === "password" && <ChangePassword />}
             {activeContent === "addCompany" && (

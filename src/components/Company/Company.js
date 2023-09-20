@@ -11,7 +11,6 @@ import {Switch} from '@mui/material';
 export default function Company({onLinkClick}) {
     const [companyData, setCompanyData] = useState([]);
     const [showDetails, setShowDetails] = useState(false);
-    const [openDetailsId, setOpenDetailsId] = useState(null);
 
     const token = localStorage.getItem('token');
 
@@ -53,15 +52,11 @@ export default function Company({onLinkClick}) {
         }
         console.log('hii', id);
     };
-
-    const toggleDetails = async (id) => {
-
-        setOpenDetailsId((prevId) => (prevId === id ? null : id));
-
+    const toggleDetails = async (company) => {
+        company.status = company.status === 'active' ? 'inactive' : 'active';
         try {
             await axios.post(`http://192.168.29.12:3000/api/company/status`, {
-                id,
-                showDetails: !showDetails,
+                id: company.id,
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -72,7 +67,6 @@ export default function Company({onLinkClick}) {
             console.error('Error updating company status:', error);
         }
     };
-
     return (
         <>
             <div style={{display: 'flex', justifyContent: 'end', padding: '15px'}}>
@@ -86,7 +80,7 @@ export default function Company({onLinkClick}) {
             <div>
                 {companyData.map((company, index) => (
                     <div key={index}>
-                        <Accordion elevation={2}>
+                        <Accordion elevation={2} disabled={company.status === 'inactive'}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
                                 <Typography variant={'h2'} color={'primary'} fontWeight={'500'}>
                                     CompanyName: {company.name}
@@ -94,7 +88,6 @@ export default function Company({onLinkClick}) {
                             </AccordionSummary>
                             <AccordionDetails
                                 sx={{
-                                    display: showDetails ? 'flex' : 'none',
                                     gap: 2,
                                     flexDirection: 'column',
                                     border: '1px solid black',
@@ -137,9 +130,8 @@ export default function Company({onLinkClick}) {
                         </Accordion>
                         <div>
                             <Switch
-                                // checked={showDetails}
-                                checked={openDetailsId === company.id}
-                                onChange={() => toggleDetails(company.id)}
+                                checked={company.status === "active"}
+                                onChange={() => toggleDetails(company)}
                             />
                             <MdEdit size={20}
                                     onClick={() => editCompany(company.id)}
@@ -157,3 +149,4 @@ export default function Company({onLinkClick}) {
         </>
     );
 }
+
