@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -177,7 +176,7 @@ export const Register = () => {
                   />
                 </div>
               </div>
-              <div className="rgister-btn">
+              <div className="register-btn">
                 <input type="submit" />
               </div>
             </form>

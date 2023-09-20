@@ -14,4 +14,5 @@ export const router = createBrowserRouter([
   { path: "/profile", element: <Home /> },
   { path: "/password", element: <Home /> },
   { path: "/addCompany", element: <Home /> },
+  { path: "/editCompany/:id", element: <Home /> },
 ]);

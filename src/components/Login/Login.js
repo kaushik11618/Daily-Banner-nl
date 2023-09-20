@@ -22,7 +22,7 @@ const Login = () => {
     ) {
       navigate("/home");
     }
-  }, []);
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();

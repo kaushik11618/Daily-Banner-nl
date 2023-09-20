@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-const AddCompany = ({ handleAddCompanySuccess}) => {
-  const navigate = useNavigate();
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
@@ -15,16 +13,15 @@ const AddCompany = ({ handleAddCompanySuccess}) => {
   const [facebook, setFacebook] = useState("");
   const [twitter, setTwitter] = useState("");
   const [image, setImage] = useState(null);
-
+  const token = localStorage.getItem("token");
   const handleImageChange = async (e) => {
     e.preventDefault();
-    const selectedImage = e.target.files[0]; 
+    const selectedImage = e.target.files[0];
     setImage(selectedImage);
   };
 
   const submitDataToAPI = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
     const formData = new FormData();
     formData.append("name", name);
     formData.append("phoneNumber", parseInt(phonenumber));
@@ -34,36 +31,81 @@ const AddCompany = ({ handleAddCompanySuccess}) => {
     formData.append("pinCode", parseInt(pinCode));
     formData.append("email", email);
     formData.append("address", address);
-    formData.append("instagram", instagram);
-    formData.append("linkedin", linkedin);
-    formData.append("facebook", facebook);
-    formData.append("twitter", twitter);
+    formData.append("instagram", instagram || null);
+    formData.append("linkedin", linkedin || null);
+    formData.append("facebook", facebook || null);
+    formData.append("twitter", twitter || null);
 
-    try {
-      const response = await fetch(
-        "http://192.168.29.12:3000/api/company/add",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
+    if (editCompanyId) {
+      try {
+        const response = await axios.patch(
+          `http://192.168.29.12:3000/api/company/${editCompanyId}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          handleAddCompanySuccess();
         }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        if (data.message) {
-          toast.success(data.message);
-          handleAddCompanySuccess()
-        } else {
-          toast.error("Registration failed. Please check your data.");
-        }
-      } else {
+      } catch (error) {
+        console.error("Error updating company:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
+    } else {
+      try {
+        const response = await axios.post(
+          "http://192.168.29.12:3000/api/company/add",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.status === 201) {
+          handleAddCompanySuccess();
+        }
+      } catch (error) {
+        console.error("Error adding company:", error);
+      }
     }
   };
+  useEffect( () => {
+    if (editCompanyId) {
+      const fetchData = async() => {
+        try {
+          const response = await fetch(
+            `http://192.168.29.12:3000/api/company/${editCompanyId}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (response.ok) {
+            const companyData = await response.json();
+            setName(companyData.name);
+            setEmail(companyData.email);
+            setPhonenumber(companyData.phonenumber);
+            setCity(companyData.city);
+            setState(companyData.state);
+            setImage(companyData.image);
+            setPinCode(companyData.pinCode);
+            setAddress(companyData.address);
+            setInstagram(companyData.instagram);
+            setFacebook(companyData.facebook);
+            setLinkedin(companyData.linkedin);
+            setTwitter(companyData.twitter);
+          }
+        } catch {}
+      };
+      fetchData()
+    }else{}
+    
+  }, [editCompanyId]);
 
   return (
     <>
@@ -80,7 +122,7 @@ const AddCompany = ({ handleAddCompanySuccess}) => {
                     placeholder="company Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    required
+                    // required
                   />
                 </div>
                 <div className="input-box">
@@ -90,7 +132,7 @@ const AddCompany = ({ handleAddCompanySuccess}) => {
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
+                    // required
                   />
                 </div>
                 <div className="input-box">
@@ -100,7 +142,7 @@ const AddCompany = ({ handleAddCompanySuccess}) => {
                     placeholder="state"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
-                    required
+                    // required
                   />
                 </div>
                 <div className="input-box">
@@ -110,7 +152,7 @@ const AddCompany = ({ handleAddCompanySuccess}) => {
                     placeholder="Pincde"
                     value={pinCode}
                     onChange={(e) => setPinCode(e.target.value)}
-                    required
+                    // required
                   />
                 </div>
                 <div className="input-box">
@@ -120,7 +162,7 @@ const AddCompany = ({ handleAddCompanySuccess}) => {
                     placeholder="City"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    required
+                    // required
                   />
                 </div>
                 <div className="input-box">
@@ -130,7 +172,7 @@ const AddCompany = ({ handleAddCompanySuccess}) => {
                     placeholder="Phone Number"
                     value={phonenumber}
                     onChange={(e) => setPhonenumber(e.target.value)}
-                    required
+                    // required
                   />
                 </div>
                 <div className="input-box">
@@ -169,12 +211,13 @@ const AddCompany = ({ handleAddCompanySuccess}) => {
                     onChange={(e) => setTwitter(e.target.value)}
                   />
                 </div>
-                <div className="input-box">
-                  <span className="details">Twitter ID</span>
+                <div className="image-box">
+                  <span className="details">Image</span>
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={handleImageChange} 
+                    onChange={handleImageChange}
+                    // required
                   />
                 </div>
               </div>
@@ -190,7 +233,7 @@ const AddCompany = ({ handleAddCompanySuccess}) => {
                   />
                 </div>
               </div>
-              <div className="rgister-btn">
+              <div className="register-btn">
                 <input type="submit" />
               </div>
             </form>

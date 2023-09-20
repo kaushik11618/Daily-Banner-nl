@@ -1,122 +1,129 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router";
-import {About} from "../About/About.js";
-import {Category} from "../Category/Category";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { About } from "../About/About.js";
+import { Category } from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
-import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
-import {Sidebar} from "../Sidebar/Sidebar";
-import {Topbar} from "../Topbar/Topbar";
+import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
+import { Sidebar } from "../Sidebar/Sidebar";
+import { Topbar } from "../Topbar/Topbar";
 import "./Home.css";
 import Company from "../Company/Company";
 import AddCompany from "../Company/AddCompany";
 
 let isMounted = true;
 export const Home = () => {
-    const navigate = useNavigate();
-    const [currentUser, setCurrentUser] = useState(null);
-    const [isOpen, setIsOpen] = useState(true);
-    const [activeContent, setActiveContent] = useState(
-        window.location.pathname.replace("/", "")
-    );
-    const [userRole, setUserRole] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
-    const fetchUserProfile = async () => {
-        const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isOpen, setIsOpen] = useState(true);
+  const [activeContent, setActiveContent] = useState(
+    window.location.pathname.replace("/", "")
+  );
+  const [userRole, setUserRole] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const fetchUserProfile = async () => {
+    const token = localStorage.getItem("token");
 
-        try {
-            const response = await fetch(
-                "http://192.168.29.12:3000/api/auth/profile",
-                {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            if (isMounted) {
-                if (response.ok) {
-                    const userData = await response.json();
-                    setUserRole(userData.role);
-                    setCurrentUser(userData);
-                }
-                setIsLoading(false);
-            }
-        } catch (error) {
-            if (isMounted) {
-                setIsLoading(false);
-            }
+    try {
+      const response = await fetch(
+        "http://192.168.29.12:3000/api/auth/profile",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-    };
-    useEffect(() => {
-        if (activeContent === "category") {
-            if (userRole === "admin") {
-                navigate("/category");
-            } else {
-                navigate("/home");
-            }
-        } else if (activeContent === "company") {
-            if (userRole === "user") {
-                navigate("/company");
-            }
-        } else if (activeContent === "about") {
-            navigate("/about");
-        } else if (activeContent === "profile") {
-            navigate("/profile");
-        } else if (activeContent === "password") {
-            navigate("/password");
+      );
+      if (isMounted) {
+        if (response.ok) {
+          const userData = await response.json();
+          setUserRole(userData.role);
+          setCurrentUser(userData);
         }
+        setIsLoading(false);
+      }
+    } catch (error) {
+      if (isMounted) {
+        setIsLoading(false);
+      }
+    }
+  };
+  useEffect(() => {
+    if (activeContent === "category") {
+      if (userRole === "admin") {
+        navigate("/category");
+      } else {
+        navigate("/home");
+      }
+    } else if (activeContent === "company") {
+      if (userRole === "user") {
+        navigate("/company");
+      }
+    } else if (activeContent === "about") {
+      navigate("/about");
+    } else if (activeContent === "profile") {
+      navigate("/profile");
+    } else if (activeContent === "password") {
+      navigate("/password");
+    } else if (activeContent === "addCompany") {
+      navigate("/addCompany");
+    } else if (activeContent.startsWith("editCompany")) {
+      navigate(`/${activeContent}`);
+    }
+    fetchUserProfile();
+  }, [activeContent, navigate]);
 
-        fetchUserProfile();
-    }, [activeContent, navigate]);
+  const handleLinkClick = (content) => {
+    setActiveContent(content);
+  };
 
-    const handleLinkClick = (content) => {
-        setActiveContent(content);
-    };
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+  const handleAddCompanySuccess = () => {
+    setActiveContent("company"); 
+    navigate("/company"); 
+  };
 
-    const toggleSidebar = () => {
-        setIsOpen(!isOpen);
-    };
-    const handleAddCompanySuccess = () => {
-        setActiveContent("company"); // Change the active content to "company"
-        navigate("/company"); // Navigate to the "company" page
-    };
-
-    return (
-        <>
-            <div className="fixed-container">
-                <div className="topbar">
-                    <Topbar onLinkClick={handleLinkClick} currentUser={currentUser}/>
-                </div>
-                <div className="sidebarlayout">
-                    <Sidebar
-                        onLinkClick={handleLinkClick}
-                        isOpen={isOpen}
-                        toggleSidebar={toggleSidebar}
-                    />
-                    <div
-                        className="content-wrapper"
-                        style={{marginLeft: isOpen ? "280px" : "30px"}}
-                    >
-                        {userRole === "admin" && activeContent === "category" && (
-                            <Category/>
-                        )}
-                        {userRole === "user" && activeContent === "company" && (
-                            <Company onLinkClick={handleLinkClick}/>
-                        )}
-                        {activeContent === "about" && <About/>}
-                        {activeContent === "profile" && (
-                            <ProfileEdit
-                                fetchUserProfile={fetchUserProfile}
-                                currentUser={currentUser}
-                                setCurrentUser={setCurrentUser}
-                            />
-                        )}
-                        {activeContent === "password" && <ChangePassword/>}
-                        {activeContent === "addCompany" &&
-                            <AddCompany handleAddCompanySuccess={handleAddCompanySuccess}/>}
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className="fixed-container">
+        <div className="topbar">
+          <Topbar onLinkClick={handleLinkClick} currentUser={currentUser} />
+        </div>
+        <div className="sidebarlayout">
+          <Sidebar
+            onLinkClick={handleLinkClick}
+            isOpen={isOpen}
+            toggleSidebar={toggleSidebar}
+          />
+          <div
+            className="content-wrapper"
+            style={{ marginLeft: isOpen ? "280px" : "30px" }}
+          >
+            {userRole === "admin" && activeContent === "category" && (
+              <Category />
+            )}
+            {userRole === "user" && activeContent === "company" && (
+              <Company onLinkClick={handleLinkClick} />
+            )}
+            {activeContent === "about" && <About />}
+            {activeContent === "profile" && (
+              <ProfileEdit
+                fetchUserProfile={fetchUserProfile}
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+              />
+            )}
+            {activeContent === "password" && <ChangePassword />}
+            {activeContent === "addCompany" && (
+              <AddCompany  handleAddCompanySuccess={handleAddCompanySuccess}/>
+            )}
+            {activeContent.startsWith("editCompany") && (
+              <AddCompany  handleAddCompanySuccess={handleAddCompanySuccess} editCompanyId={activeContent.split("/")[1]} />
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };

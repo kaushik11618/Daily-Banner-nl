@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "./ProfileEdit.css";
 
-export const ProfileEdit = ({ fetchUserProfile, currentUser,setCurrentUser}) => {
+export const ProfileEdit = ({
+  fetchUserProfile,
+  currentUser,
+  setCurrentUser,
+}) => {
   const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem("token");
   const upadateProfile = async (event) => {
@@ -49,7 +53,6 @@ export const ProfileEdit = ({ fetchUserProfile, currentUser,setCurrentUser}) => 
     let { name, value } = event.target;
     let input = { [name]: value };
     setCurrentUser({ ...currentUser, ...input });
-
   };
   useEffect(() => {
     if (!currentUser && isLoading) {
@@ -59,7 +62,7 @@ export const ProfileEdit = ({ fetchUserProfile, currentUser,setCurrentUser}) => 
   }, [currentUser, fetchUserProfile, isLoading]);
 
   if (!currentUser) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
@@ -88,6 +91,17 @@ export const ProfileEdit = ({ fetchUserProfile, currentUser,setCurrentUser}) => 
                     placeholder="Last Name"
                     name="last_name"
                     value={currentUser.last_name}
+                  />
+                </div>
+                <div className="input-box1">
+                  <span className="details">Email</span>
+                  <input
+                    type="email"
+                    onChange={getInput}
+                    placeholder="Email"
+                    name="email"
+                    value={currentUser.email}
+                    required
                   />
                 </div>
                 <div className="input-box1">
