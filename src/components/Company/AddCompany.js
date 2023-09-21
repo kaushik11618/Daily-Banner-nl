@@ -68,7 +68,6 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
         console.log(response.status);
         if (response.status === 201) {
           handleAddCompanySuccess();
-        
         }
       } catch (error) {
         console.error("Error adding company:", error);
@@ -113,7 +112,7 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
 
   return (
     <>
-      <div className="register">
+      <div className="register1">
         <div className="register-container">
           <div className="register-title">Company Registration</div>
           <div className="content">
@@ -140,6 +139,36 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
                   />
                 </div>
                 <div className="input-box">
+                  <span className="details">Phone Number</span>
+                  <input
+                    type="number"
+                    placeholder="Phone Number"
+                    value={phonenumber}
+                    onChange={(e) => setPhonenumber(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="input-box">
+                  <span className="details">Address</span>
+                  <input
+                    type="text"
+                    placeholder="Address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="input-box">
+                  <span className="details">City</span>
+                  <input
+                    type="text"
+                    placeholder="City"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="input-box">
                   <span className="details">state</span>
                   <input
                     type="state"
@@ -156,26 +185,6 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
                     placeholder="Pincde"
                     value={pinCode}
                     onChange={(e) => setPinCode(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">City</span>
-                  <input
-                    type="text"
-                    placeholder="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">Phone Number</span>
-                  <input
-                    type="number"
-                    placeholder="Phone Number"
-                    value={phonenumber}
-                    onChange={(e) => setPhonenumber(e.target.value)}
                     required
                   />
                 </div>
@@ -215,28 +224,25 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
                     onChange={(e) => setTwitter(e.target.value)}
                   />
                 </div>
-                <div className="input-box">
-                  <span className="details">Image</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                  />
-                </div>
               </div>
-              <div className="gender-details">
-                <div className="input-box">
-                  <span className="details">Address</span>
-                  <input
-                    type="text"
-                    placeholder="Address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                  />
-                </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "calc(100% / 2 - 20px)",
+                }}
+              >
+                <span className="details">Image</span>
+                <label style={{fontSize:"16px"}} htmlFor="image">Upload Image</label>
+                <input
+                  style={{ display: "none" }}
+                  id="image"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
               </div>
-              <div className="rgister-btn">
+              <div className="register-btn">
                 <input type="submit" />
               </div>
             </form>
