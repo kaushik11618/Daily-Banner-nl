@@ -113,7 +113,7 @@ export default function Company({ onLinkClick }) {
           {companyData.map((company, index) => (
             <div
               key={index}
-              style={{ display: "flex", padding: "5px", marginTop: "10px" }}
+              style={{ display: "flex", marginTop: "10px" }}
             >
               <Accordion
                 sx={{ width: "100%", border: "1px solid black" }}

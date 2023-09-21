@@ -1,15 +1,18 @@
-import React, {useEffect, useState} from "react";
-import {BiLogOut, BiSolidCategory, BiSolidUserPlus} from "react-icons/bi";
-import {FaBars} from "react-icons/fa";
-import {FcAbout} from "react-icons/fc";
-import {useNavigate} from "react-router";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
+import CategoryIcon from "@mui/icons-material/Category";
+import DehazeIcon from "@mui/icons-material/Dehaze";
+import GroupIcon from "@mui/icons-material/Group";
+import InfoIcon from "@mui/icons-material/Info";
+import LogoutIcon from "@mui/icons-material/Logout";
+import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import "./Sidebar.css";
 
 export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-    const [userRole, setUserRole] = useState("");
-    const [showData, setShowData] = useState()
+  const [userRole, setUserRole] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -70,7 +73,7 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
           style={{ marginLeft: isOpen ? "30px" : "0px", cursor: "pointer" }}
           className="bars"
         >
-          <FaBars onClick={toggleSidebar} />
+          <DehazeIcon fontSize="16px" onClick={toggleSidebar} />
         </div>
       </div>
       {userRole === "admin" ? (
@@ -80,7 +83,7 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
           role="button"
           style={{ display: userRole === "admin" ? "block" : "none" }}
         >
-          &nbsp; <BiSolidCategory style={{ fontSize: "30px" }} />
+          &nbsp; <CategoryIcon style={{ fontSize: "30px" }} />
           <strong
             style={{
               display: isOpen ? "block" : "none",
@@ -98,57 +101,75 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
           className="link"
           role="button"
         >
-          &nbsp; <BiSolidCategory style={{ fontSize: "30px" }} />
+          &nbsp; <AddBusinessIcon style={{ fontSize: "30px" }} />
           <strong
             style={{
-                display: isOpen ? "block" : "none",
-                marginInlineStart: "50px",
-                position: "relative",
-                bottom: "25px",
+              display: isOpen ? "block" : "none",
+              marginInlineStart: "50px",
+              position: "relative",
+              bottom: "25px",
             }}
           >
-              Company
+            Company
           </strong>
         </h2>
       )}
-        {userRole === 'admin' ? (
-            <h2
-                onClick={() => onLinkClick("user")}
-                className="link"
-                role="button"
-                style={{display: userRole === "admin" ? "block" : "none"}}
-            >
-                &nbsp; <BiSolidUserPlus style={{fontSize: "30px"}}/>
-                <strong
-                    style={{
-                        display: isOpen ? "block" : "none",
-                        marginInlineStart: "50px",
-                        position: "relative",
-                        bottom: "25px",
-                    }}
-                >
-                    UserMenu
-                </strong>
-            </h2>
-        ) : (
-            <></>
-        )}
-        <h2 onClick={() => onLinkClick("about")} className="link" role="button">
-            &nbsp; <FcAbout style={{fontSize: "30px"}} className="ct"/>
-            <strong
-                style={{
-                    display: isOpen ? "block" : "none",
-                    marginInlineStart: "50px",
-                    position: "relative",
-                    bottom: "25px",
-                }}
-            >
-                About
-            </strong>
+      {userRole === "admin" ? (
+        <h2
+          onClick={() => onLinkClick("user")}
+          className="link"
+          role="button"
+          style={{ display: userRole === "admin" ? "block" : "none" }}
+        >
+          &nbsp; <GroupIcon style={{ fontSize: "30px" }} />
+          <strong
+            style={{
+              display: isOpen ? "block" : "none",
+              marginInlineStart: "50px",
+              position: "relative",
+              bottom: "25px",
+            }}
+          >
+            UserMenu
+          </strong>
+        </h2>
+      ) : (
+        <></>
+      )}
+      {userRole === "user" ? (
+        <h2 onClick={() => onLinkClick("post")} className="link" role="button">
+          &nbsp;{" "}
+          <PostAddOutlinedIcon style={{ fontSize: "30px" }} className="ct" />
+          <strong
+            style={{
+              display: isOpen ? "block" : "none",
+              marginInlineStart: "50px",
+              position: "relative",
+              bottom: "25px",
+            }}
+          >
+            Post
+          </strong>
+        </h2>
+      ) : (
+        <></>
+      )}
+      <h2 onClick={() => onLinkClick("about")} className="link" role="button">
+        &nbsp; <InfoIcon style={{ fontSize: "30px" }} className="ct" />
+        <strong
+          style={{
+            display: isOpen ? "block" : "none",
+            marginInlineStart: "50px",
+            position: "relative",
+            bottom: "25px",
+          }}
+        >
+          About
+        </strong>
       </h2>
       <h2 role="button">
         &nbsp;{" "}
-        <BiLogOut
+        <LogoutIcon
           style={{ fontSize: "30px" }}
           className="ct"
           onClick={handleLogout}

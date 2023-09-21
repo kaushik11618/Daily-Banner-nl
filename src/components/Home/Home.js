@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router";
-import {About} from "../About/About.js";
-import {Category} from "../Category/Category";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { About } from "../About/About.js";
+import { Category } from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
-import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
-import {Sidebar} from "../Sidebar/Sidebar";
-import {Topbar} from "../Topbar/Topbar";
+import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
+import { Sidebar } from "../Sidebar/Sidebar";
+import { Topbar } from "../Topbar/Topbar";
+import { Post } from "../Post/Post.js";
 import "./Home.css";
 import Company from "../Company/Company";
 import AddCompany from "../Company/AddCompany";
@@ -63,6 +64,10 @@ export const Home = () => {
       if (userRole === "user") {
         navigate("/company");
       }
+    } else if (activeContent === "post") {
+      if (userRole === "user") {
+        navigate("/post");
+      }
     } else if (activeContent === "about") {
       navigate("/about");
     } else if (activeContent === "profile") {
@@ -97,37 +102,39 @@ export const Home = () => {
         </div>
         <div className="sidebarlayout">
           <Sidebar
-              onLinkClick={handleLinkClick}
-              isOpen={isOpen}
-              toggleSidebar={toggleSidebar}
+            onLinkClick={handleLinkClick}
+            isOpen={isOpen}
+            toggleSidebar={toggleSidebar}
           />
           <div
-              className="content-wrapper"
-              style={{marginLeft: isOpen ? "280px" : "30px"}}
+            className="content-wrapper"
+            style={{ marginLeft: isOpen ? "280px" : "30px" }}
           >
             {userRole === "admin" && activeContent === "category" && (
-                <Category/>
+              <Category />
             )}
-            {userRole === "admin" && activeContent === "user" && (
-                <UserMenu/>
-            )}
+            {userRole === "admin" && activeContent === "user" && <UserMenu />}
             {userRole === "user" && activeContent === "company" && (
-                <Company onLinkClick={handleLinkClick}/>
-            )}
-            {activeContent === "about" && <About/>}
+              <Company onLinkClick={handleLinkClick} />
+            )}{" "}
+            {activeContent === "post" && <Post />}
+            {activeContent === "about" && <About />}
             {activeContent === "profile" && (
-                <ProfileEdit
-                    fetchUserProfile={fetchUserProfile}
-                    currentUser={currentUser}
-                    setCurrentUser={setCurrentUser}
-                />
+              <ProfileEdit
+                fetchUserProfile={fetchUserProfile}
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+              />
             )}
             {activeContent === "password" && <ChangePassword />}
             {activeContent === "addCompany" && (
-              <AddCompany  handleAddCompanySuccess={handleAddCompanySuccess}/>
+              <AddCompany handleAddCompanySuccess={handleAddCompanySuccess} />
             )}
             {activeContent.startsWith("editCompany") && (
-              <AddCompany  handleAddCompanySuccess={handleAddCompanySuccess} editCompanyId={activeContent.split("/")[1]} />
+              <AddCompany
+                handleAddCompanySuccess={handleAddCompanySuccess}
+                editCompanyId={activeContent.split("/")[1]}
+              />
             )}
           </div>
         </div>
