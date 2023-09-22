@@ -181,8 +181,7 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
             marginInlineStart: "50px",
             position: "relative",
             bottom: "32px",
-            width: "80px",
-            backgroundColor: "blue",
+            width: "100px",
           }}
           onClick={handleLogout}
         >

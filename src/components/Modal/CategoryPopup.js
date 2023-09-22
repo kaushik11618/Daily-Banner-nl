@@ -18,7 +18,7 @@ export const CategoryPopup = ({
   useEffect(() => {
     async function fetchDropdownOptions() {
       try {
-        const response = await fetch("http://192.168.29.12:3000/api/category", {
+        const response = await fetch("http://192.168.29.12:3000/api/category/all", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

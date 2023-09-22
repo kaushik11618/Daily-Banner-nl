@@ -23,8 +23,7 @@ const UserMenu = () => {
           },
         }
       );
-      setUserData(response.data.user_1.user);
-
+      setUserData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -93,32 +92,6 @@ const UserMenu = () => {
               <Typography variant={"h5"}>
                 Company Name : {user.company_name}
               </Typography>
-              {user.instagram === "null" ? (
-                <></>
-              ) : (
-                <Typography variant={"h5"}>
-                  Instagram: {user.instagram}
-                </Typography>
-              )}
-              {user.linkedin === "null" ? (
-                <></>
-              ) : (
-                <Typography variant={"h5"}>
-                  LinkedIn: {user.linkedin}
-                </Typography>
-              )}
-              {user.facebook === "null" ? (
-                <></>
-              ) : (
-                <Typography variant={"h5"}>
-                  Facebook: {user.facebook}
-                </Typography>
-              )}
-              {user.twitter === "" ? (
-                <></>
-              ) : (
-                <Typography variant={"h5"}>Twitter: {user.twitter}</Typography>
-              )}
             </AccordionDetails>
           </Accordion>
           <div style={{ display: "flex", justifyContent: "end" }}>
