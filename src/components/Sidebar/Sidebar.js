@@ -5,8 +5,8 @@ import GroupIcon from "@mui/icons-material/Group";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import "./Sidebar.css";
 
 export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
@@ -17,13 +17,13 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
   const handleLogout = async () => {
     try {
       const response = await fetch(
-          "http://localhost:3000/api/auth/logout",
-          {
-              method: "GET",
-              headers: {
-                  Authorization: `Bearer ${token}`,
-              },
-          }
+        "http://192.168.29.12:3000/api/auth/logout",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (response.ok) {
         localStorage.removeItem("token");
@@ -43,13 +43,13 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
     const fetchUserProfile = async () => {
       try {
         const response = await fetch(
-            "http://localhost:3000/api/auth/profile",
-            {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
+          "http://192.168.29.12:3000/api/auth/profile",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (response.ok) {
           const userData = await response.json();

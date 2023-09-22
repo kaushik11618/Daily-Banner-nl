@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import {Switch} from "@mui/material";
+import { Switch } from "@mui/material";
 
 const UserMenu = () => {
   const [userData, setUserData] = useState([]);
@@ -15,16 +15,15 @@ const UserMenu = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-          "http://localhost:3000/api/admin/users",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        "http://192.168.29.12:3000/api/admin/users",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setUserData(response.data);
-
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -39,15 +38,15 @@ const UserMenu = () => {
 
     try {
       await axios.post(
-          "http://localhost:3000/api/admin/users",
-          {
-            id: user.id,
+        "http://192.168.29.12:3000/api/admin/users",
+        {
+          id: user.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        }
       );
       setShowData(!showData);
     } catch (error) {
@@ -93,32 +92,6 @@ const UserMenu = () => {
               <Typography variant={"h5"}>
                 Company Name : {user.company_name}
               </Typography>
-              {user.instagram === "null" ? (
-                <></>
-              ) : (
-                <Typography variant={"h5"}>
-                  Instagram: {user.instagram}
-                </Typography>
-              )}
-              {user.linkedin === "null" ? (
-                <></>
-              ) : (
-                <Typography variant={"h5"}>
-                  LinkedIn: {user.linkedin}
-                </Typography>
-              )}
-              {user.facebook === "null" ? (
-                <></>
-              ) : (
-                <Typography variant={"h5"}>
-                  Facebook: {user.facebook}
-                </Typography>
-              )}
-              {user.twitter === "" ? (
-                <></>
-              ) : (
-                <Typography variant={"h5"}>Twitter: {user.twitter}</Typography>
-              )}
             </AccordionDetails>
           </Accordion>
           <div style={{ display: "flex", justifyContent: "end" }}>
