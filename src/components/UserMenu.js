@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import { Switch } from "@mui/material";
+import {Switch} from "@mui/material";
 
 const UserMenu = () => {
   const [userData, setUserData] = useState([]);
@@ -15,15 +15,15 @@ const UserMenu = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.29.12:3000/api/admin/users",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+          "http://localhost:3000/api/admin/users",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
       );
-      setUserData(response.data.user_1.user);
+      setUserData(response.data);
 
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -39,15 +39,15 @@ const UserMenu = () => {
 
     try {
       await axios.post(
-        "http://192.168.29.12:3000/api/admin/users",
-        {
-          id: user.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+          "http://localhost:3000/api/admin/users",
+          {
+            id: user.id,
           },
-        }
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
       );
       setShowData(!showData);
     } catch (error) {

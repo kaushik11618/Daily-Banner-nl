@@ -41,13 +41,13 @@ const ChangePassword = () => {
       new_password: newPassword,
     };
 
-    fetch("http://192.168.29.12:3000/api/auth/change-password", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(requestBody),
+    fetch("http://localhost:3000/api/auth/change-password", {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
     })
       .then((response) => {
         if (response.ok) {

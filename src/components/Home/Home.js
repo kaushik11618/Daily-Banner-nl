@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { About } from "../About/About.js";
-import { Category } from "../Category/Category";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
+import {About} from "../About/About.js";
+import {Category} from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
-import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
-import { Sidebar } from "../Sidebar/Sidebar";
-import { Topbar } from "../Topbar/Topbar";
-import { Post } from "../Post/Post.js";
+import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
+import {Sidebar} from "../Sidebar/Sidebar";
+import {Topbar} from "../Topbar/Topbar";
+import {Post} from "../Post/Post.js";
 import "./Home.css";
 import Company from "../Company/Company";
 import AddCompany from "../Company/AddCompany";
@@ -27,13 +27,13 @@ export const Home = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.29.12:3000/api/auth/profile",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+          "http://localhost:3000/api/auth/profile",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
       );
       if (isMounted) {
         if (response.ok) {

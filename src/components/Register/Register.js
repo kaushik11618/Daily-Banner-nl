@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
+import React, {useState} from "react";
+import {useNavigate} from "react-router";
+import {toast} from "react-toastify";
 import "./Register.css";
+
 export const Register = () => {
   const navigate = useNavigate("");
   const [firstname, setFirstname] = useState("");
@@ -34,14 +35,14 @@ export const Register = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.29.12:3000/api/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        }
+          "http://localhost:3000/api/auth/register",
+          {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify(requestData),
+          }
       );
       if (response.ok) {
         const data = await response.json();

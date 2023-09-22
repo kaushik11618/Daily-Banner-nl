@@ -1,6 +1,6 @@
-import { Button, Modal } from "antd";
-import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import {Button, Modal} from "antd";
+import React, {useEffect, useState} from "react";
+import {toast} from "react-toastify";
 
 export const CategoryPopup = ({
   modalOpen,
@@ -18,11 +18,11 @@ export const CategoryPopup = ({
   useEffect(() => {
     async function fetchDropdownOptions() {
       try {
-        const response = await fetch("http://192.168.29.12:3000/api/category", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const response = await fetch("http://localhost:3000/api/category", {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
         });
 
         if (response.ok) {
@@ -66,15 +66,15 @@ export const CategoryPopup = ({
     try {
       if (selectedCategory) {
         const response = await fetch(
-          `http://192.168.29.12:3000/api/category/${selectedCategory.id}`,
-          {
-            method: "PATCH",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestData),
-          }
+            `http://localhost:3000/api/category/${selectedCategory.id}`,
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestData),
+            }
         );
 
         if (response.status === 200) {
@@ -84,14 +84,14 @@ export const CategoryPopup = ({
           setSelectedCategory("");
         }
       } else {
-        const response = await fetch("http://192.168.29.12:3000/api/category", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        });
+          const response = await fetch("http://localhost:3000/api/category", {
+              method: "POST",
+              headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify(requestData),
+          });
 
         if (response.status === 201) {
           const data = await response.json();

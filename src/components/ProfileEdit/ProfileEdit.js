@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import React, {useEffect, useState} from "react";
+import {toast} from "react-toastify";
 import "./ProfileEdit.css";
 
 export const ProfileEdit = ({
@@ -25,15 +25,15 @@ export const ProfileEdit = ({
         twitter: currentUser.twitter || null,
       };
       const response = await fetch(
-        "http://192.168.29.12:3000/api/auth/update",
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(updatedUserData),
-        }
+          "http://localhost:3000/api/auth/update",
+          {
+              method: "PATCH",
+              headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(updatedUserData),
+          }
       );
       if (response.ok) {
         const apiMessage = await response.json();

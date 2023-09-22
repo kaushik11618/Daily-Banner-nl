@@ -1,5 +1,5 @@
-import { FormControlLabel, Switch } from "@mui/material";
-import React, { useState } from "react";
+import {FormControlLabel, Switch} from "@mui/material";
+import React, {useState} from "react";
 
 function Toggle({ categoryStatus, toggleID, ontoggle, toggleType }) {
   const [isInfoVisible, setIsInfoVisible] = useState(false);
@@ -20,9 +20,9 @@ function Toggle({ categoryStatus, toggleID, ontoggle, toggleType }) {
     if (userConfirmed) {
       try {
         const endpoint =
-          toggleType === "category"
-            ? "http://192.168.29.12:3000/api/category/status"
-            : "http://192.168.29.12:3000/api/category/status";
+            toggleType === "category"
+                ? "http://localhost:3000/api/category/status"
+                : "http://localhost:3000/api/category/status";
 
         await fetch(endpoint, {
           method: "POST",

@@ -1,10 +1,10 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
-import { useEffect, useState } from "react";
-import { IoAddCircleSharp } from "react-icons/io5";
-import { MdDeleteForever, MdEdit } from "react-icons/md";
-import { CategoryPopup } from "../Modal/CategoryPopup.js";
-import { SubCategoryList } from "../SubCategory/SubCategory.js";
+import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import {useEffect, useState} from "react";
+import {IoAddCircleSharp} from "react-icons/io5";
+import {MdDeleteForever, MdEdit} from "react-icons/md";
+import {CategoryPopup} from "../Modal/CategoryPopup.js";
+import {SubCategoryList} from "../SubCategory/SubCategory.js";
 import Toggle from "../Toggle";
 import "./Category.css";
 
@@ -29,7 +29,7 @@ export const Category = () => {
     );
     if (conformDelete) {
       try {
-        await fetch(`http://192.168.29.12:3000/api/category/${category_id}`, {
+        await fetch(`http://localhost:3000/api/category/${category_id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ export const Category = () => {
   };
 
   const fetchCategories = () => {
-    fetch("http://192.168.29.12:3000/api/category/all", {
+    fetch("http://localhost:3000/api/category/all", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

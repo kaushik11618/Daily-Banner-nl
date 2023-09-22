@@ -1,14 +1,15 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Button, Switch } from "@mui/material";
+import {Button, Switch} from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { MdDeleteForever, MdEdit } from "react-icons/md";
+import React, {useEffect, useState} from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
-export default function Company({ onLinkClick }) {
+export default function Company({onLinkClick}) {
   const [companyData, setCompanyData] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
 
@@ -17,13 +18,13 @@ export default function Company({ onLinkClick }) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.29.12:3000/api/company",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+          "http://localhost:3000/api/company",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
       );
       setCompanyData(response.data);
     } catch (error) {
@@ -44,7 +45,7 @@ export default function Company({ onLinkClick }) {
     );
     if (confirmDelete) {
       try {
-        await fetch(`http://192.168.29.12:3000/api/company/${id}`, {
+        await fetch(`http://localhost:3000/api/company/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,15 +69,15 @@ export default function Company({ onLinkClick }) {
     if (userConfirmed) {
       try {
         await axios.post(
-          `http://192.168.29.12:3000/api/company/status`,
-          {
-            id: company.id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+            `http://localhost:3000/api/company/status`,
+            {
+              id: company.id,
             },
-          }
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
         );
         setShowDetails(!showDetails);
         fetchData()
@@ -112,8 +113,8 @@ export default function Company({ onLinkClick }) {
         >
           {companyData.map((company, index) => (
             <div
-              key={index}
-              style={{ display: "flex", marginTop: "10px" }}
+                key={index}
+                style={{display: "flex", padding: "5px", marginTop: "10px"}}
             >
               <Accordion
                 sx={{ width: "100%", border: "1px solid black" }}
@@ -191,20 +192,20 @@ export default function Company({ onLinkClick }) {
               </Accordion>
               <div style={{ display: "flex" }}>
                 <Switch
-                  className="mt-3 ms-3"
-                  checked={company.status === "active"}
-                  onChange={() => toggleDetails(company)}
+                    className="mt-3 ms-3"
+                    checked={company.status === "active"}
+                    onChange={() => toggleDetails(company)}
                 />
-                <MdEdit
-                  className="mt-4 ms-3"
-                  size={25}
-                  onClick={() => editCompany(company.id)}
+                <EditIcon
+                    className="mt-4 ms-3"
+                    sx={{fontSize: '25px'}}
+                    onClick={() => editCompany(company.id)}
                 />
-                <MdDeleteForever
-                  type="button"
-                  size={25}
-                  className="mt-4 ms-3"
-                  onClick={() => deleteCompany(company.id)}
+                <DeleteIcon
+                    sx={{fontSize: '25px'}}
+                    type="button"
+                    className="mt-4 ms-3"
+                    onClick={() => deleteCompany(company.id)}
                 />
               </div>
             </div>

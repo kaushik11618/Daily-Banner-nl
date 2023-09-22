@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 import "./Login.css";
 
 const Login = () => {
@@ -32,7 +32,7 @@ const Login = () => {
     };
 
     try {
-      const response = await fetch("http://192.168.29.12:3000/api/auth/login", {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,6 @@ const Login = () => {
   return (
     <>
       <div className="login">
-        <div className=" ">
           <div className="row h-100 justify-content-center align-items-center">
             <form className="col-md-9" onSubmit={handleSubmit}>
               <div className="AppForm shadow-lg">
@@ -110,7 +109,6 @@ const Login = () => {
               </div>
             </form>
           </div>
-        </div>
       </div>
     </>
   );

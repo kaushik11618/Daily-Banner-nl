@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 
 const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
   const [name, setName] = useState("");
@@ -40,13 +40,13 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
     if (editCompanyId) {
       try {
         const response = await axios.patch(
-          `http://192.168.29.12:3000/api/company/${editCompanyId}`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+            `http://localhost:3000/api/company/${editCompanyId}`,
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
         );
         if (response.status === 200) {
           handleAddCompanySuccess();
@@ -57,13 +57,13 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
     } else {
       try {
         const response = await axios.post(
-          "http://192.168.29.12:3000/api/company/add",
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+            "http://localhost:3000/api/company/add",
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
         );
         console.log(response.status);
         if (response.status === 201) {
@@ -79,13 +79,13 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
       const fetchData = async () => {
         try {
           const response = await fetch(
-            `http://192.168.29.12:3000/api/company/${editCompanyId}`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+              `http://localhost:3000/api/company/${editCompanyId}`,
+              {
+                  method: "GET",
+                  headers: {
+                      Authorization: `Bearer ${token}`,
+                  },
+              }
           );
           if (response.ok) {
             const companyData = await response.json();

@@ -11,7 +11,7 @@ const Design = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://192.168.29.12:3000/api/admin/users', {
+            const response = await axios.get('http://localhost:3000/api/admin/users', {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,
