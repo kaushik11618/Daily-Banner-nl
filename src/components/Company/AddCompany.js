@@ -40,12 +40,12 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
     if (editCompanyId) {
       try {
         const response = await axios.patch(
-            `http://localhost:3000/api/company/${editCompanyId}`,
+            `http://192.168.29.12:3000/api/company/${editCompanyId}`,
             formData,
             {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
         );
         if (response.status === 200) {
@@ -57,12 +57,12 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
     } else {
       try {
         const response = await axios.post(
-            "http://localhost:3000/api/company/add",
+            "http://192.168.29.12:3000/api/company/add",
             formData,
             {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
         );
         console.log(response.status);
@@ -79,12 +79,12 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
       const fetchData = async () => {
         try {
           const response = await fetch(
-              `http://localhost:3000/api/company/${editCompanyId}`,
+              `http://192.168.29.12:3000/api/company/${editCompanyId}`,
               {
-                  method: "GET",
-                  headers: {
-                      Authorization: `Bearer ${token}`,
-                  },
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
               }
           );
           if (response.ok) {
@@ -111,145 +111,145 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
   }, [editCompanyId]);
 
   return (
-    <>
-      <div className="register1">
-        <div className="register-container">
-          <div className="register-title">Company Registration</div>
-          <div className="content">
-            <form className="register-form" onSubmit={submitDataToAPI}>
-              <div className="user-details">
-                <div className="input-box">
-                  <span className="details">Name</span>
+      <>
+        <div className="register1">
+          <div className="register-container">
+            <div className="register-title">Company Registration</div>
+            <div className="content">
+              <form className="register-form" onSubmit={submitDataToAPI}>
+                <div className="user-details">
+                  <div className="input-box">
+                    <span className="details">Name</span>
+                    <input
+                        type="text"
+                        placeholder="company Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                  </div>
+                  <div className="input-box">
+                    <span className="details">Email</span>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                  </div>
+                  <div className="input-box">
+                    <span className="details">Phone Number</span>
+                    <input
+                        type="number"
+                        placeholder="Phone Number"
+                        value={phonenumber}
+                        onChange={(e) => setPhonenumber(e.target.value)}
+                        required
+                    />
+                  </div>
+                  <div className="input-box">
+                    <span className="details">Address</span>
+                    <input
+                        type="text"
+                        placeholder="Address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
+                    />
+                  </div>
+                  <div className="input-box">
+                    <span className="details">City</span>
+                    <input
+                        type="text"
+                        placeholder="City"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        required
+                    />
+                  </div>
+                  <div className="input-box">
+                    <span className="details">state</span>
+                    <input
+                        type="state"
+                        placeholder="state"
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                        required
+                    />
+                  </div>
+                  <div className="input-box">
+                    <span className="details">Pincode</span>
+                    <input
+                        type="number"
+                        placeholder="Pincde"
+                        value={pinCode}
+                        onChange={(e) => setPinCode(e.target.value)}
+                        required
+                    />
+                  </div>
+                  <div className="input-box">
+                    <span className="details">Linkedin ID</span>
+                    <input
+                        type="text"
+                        placeholder="Linkedin Id"
+                        value={linkedin}
+                        onChange={(e) => setLinkedin(e.target.value)}
+                    />
+                  </div>
+                  <div className="input-box">
+                    <span className="details">Instagram ID</span>
+                    <input
+                        type="text"
+                        placeholder="Instagram Id"
+                        value={instagram}
+                        onChange={(e) => setInstagram(e.target.value)}
+                    />
+                  </div>
+                  <div className="input-box">
+                    <span className="details">Facebook ID</span>
+                    <input
+                        type="text"
+                        placeholder="Facebokk ID"
+                        value={facebook}
+                        onChange={(e) => setFacebook(e.target.value)}
+                    />
+                  </div>
+                  <div className="input-box">
+                    <span className="details">Twitter ID</span>
+                    <input
+                        type="text"
+                        placeholder="Twitter Id"
+                        value={twitter}
+                        onChange={(e) => setTwitter(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "calc(100% / 2 - 20px)",
+                    }}
+                >
+                  <span className="details">Image</span>
+                  <label style={{fontSize: "16px"}} htmlFor="image">Upload Image</label>
                   <input
-                    type="text"
-                    placeholder="company Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
+                      style={{display: "none"}}
+                      id="image"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
                   />
                 </div>
-                <div className="input-box">
-                  <span className="details">Email</span>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
+                <div className="register-btn">
+                  <input type="submit"/>
                 </div>
-                <div className="input-box">
-                  <span className="details">Phone Number</span>
-                  <input
-                    type="number"
-                    placeholder="Phone Number"
-                    value={phonenumber}
-                    onChange={(e) => setPhonenumber(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">Address</span>
-                  <input
-                    type="text"
-                    placeholder="Address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">City</span>
-                  <input
-                    type="text"
-                    placeholder="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">state</span>
-                  <input
-                    type="state"
-                    placeholder="state"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">Pincode</span>
-                  <input
-                    type="number"
-                    placeholder="Pincde"
-                    value={pinCode}
-                    onChange={(e) => setPinCode(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">Linkedin ID</span>
-                  <input
-                    type="text"
-                    placeholder="Linkedin Id"
-                    value={linkedin}
-                    onChange={(e) => setLinkedin(e.target.value)}
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">Instagram ID</span>
-                  <input
-                    type="text"
-                    placeholder="Instagram Id"
-                    value={instagram}
-                    onChange={(e) => setInstagram(e.target.value)}
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">Facebook ID</span>
-                  <input
-                    type="text"
-                    placeholder="Facebokk ID"
-                    value={facebook}
-                    onChange={(e) => setFacebook(e.target.value)}
-                  />
-                </div>
-                <div className="input-box">
-                  <span className="details">Twitter ID</span>
-                  <input
-                    type="text"
-                    placeholder="Twitter Id"
-                    value={twitter}
-                    onChange={(e) => setTwitter(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "calc(100% / 2 - 20px)",
-                }}
-              >
-                <span className="details">Image</span>
-                <label style={{fontSize:"16px"}} htmlFor="image">Upload Image</label>
-                <input
-                  style={{ display: "none" }}
-                  id="image"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                />
-              </div>
-              <div className="register-btn">
-                <input type="submit" />
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </>
+      </>
   );
 };
 

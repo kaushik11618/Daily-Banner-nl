@@ -19,11 +19,11 @@ export const SubCategoryList = ({
     );
     if (conformDelete) {
       try {
-        await fetch(`http://localhost:3000/api/category/${subCategoryId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        await fetch(`http://192.168.29.12:3000/api/category/${subCategoryId}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
         });
         setSubCategories((prevSubCategories) =>
           prevSubCategories.filter(

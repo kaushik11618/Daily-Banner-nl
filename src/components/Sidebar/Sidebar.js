@@ -5,8 +5,8 @@ import GroupIcon from "@mui/icons-material/Group";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
 import "./Sidebar.css";
 
 export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
@@ -137,18 +137,18 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
         <></>
       )}
       {userRole === "user" ? (
-        <h2 onClick={() => onLinkClick("post")} className="link" role="button">
-          &nbsp;{" "}
-          <PostAddOutlinedIcon style={{ fontSize: "30px" }} className="ct" />
-          <strong
-            style={{
-              display: isOpen ? "block" : "none",
-              marginInlineStart: "50px",
-              position: "relative",
-              bottom: "25px",
-            }}
-          >
-            Post
+        <h2 onClick={() => onLinkClick("post-list")} className="link" role="button">
+            &nbsp;{" "}
+            <PostAddOutlinedIcon style={{fontSize: "30px"}} className="ct"/>
+            <strong
+                style={{
+                    display: isOpen ? "block" : "none",
+                    marginInlineStart: "50px",
+                    position: "relative",
+                    bottom: "25px",
+                }}
+            >
+                PostList
           </strong>
         </h2>
       ) : (

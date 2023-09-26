@@ -6,8 +6,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import {MdDeleteForever, MdEdit} from "react-icons/md";
 
 export default function Company({onLinkClick}) {
   const [companyData, setCompanyData] = useState([]);
@@ -18,7 +17,7 @@ export default function Company({onLinkClick}) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-          "http://localhost:3000/api/company",
+          "http://192.168.29.12:3000/api/company",
           {
             method: "GET",
             headers: {
@@ -41,18 +40,18 @@ export default function Company({onLinkClick}) {
 
   const deleteCompany = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this category?"
+        "Are you sure you want to delete this category?"
     );
     if (confirmDelete) {
       try {
-        await fetch(`http://localhost:3000/api/company/${id}`, {
+        await fetch(`http://192.168.29.12:3000/api/company/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setCompanyData((prevData) =>
-          prevData.filter((company) => company.id !== id)
+            prevData.filter((company) => company.id !== id)
         );
       } catch (error) {
         console.error("Error deleting company:", error);
@@ -63,13 +62,13 @@ export default function Company({onLinkClick}) {
   const toggleDetails = async (company) => {
     const newStatus = company.status === "active" ? "inactive" : "active";
     const confirmationMessage = `Are you sure you want to ${
-      newStatus === "active" ? "activate" : "inactivate"
+        newStatus === "active" ? "activate" : "inactivate"
     } "${company.name}"?`;
     const userConfirmed = window.confirm(confirmationMessage);
     if (userConfirmed) {
       try {
         await axios.post(
-            `http://localhost:3000/api/company/status`,
+            `http://192.168.29.12:3000/api/company/status`,
             {
               id: company.id,
             },
@@ -88,130 +87,130 @@ export default function Company({onLinkClick}) {
   };
 
   return (
-    <>
-      <div className="category-container">
-        <h1 className="title mt-5">Company</h1>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row-reverse",
-          }}
-        >
-          <Button variant="contained"
-            style={{ width: "150px", height: "50px" }}
-            onClick={() => onLinkClick("addCompany")}
+      <>
+        <div className="category-container">
+          <h1 className="title mt-5">Company</h1>
+          <div
+              style={{
+                display: "flex",
+                flexDirection: "row-reverse",
+              }}
           >
-            Add
-          </Button>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            flexDirection: "column",
-          }}
-        >
-          {companyData.map((company, index) => (
-            <div
-                key={index}
-                style={{display: "flex", padding: "5px", marginTop: "10px"}}
+            <Button variant="contained"
+                    style={{width: "150px", height: "50px"}}
+                    onClick={() => onLinkClick("addCompany")}
             >
-              <Accordion
-                sx={{ width: "100%", border: "1px solid black" }}
-                elevation={2}
-                disabled={company.status === "inactive"}
-              >
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography
-                    variant={"h2"}
-                    color={"primary"}
-                    fontWeight={"500"}
-                  >
-                    Company Name: {company.name}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails
-                  sx={{
-                    gap: 2,
-                    flexDirection: "column",
-                  }}
+              Add
+            </Button>
+          </div>
+          <div
+              style={{
+                display: "flex",
+                width: "100%",
+                flexDirection: "column",
+              }}
+          >
+            {companyData.map((company, index) => (
+                <div
+                    key={index}
+                    style={{display: "flex", marginTop: "10px"}}
                 >
-                  <Typography variant={"h3"}>
-                    Image :<br />
-                    <img
-                      src={company.image}
-                      style={{ width: "180px", height: "100px" }}
-                      alt={company.name}
+                  <Accordion
+                      sx={{width: "100%", border: "1px solid black"}}
+                      elevation={2}
+                      disabled={company.status === "inactive"}
+                  >
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                      <Typography
+                          variant={"h2"}
+                          color={"primary"}
+                          fontWeight={"500"}
+                      >
+                        Company Name: {company.name}
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails
+                        sx={{
+                          gap: 2,
+                          flexDirection: "column",
+                        }}
+                    >
+                      <Typography variant={"h3"}>
+                        Image :<br/>
+                        <img
+                            src={company.image}
+                            style={{width: "180px", height: "100px"}}
+                            alt={company.name}
+                        />
+                      </Typography>
+                      <Typography variant={"h4"}>
+                        PhoneNumber : {company.phoneNumber}
+                      </Typography>
+                      <Typography variant={"h5"}>
+                        Email : {company.email}
+                      </Typography>
+                      <Typography variant={"h5"}>
+                        Address : {company.address}
+                      </Typography>
+                      <Typography variant={"h5"}>City : {company.city}</Typography>
+                      <Typography variant={"h5"}>
+                        State : {company.state}
+                      </Typography>
+                      <Typography variant={"h5"}>
+                        PinCode : {company.pinCode}
+                      </Typography>
+                      {company.instagram === "null" ? (
+                          <></>
+                      ) : (
+                          <Typography variant={"h5"}>
+                            Instagram: {company.instagram}
+                          </Typography>
+                      )}
+                      {company.linkedin === "null" ? (
+                          <></>
+                      ) : (
+                          <Typography variant={"h5"}>
+                            LinkedIn: {company.linkedin}
+                          </Typography>
+                      )}
+                      {company.facebook === "null" ? (
+                          <></>
+                      ) : (
+                          <Typography variant={"h5"}>
+                            Facebook: {company.facebook}
+                          </Typography>
+                      )}
+                      {company.twitter === "null" ? (
+                          <></>
+                      ) : (
+                          <Typography variant={"h5"}>
+                            Twitter: {company.twitter}
+                          </Typography>
+                      )}
+                    </AccordionDetails>
+                  </Accordion>
+                  <div style={{display: "flex"}}>
+                    <Switch
+                        className="mt-3 ms-3"
+                        checked={company.status === "active"}
+                        onChange={() => toggleDetails(company)}
                     />
-                  </Typography>
-                  <Typography variant={"h4"}>
-                    PhoneNumber : {company.phoneNumber}
-                  </Typography>
-                  <Typography variant={"h5"}>
-                    Email : {company.email}
-                  </Typography>
-                  <Typography variant={"h5"}>
-                    Address : {company.address}
-                  </Typography>
-                  <Typography variant={"h5"}>City : {company.city}</Typography>
-                  <Typography variant={"h5"}>
-                    State : {company.state}
-                  </Typography>
-                  <Typography variant={"h5"}>
-                    PinCode : {company.pinCode}
-                  </Typography>
-                  {company.instagram === "null" ? (
-                    <></>
-                  ) : (
-                    <Typography variant={"h5"}>
-                      Instagram: {company.instagram}
-                    </Typography>
-                  )}
-                  {company.linkedin === "null" ? (
-                    <></>
-                  ) : (
-                    <Typography variant={"h5"}>
-                      LinkedIn: {company.linkedin}
-                    </Typography>
-                  )}
-                  {company.facebook === "null" ? (
-                    <></>
-                  ) : (
-                    <Typography variant={"h5"}>
-                      Facebook: {company.facebook}
-                    </Typography>
-                  )}
-                  {company.twitter === "null" ? (
-                    <></>
-                  ) : (
-                    <Typography variant={"h5"}>
-                      Twitter: {company.twitter}
-                    </Typography>
-                  )}
-                </AccordionDetails>
-              </Accordion>
-              <div style={{ display: "flex" }}>
-                <Switch
-                    className="mt-3 ms-3"
-                    checked={company.status === "active"}
-                    onChange={() => toggleDetails(company)}
-                />
-                <EditIcon
-                    className="mt-4 ms-3"
-                    sx={{fontSize: '25px'}}
-                    onClick={() => editCompany(company.id)}
-                />
-                <DeleteIcon
-                    sx={{fontSize: '25px'}}
-                    type="button"
-                    className="mt-4 ms-3"
-                    onClick={() => deleteCompany(company.id)}
-                />
-              </div>
-            </div>
-          ))}
+                    <MdEdit
+                        className="mt-4 ms-3"
+                        size={25}
+                        onClick={() => editCompany(company.id)}
+                    />
+                    <MdDeleteForever
+                        type="button"
+                        size={25}
+                        className="mt-4 ms-3"
+                        onClick={() => deleteCompany(company.id)}
+                    />
+                  </div>
+                </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </>
+      </>
   );
 }
