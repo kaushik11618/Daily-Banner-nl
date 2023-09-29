@@ -35,7 +35,7 @@ export const Register = () => {
 
     try {
       const response = await fetch(
-          "http://localhost:3000/api/auth/register",
+          "http://192.168.29.12:3000/api/auth/register",
           {
               method: "POST",
               headers: {

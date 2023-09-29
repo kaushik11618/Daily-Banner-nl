@@ -8,6 +8,7 @@ import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import "./Sidebar.css";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
@@ -126,26 +127,48 @@ export const Sidebar = ({ onLinkClick, isOpen, toggleSidebar }) => {
             style={{
               display: isOpen ? "block" : "none",
               marginInlineStart: "50px",
-              position: "relative",
-              bottom: "25px",
+                position: "relative",
+                bottom: "25px",
             }}
           >
-            UserMenu
+              UserMenu
           </strong>
         </h2>
       ) : (
-        <></>
+          <></>
       )}
-      {userRole === "user" ? (
-        <h2 onClick={() => onLinkClick("post-list")} className="link" role="button">
-            &nbsp;{" "}
-            <PostAddOutlinedIcon style={{fontSize: "30px"}} className="ct"/>
-            <strong
-                style={{
-                    display: isOpen ? "block" : "none",
-                    marginInlineStart: "50px",
-                    position: "relative",
-                    bottom: "25px",
+        {userRole === "admin" ? (
+            <h2
+                onClick={() => onLinkClick("post")}
+                className="link"
+                role="button"
+                style={{display: userRole === "admin" ? "block" : "none"}}
+            >
+                &nbsp; <AdminPanelSettingsIcon style={{fontSize: "30px"}}/>
+                <strong
+                    style={{
+                        display: isOpen ? "block" : "none",
+                        marginInlineStart: "50px",
+                        position: "relative",
+                        bottom: "25px",
+                    }}
+                >
+                    Admin Post
+                </strong>
+            </h2>
+        ) : (
+            <></>
+        )}
+        {userRole === "user" ? (
+            <h2 onClick={() => onLinkClick("post-list")} className="link" role="button">
+                &nbsp;{" "}
+                <PostAddOutlinedIcon style={{fontSize: "30px"}} className="ct"/>
+                <strong
+                    style={{
+                        display: isOpen ? "block" : "none",
+                        marginInlineStart: "50px",
+                        position: "relative",
+                        bottom: "25px",
                 }}
             >
                 PostList

@@ -12,6 +12,7 @@ import AddCompany from "../Company/AddCompany";
 import UserMenu from "../UserMenu";
 import PostList from "../PostList/PostList";
 import {AddPost} from "../PostList/AddPost";
+import Post from "../AdminPost/Post";
 
 let isMounted = true;
 export const Home = () => {
@@ -60,6 +61,10 @@ export const Home = () => {
     } else if (activeContent === "user") {
       if (userRole === "admin") {
         navigate("/user");
+      }
+    } else if (activeContent === "post") {
+      if (userRole === "admin") {
+        navigate('/post')
       }
     } else if (activeContent === "company") {
       if (userRole === "user") {
@@ -111,26 +116,29 @@ export const Home = () => {
           <div className="sidebarlayout">
             <Sidebar
                 onLinkClick={handleLinkClick}
-            isOpen={isOpen}
-            toggleSidebar={toggleSidebar}
-          />
-          <div
-              className="content-wrapper"
-              style={{marginLeft: isOpen ? "280px" : "30px"}}
-          >
-            {userRole === "admin" && activeContent === "category" && (
-                <Category/>
-            )}
-            {userRole === "admin" && activeContent === "user" && <UserMenu/>}
-            {userRole === "user" && activeContent === "company" && (
-                <Company onLinkClick={handleLinkClick}/>
-            )}{" "}
-            {userRole === "user" && activeContent === "post-list" && (
-                <PostList onLinkClick={handleLinkClick}/>
-            )}{" "}
-            {activeContent === "about" && <About/>}
-            {activeContent === "profile" && (
-                <ProfileEdit
+                isOpen={isOpen}
+                toggleSidebar={toggleSidebar}
+            />
+            <div
+                className="content-wrapper"
+                style={{marginLeft: isOpen ? "280px" : "30px", height: '100vh'}}
+            >
+              {userRole === "admin" && activeContent === "category" && (
+                  <Category/>
+              )}
+              {userRole === "admin" && activeContent === "post" && (
+                  <Post/>
+              )}
+              {userRole === "admin" && activeContent === "user" && <UserMenu/>}
+              {userRole === "user" && activeContent === "company" && (
+                  <Company onLinkClick={handleLinkClick}/>
+              )}{" "}
+              {userRole === "user" && activeContent === "post-list" && (
+                  <PostList onLinkClick={handleLinkClick}/>
+              )}{" "}
+              {activeContent === "about" && <About/>}
+              {activeContent === "profile" && (
+                  <ProfileEdit
                     fetchUserProfile={fetchUserProfile}
                     currentUser={currentUser}
                     setCurrentUser={setCurrentUser}
