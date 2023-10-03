@@ -11,7 +11,6 @@ import Divider from "@mui/material/Divider";
 import {Avatar, Button, Checkbox, Stack} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Box from "@mui/material/Box";
-import axios from "axios";
 import Swal from "sweetalert2";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -27,7 +26,7 @@ const PostList = ({onLinkClick}) => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(
+            const response = await fetch(
                 "http://192.168.29.12:3000/api/post",
                 {
                     method: "GET",
@@ -36,7 +35,8 @@ const PostList = ({onLinkClick}) => {
                     },
                 }
             );
-            setUserList(response.data);
+            const data = await response.json();
+            setUserList(data);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -107,7 +107,7 @@ const PostList = ({onLinkClick}) => {
                                     </TableCell>
                                     <TableCell align='left' sx={{minWidth: '100px'}}>
                                         <Typography gutterBottom variant='h4' component='div'>
-                                            Sub Category
+                                            Sub -Category
                                         </Typography>
                                     </TableCell>
                                     <TableCell align='left' sx={{minWidth: '100px'}}>
@@ -214,7 +214,7 @@ const PostList = ({onLinkClick}) => {
                                                 </TableCell>
                                                 <TableCell align='left'>
                                                     <Typography variant='h5' className='ms-3'>
-                                                        <Checkbox checked={parseInt(user.social_media) === 1}/>
+                                                        <Checkbox checked={parseInt(user.socialMedia) === 1}/>
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell align='left'>
@@ -229,7 +229,7 @@ const PostList = ({onLinkClick}) => {
                                                 </TableCell>
                                                 <TableCell align='left'>
                                                     <Typography variant='h5' className='ms-3'>
-                                                        <Checkbox checked={parseInt(user.phone_number) === 1}/>
+                                                        <Checkbox checked={parseInt(user.phoneNumber) === 1}/>
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell align='left'>

@@ -13,6 +13,7 @@ import UserMenu from "../UserMenu";
 import PostList from "../PostList/PostList";
 import {AddPost} from "../PostList/AddPost";
 import Post from "../AdminPost/Post";
+import Details from "../AdminPost/Details";
 
 let isMounted = true;
 export const Home = () => {
@@ -86,6 +87,8 @@ export const Home = () => {
       navigate(`/${activeContent}`);
     } else if (activeContent === 'add-post') {
       navigate('/add-post')
+    } else if (activeContent === 'details') {
+      navigate('/details')
     }
     fetchUserProfile();
   }, [activeContent, navigate]);
@@ -127,7 +130,7 @@ export const Home = () => {
                   <Category/>
               )}
               {userRole === "admin" && activeContent === "post" && (
-                  <Post/>
+                  <Post onLinkClick={handleLinkClick}/>
               )}
               {userRole === "admin" && activeContent === "user" && <UserMenu/>}
               {userRole === "user" && activeContent === "company" && (
@@ -148,16 +151,19 @@ export const Home = () => {
             {activeContent === "addCompany" && (
                 <AddCompany handleAddCompanySuccess={handleAddCompanySuccess}/>
             )}
-            {activeContent.startsWith("editCompany") && (
-                <AddCompany
-                    handleAddCompanySuccess={handleAddCompanySuccess}
-                    editCompanyId={activeContent.split("/")[1]}
-                />
-            )}
-            {activeContent === 'add-post' && (
-                <AddPost handleAddPost={handleAddPost}/>
-            )}
-          </div>
+              {activeContent.startsWith("editCompany") && (
+                  <AddCompany
+                      handleAddCompanySuccess={handleAddCompanySuccess}
+                      editCompanyId={activeContent.split("/")[1]}
+                  />
+              )}
+              {activeContent === 'add-post' && (
+                  <AddPost handleAddPost={handleAddPost}/>
+              )}
+              {activeContent === 'details' && (
+                  <Details onLinkClick={handleLinkClick}/>
+              )}
+            </div>
         </div>
       </div>
     </>

@@ -97,17 +97,17 @@ export const AddPost = ({handleAddPost}) => {
         if (selectedCategoryObj && selectedSubcategoryObj) {
             const postData = {
                 category: selectedCategoryObj.id,
-                sub_category: selectedSubcategoryObj.id,
+                subCategory: selectedSubcategoryObj.id,
                 company: selectedId,
                 description: description,
                 note: note,
                 posting_date: selectedPostDate,
                 ending_date: selectedDueDate,
-                social_media: socialMedia,
+                socialMedia: socialMedia,
                 email: email,
-                phone_number: phone,
+                phoneNumber: phone,
                 address: address,
-                post_platform: selectedPlatforms,
+                postPlatform: selectedPlatforms,
             };
 
             try {

@@ -16,14 +16,15 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import {toast} from "react-toastify";
+import InfoIcon from "@mui/icons-material/Info";
 
-const Post = () => {
+const Post = ({onLinkClick}) => {
 
     const [user, setUser] = useState([])
     const [options, setOptions] = useState([])
-    const [selectedValue, setSelectedValue] = useState('')
+    const [selectedValue, setSelectedValue] = useState([])
     const [selected, setSelected] = useState([])
-    const [selectedValues, setSelectedValues] = useState('');
 
 
     const token = localStorage.getItem("token");
@@ -59,24 +60,41 @@ const Post = () => {
             }
         }
 
-        const selectRequest = async () => {
-            try {
-                const response = await axios.patch('http://192.168.29.12:3000/api/admin/request', {
-                    header: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-                setSelectedValue(response.data)
-            } catch (error) {
-                console.log()
-            }
-        }
-
 
         fetchData();
         showRequest()
-        selectRequest()
     }, []);
+
+
+    const handleChange = async (userId, event) => {
+        event.preventDefault()
+        const postStatus = parseInt(event.target.value);
+        setSelected(event.target.value);
+        setSelectedValue((prevSelectedValues) => ({
+            ...prevSelectedValues,
+            [user.id]: postStatus,
+        }));
+
+        const updateStatus = {
+            id: userId,
+            requestStatus: postStatus
+        }
+        const response = await fetch('http://192.168.29.12:3000/api/admin/request-status-change', {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updateStatus)
+        })
+        if (response.ok) {
+            const apiMessage = await response.json();
+            toast.success(apiMessage.message);
+        } else {
+            const errorMessage = await response.json();
+            toast.error(errorMessage.message);
+        }
+    }
 
 
     return (
@@ -278,24 +296,19 @@ const Post = () => {
                                             <FormControl sx={{m: 1, minWidth: 100, marginTop: 2}}>
                                                 <Select
                                                     native
-                                                    value={selectedValue[user.id] || ''}
-                                                    onChange={(event) => {
-                                                        const newValue = event.target.value;
-                                                        setSelected(event.target.value);
-                                                        setSelectedValue((prevSelectedValues) => ({
-                                                            ...prevSelectedValues,
-                                                            [user.id]: newValue,
-                                                        }));
-                                                    }}
+                                                    value={selectedValue[user.id]}
+                                                    onChange={(event) => handleChange(user.id, event)}
                                                     id="grouped-native-select"
                                                 >
                                                     {options.map((option) => (
-                                                        <option key={option.id} value={option.id}>
+                                                        <option key={option.id} value={option.id}
+                                                                selected={user.post_status.id === option.id}>
                                                             {option.name}
                                                         </option>
                                                     ))}
                                                 </Select>
                                             </FormControl>
+                                            <InfoIcon onClick={() => onLinkClick('details')}/>
                                         </TableRow>
                                     );
                                 })}
