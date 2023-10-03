@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router";
-import {About} from "../About/About.js";
-import {Category} from "../Category/Category";
-import ChangePassword from "../ChangePassword/ChangePassword";
-import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
-import {Sidebar} from "../Sidebar/Sidebar";
-import {Topbar} from "../Topbar/Topbar";
-import "./Home.css";
-import Company from "../Company/Company";
-import AddCompany from "../Company/AddCompany";
-import UserMenu from "../UserMenu";
-import PostList from "../PostList/PostList";
-import {AddPost} from "../PostList/AddPost";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { About } from "../About/About.js";
 import Post from "../AdminPost/Post";
+import { Category } from "../Category/Category";
+import ChangePassword from "../ChangePassword/ChangePassword";
+import AddCompany from "../Company/AddCompany";
+import Company from "../Company/Company";
+import { AddPost } from "../PostList/AddPost";
+import PostList from "../PostList/PostList";
+import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
+import { Sidebar } from "../Sidebar/Sidebar";
+import { Topbar } from "../Topbar/Topbar";
+import UserMenu from "../UserMenu";
+import "./Home.css";
 
 let isMounted = true;
 export const Home = () => {
@@ -20,7 +20,7 @@ export const Home = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
   const [activeContent, setActiveContent] = useState(
-      window.location.pathname.replace("/", "")
+    window.location.pathname.replace("/", "")
   );
   const [userRole, setUserRole] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -29,13 +29,13 @@ export const Home = () => {
 
     try {
       const response = await fetch(
-          "http://192.168.29.12:3000/api/auth/profile",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        "http://192.168.29.12:3000/api/auth/profile",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (isMounted) {
         if (response.ok) {
@@ -64,7 +64,7 @@ export const Home = () => {
       }
     } else if (activeContent === "post") {
       if (userRole === "admin") {
-        navigate('/post')
+        navigate("/post");
       }
     } else if (activeContent === "company") {
       if (userRole === "user") {
@@ -84,8 +84,8 @@ export const Home = () => {
       navigate("/addCompany");
     } else if (activeContent.startsWith("editCompany")) {
       navigate(`/${activeContent}`);
-    } else if (activeContent === 'add-post') {
-      navigate('/add-post')
+    } else if (activeContent === "add-post") {
+      navigate("/add-post");
     }
     fetchUserProfile();
   }, [activeContent, navigate]);
@@ -103,59 +103,59 @@ export const Home = () => {
   };
 
   const handleAddPost = () => {
-    setActiveContent("post-list")
-    navigate('/post-list')
-  }
+    setActiveContent("post-list");
+    navigate("/post-list");
+  };
 
   return (
-      <>
-        <div className="fixed-container">
-          <div className="topbar">
-            <Topbar onLinkClick={handleLinkClick} currentUser={currentUser}/>
-          </div>
-          <div className="sidebarlayout">
-            <Sidebar
-                onLinkClick={handleLinkClick}
-                isOpen={isOpen}
-                toggleSidebar={toggleSidebar}
-            />
-            <div
-                className="content-wrapper"
-                style={{marginLeft: isOpen ? "280px" : "30px", height: '100vh'}}
-            >
-              {userRole === "admin" && activeContent === "category" && (
-                  <Category/>
-              )}
-              {userRole === "admin" && activeContent === "post" && (
-                  <Post/>
-              )}
-              {userRole === "admin" && activeContent === "user" && <UserMenu/>}
-              {userRole === "user" && activeContent === "company" && (
-                  <Company onLinkClick={handleLinkClick}/>
-              )}{" "}
-              {userRole === "user" && activeContent === "post-list" && (
-                  <PostList onLinkClick={handleLinkClick}/>
-              )}{" "}
-              {activeContent === "about" && <About/>}
-              {activeContent === "profile" && (
-                  <ProfileEdit
-                    fetchUserProfile={fetchUserProfile}
-                    currentUser={currentUser}
-                    setCurrentUser={setCurrentUser}
-                />
+    <>
+      <div className="fixed-container">
+        <div className="topbar">
+          <Topbar onLinkClick={handleLinkClick} currentUser={currentUser} />
+        </div>
+        <div className="sidebarlayout">
+          <Sidebar
+            onLinkClick={handleLinkClick}
+            isOpen={isOpen}
+            toggleSidebar={toggleSidebar}
+          />
+          <div
+            className="content-wrapper"
+            style={{ marginLeft: isOpen ? "280px" : "30px", height: "100vh" }}
+          >
+            {userRole === "admin" && activeContent === "category" && (
+              <Category />
             )}
-            {activeContent === "password" && <ChangePassword/>}
+            {userRole === "admin" && activeContent === "post" && (
+              <Post onLinkClick={handleLinkClick} />
+            )}
+            {userRole === "admin" && activeContent === "user" && <UserMenu />}
+            {userRole === "user" && activeContent === "company" && (
+              <Company onLinkClick={handleLinkClick} />
+            )}{" "}
+            {userRole === "user" && activeContent === "post-list" && (
+              <PostList onLinkClick={handleLinkClick} />
+            )}{" "}
+            {activeContent === "about" && <About />}
+            {activeContent === "profile" && (
+              <ProfileEdit
+                fetchUserProfile={fetchUserProfile}
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+              />
+            )}
+            {activeContent === "password" && <ChangePassword />}
             {activeContent === "addCompany" && (
-                <AddCompany handleAddCompanySuccess={handleAddCompanySuccess}/>
+              <AddCompany handleAddCompanySuccess={handleAddCompanySuccess} />
             )}
             {activeContent.startsWith("editCompany") && (
-                <AddCompany
-                    handleAddCompanySuccess={handleAddCompanySuccess}
-                    editCompanyId={activeContent.split("/")[1]}
-                />
+              <AddCompany
+                handleAddCompanySuccess={handleAddCompanySuccess}
+                editCompanyId={activeContent.split("/")[1]}
+              />
             )}
-            {activeContent === 'add-post' && (
-                <AddPost handleAddPost={handleAddPost}/>
+            {activeContent === "add-post" && (
+              <AddPost handleAddPost={handleAddPost} />
             )}
           </div>
         </div>
