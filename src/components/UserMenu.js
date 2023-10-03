@@ -68,7 +68,7 @@ const UserMenu = () => {
           >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography variant={"h3"} color={"primary"} fontWeight={"500"}>
-                Name: {user.slug}
+                Name: {user.first_name}
               </Typography>
             </AccordionSummary>
             <AccordionDetails
@@ -89,9 +89,11 @@ const UserMenu = () => {
               </Typography>
               <Typography variant={"h5"}>Email : {user.email}</Typography>
               <Typography variant={"h5"}>Address : {user.address}</Typography>
-              <Typography variant={"h5"}>
-                Company Name : {user.company_name}
-              </Typography>
+              {user.company.map((companyItem) => (
+                <Typography variant={"h5"}>
+                  Company Name: {companyItem.name}
+                </Typography>
+              ))}
             </AccordionDetails>
           </Accordion>
           <div style={{ display: "flex", justifyContent: "end" }}>
