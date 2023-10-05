@@ -268,3 +268,5 @@ export default function Details({postId}) {
         </Box>
     );
 }
+
+export default Details;

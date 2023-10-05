@@ -87,8 +87,8 @@ export const Home = () => {
       navigate(`/${activeContent}`);
     } else if (activeContent === 'add-post') {
       navigate('/add-post')
-    } else if (activeContent.startsWith('details')) {
-      navigate(`/${activeContent}`)
+    } else if (activeContent === 'details') {
+      navigate('/details')
     }
     fetchUserProfile();
   }, [activeContent, navigate]);
