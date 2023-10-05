@@ -13,11 +13,10 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 const PostList = ({ onLinkClick }) => {
   const [userList, setUserList] = useState([]);
-
   const token = localStorage.getItem("token");
 
   const fetchData = async () => {
@@ -66,9 +65,10 @@ const PostList = ({ onLinkClick }) => {
   const UserPostDetail = (userId) => {
     onLinkClick(`post-details/${userId}`);
   };
-  const editUser =(userID)=>{
-    onLinkClick(`post-edit/${userID}`)
-  }
+  const editUser = (userID) => {
+    onLinkClick(`post-edit/${userID}`);
+  };
+  console.log(userList);
   return (
     <>
       <div className="mt-5">
@@ -172,13 +172,23 @@ const PostList = ({ onLinkClick }) => {
                       </TableCell>
                       <TableCell align="left">
                         <Stack spacing={2} direction="row">
-                          <DeleteIcon
-                            sx={{ fontSize: "30px", color: "red" }}
-                            onClick={() => deleteUser(user.id)}
-                          />
-                          <ModeEditIcon onClick={()=>{
-                            editUser(user.id)
-                          }}/>
+                          {user.post_status.id === 7 ? (
+                            <></>
+                          ) : (
+                            <DeleteIcon
+                              sx={{ fontSize: "30px", color: "red" }}
+                              onClick={() => deleteUser(user.id)}
+                            />
+                          )}{" "}
+                          {user.post_status.id === 7 ? (
+                            <></>
+                          ) : (
+                            <ModeEditIcon
+                              onClick={() => {
+                                editUser(user.id);
+                              }}
+                            />
+                          )}
                           <Details
                             onClick={() => {
                               UserPostDetail(user.id);
@@ -199,3 +209,12 @@ const PostList = ({ onLinkClick }) => {
 };
 
 export default PostList;
+{
+  /* <DeleteIcon
+sx={{ fontSize: "30px", color: "red" }}
+onClick={() => deleteUser(user.id)}
+/>
+<ModeEditIcon onClick={()=>{
+editUser(user.id)
+}}/> */
+}

@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {toast} from "react-toastify";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import "./ProfileEdit.css";
 
 export const ProfileEdit = ({
   fetchUserProfile,
   currentUser,
   setCurrentUser,
-
-                            }) => {
+}) => {
   const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem("token");
   const upadateProfile = async (event) => {
@@ -25,17 +24,14 @@ export const ProfileEdit = ({
         facebook: currentUser.facebook || null,
         twitter: currentUser.twitter || null,
       };
-      const response = await fetch(
-          "http://localhost:3000/api/auth/update",
-          {
-              method: "PATCH",
-              headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify(updatedUserData),
-          }
-      );
+      const response = await fetch("http://localhost:3000/api/auth/update", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedUserData),
+      });
       if (response.ok) {
         const apiMessage = await response.json();
         toast.success(apiMessage.message);
@@ -116,62 +112,16 @@ export const ProfileEdit = ({
                   />
                 </div>
                 <div className="input-box1">
-                  <span className="details">Company</span>
-                  <input
+                  <span className="details">Address</span>
+                  <textarea
                     required
                     onChange={getInput}
-                    placeholder="Company"
-                    name="company_name"
-                    value={currentUser.company_name}
+                    className="common-textArea w-100 p-3 mt-2"
+                    placeholder="Address"
+                    name="address"
+                    value={currentUser.address}
                   />
                 </div>
-                <div className="input-box1">
-                  <span className="details">Instagram</span>
-                  <input
-                    onChange={getInput}
-                    placeholder="Instagram"
-                    name="instagram"
-                    value={currentUser.instagram}
-                  />
-                </div>
-                <div className="input-box1">
-                  <span className="details">Linkedin</span>
-                  <input
-                    onChange={getInput}
-                    placeholder="Linkedin"
-                    name="linkedin"
-                    value={currentUser.linkedin}
-                  />
-                </div>
-                <div className="input-box1">
-                  <span className="details">facebook</span>
-                  <input
-                    onChange={getInput}
-                    placeholder="Facebook"
-                    name="facebook"
-                    value={currentUser.facebook}
-                  />
-                </div>
-                <div className="input-box1">
-                  <span className="details">Twitter</span>
-                  <input
-                    onChange={getInput}
-                    placeholder="Twitter"
-                    name="twitter"
-                    value={currentUser.twitter}
-                  />
-                </div>
-              </div>
-              <div className="gender-details">
-                <span className="details">Address</span>
-                <textarea
-                  required
-                  onChange={getInput}
-                  className="common-textArea w-100 p-3 mt-2"
-                  placeholder="Address"
-                  name="address"
-                  value={currentUser.address}
-                />
               </div>
               <div className="save-container">
                 <button className="save-btn btn-primary p-3 w-25 text-center">

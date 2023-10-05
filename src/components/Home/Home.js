@@ -178,7 +178,7 @@ export const Home = () => {
             )}
             {userRole === "user" &&
               activeContent.startsWith("post-details") && (
-                <PostDetails postUserId={activeContent.split("/")[1]} />
+                <PostDetails postUserId={activeContent.split("/")[1]} handleAddPost={handleAddPost} />
               )}
           </div>
         </div>

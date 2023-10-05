@@ -8,7 +8,7 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { Avatar, Box, Checkbox, TableCell, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 const token = localStorage.getItem("token");
-export const PostDetails = ({ postUserId }) => {
+export const PostDetails = ({ postUserId,handleAddPost }) => {
   const [postData, setPostData] = useState([]);
   const [imageURL, setImageURL] = useState("");
   useEffect(() => {
@@ -42,7 +42,30 @@ export const PostDetails = ({ postUserId }) => {
       })
       .catch((error) => console.error(`Error fetching  image:`, error));
   };
-
+  const handleVarified = async () => {
+    const varifiedData = {
+      post_id: postUserId,
+      requestStatus: 7,
+    };
+    try {
+      const response = await fetch(
+        "http://192.168.29.12:3000/api/admin/completed",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(varifiedData),
+        }
+      );
+      if(response.status === 201){
+        handleAddPost()
+      }else{}
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -160,10 +183,16 @@ export const PostDetails = ({ postUserId }) => {
             ) : null}
           </>
         )}
+        {postData.post_status && postData.post_status.id === parseInt("5") ? (
+          <button onClick={handleVarified}>varified</button>
+        ) : (
+          <></>
+        )}
+        {console.log(postData.post_status)}
         {postData.uploaded_image &&
           postData.uploaded_image.map((image) => (
             <div key={image.id} className="mt-5 d-flex flex-column">
-              <Typography variant="h4">Download {image.type} image</Typography>\
+              <Typography variant="h4">Download {image.type} image</Typography>
               <img src={image.image} alt="image "></img>
               <button onClick={() => handleImageDownload(image.image)}>
                 Download {image.type} Image

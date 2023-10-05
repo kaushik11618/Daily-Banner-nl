@@ -1,0 +1,43 @@
+/* PostDetails.css */
+
+/* Style for the main container */
+.post-details-container {
+    padding: 16px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style for headings */
+  .post-heading {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  /* Style for checkboxes */
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+  }
+  
+  /* Style for images */
+  .image-container {
+    padding: 16px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 16px;
+  }
+  
+  /* Style for buttons */
+  .download-button {
+    margin-top: 16px;
+  }
+  
