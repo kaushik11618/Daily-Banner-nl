@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { Details } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Button, Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,17 +11,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import { Avatar, Button, Checkbox, Stack } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Box from "@mui/material/Box";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { Details } from "@mui/icons-material";
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 const PostList = ({ onLinkClick }) => {
   const [userList, setUserList] = useState([]);
@@ -70,6 +66,9 @@ const PostList = ({ onLinkClick }) => {
   const UserPostDetail = (userId) => {
     onLinkClick(`post-details/${userId}`);
   };
+  const editUser =(userID)=>{
+    onLinkClick(`post-edit/${userID}`)
+  }
   return (
     <>
       <div className="mt-5">
@@ -119,7 +118,7 @@ const PostList = ({ onLinkClick }) => {
                       Company
                     </Typography>
                   </TableCell>
-                 
+
                   <TableCell align="left" sx={{ minWidth: "100px" }}>
                     <Typography gutterBottom variant="h4" component="div">
                       Description
@@ -130,7 +129,7 @@ const PostList = ({ onLinkClick }) => {
                       Due Date
                     </Typography>
                   </TableCell>
-                 
+
                   <TableCell align="left" sx={{ minWidth: "100px" }}>
                     <Typography gutterBottom variant="h4" component="div">
                       Action
@@ -160,7 +159,7 @@ const PostList = ({ onLinkClick }) => {
                           {user.company.name}
                         </Typography>
                       </TableCell>
-                   
+
                       <TableCell align="left">
                         <Typography variant="h5" className="ms-3">
                           {user.description}
@@ -177,7 +176,14 @@ const PostList = ({ onLinkClick }) => {
                             sx={{ fontSize: "30px", color: "red" }}
                             onClick={() => deleteUser(user.id)}
                           />
-                          <Details onClick={()=>{UserPostDetail(user.id)}} />
+                          <ModeEditIcon onClick={()=>{
+                            editUser(user.id)
+                          }}/>
+                          <Details
+                            onClick={() => {
+                              UserPostDetail(user.id);
+                            }}
+                          />
                         </Stack>
                       </TableCell>
                     </TableRow>

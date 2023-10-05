@@ -88,12 +88,13 @@ export const Home = () => {
       navigate(`/${activeContent}`);
     } else if (activeContent === "add-post") {
       navigate("/add-post");
-    } else if (activeContent==="details") {
+    } else if (activeContent === "details") {
       navigate("/details");
     } else if (activeContent.startsWith("post-details")) {
       navigate(`/${activeContent}`);
+    } else if (activeContent.startsWith("post-edit")) {
+      navigate(`/${activeContent}`);
     }
-
     fetchUserProfile();
   }, [activeContent, navigate]);
 
@@ -136,9 +137,7 @@ export const Home = () => {
             {userRole === "admin" && activeContent === "post" && (
               <Post onLinkClick={handleLinkClick} />
             )}
-            {userRole === "admin" && activeContent === "details" && (
-              <Details/>
-            )}
+            {userRole === "admin" && activeContent === "details" && <Details />}
             {userRole === "admin" && activeContent === "user" && <UserMenu />}
 
             {userRole === "user" && activeContent === "company" && (
@@ -160,9 +159,16 @@ export const Home = () => {
             {userRole === "user" && activeContent === "add-post" && (
               <AddPost handleAddPost={handleAddPost} />
             )}
-            { userRole === "user" && activeContent.startsWith("post-details") && (
-              <PostDetails postUserId={activeContent.split("/")[1]} />
+            {userRole === "user" && activeContent.startsWith("post-edit") && (
+              <AddPost
+                handleAddPost={handleAddPost}
+                editPostId={activeContent.split("/")[1]}
+              />
             )}
+            {userRole === "user" &&
+              activeContent.startsWith("post-details") && (
+                <PostDetails postUserId={activeContent.split("/")[1]} />
+              )}
             {activeContent === "profile" && (
               <ProfileEdit
                 fetchUserProfile={fetchUserProfile}

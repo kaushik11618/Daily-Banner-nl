@@ -20,5 +20,6 @@ export const router = createBrowserRouter([
   {path: "/add-post", element: <Home/>},
   {path: '/post', element: <Home/>},
   {path: '/details/', element: <Home/>},
-  {path: '/post-details/:id', element: <Home/>}
+  {path: '/post-details/:id', element: <Home/>},
+  {path: '/post-edit/:id', element: <Home/>}
 ]);
