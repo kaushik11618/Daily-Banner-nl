@@ -167,6 +167,9 @@ export const Home = () => {
                 editCompanyId={activeContent.split("/")[1]}
               />
             )}
+            {userRole === "user" && activeContent.startsWith("add-post") && (
+              <AddPost handleAddPost={handleAddPost} />
+            )}
             {userRole === "user" && activeContent.startsWith("post-edit") && (
               <AddPost
                 handleAddPost={handleAddPost}

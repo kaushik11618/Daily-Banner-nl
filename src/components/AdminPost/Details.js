@@ -1,16 +1,16 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Unstable_Grid2";
-import Typography from "@mui/material/Typography";
-import { Avatar, Button, Checkbox } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { Avatar, Button, Checkbox } from "@mui/material";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Unstable_Grid2";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -23,30 +23,27 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Details({ postId }) {
   const [show, setShow] = useState([]);
-
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadImage, setUploadImage] = useState({});
-
+  const [selectedFiles, setSelectedFiles] = useState({});
+console.log(selectedFiles);
   const token = localStorage.getItem("token");
 
   const handleFileChange = (event, platform) => {
-    setSelectedFile(event.target.files[0]);
-    const file = event.target.files[0];
-    if (file) {
-      setUploadImage((prevImag) => ({
-        ...prevImag,
-        [platform]: URL.createObjectURL(file),
-      }));
-    }
+    setSelectedFiles((prevSelectedFiles) => ({
+      ...prevSelectedFiles,
+      [platform]: event.target.files[0],
+    }));
   };
+  
 
   const handleUpload = (platform) => {
+    const selectedFile = selectedFiles[platform];
+  
     if (selectedFile) {
       const formData = new FormData();
       formData.append("image", selectedFile);
       formData.append("type", platform);
       formData.append("post_id", postId);
-
+  
       fetch(`http://192.168.29.12:3000/api/admin/upload-image`, {
         method: "POST",
         body: formData,
@@ -56,20 +53,26 @@ export default function Details({ postId }) {
       })
         .then((response) => {
           if (response.ok) {
-            toast.success(response.message);
-            console.log(`image uploaded successfully.`);
+            toast.success(`Image uploaded successfully for ${platform}.`);
+            console.log(`Image uploaded successfully for ${platform}.`);
+            // Clear the selected file and its URL after successful upload
+            setSelectedFiles((prevSelectedFiles) => ({
+              ...prevSelectedFiles,
+              [platform]: undefined,
+            }));
           } else {
             toast.error("Error uploading image");
-            console.error(`Error uploading image.`);
+            console.error(`Error uploading image for ${platform}.`);
           }
         })
         .catch((error) => {
-          console.error(`Error uploading image`);
+          console.error(`Error uploading image for ${platform}.`);
         });
     } else {
-      console.error("No file selected.");
+      console.error(`No file selected for ${platform}.`);
     }
   };
+  
 
   useEffect(() => {
     const showDetails = async () => {
@@ -308,7 +311,7 @@ export default function Details({ postId }) {
                       accept="image/*"
                       onChange={(event) => handleFileChange(event, platform)}
                     />
-                    {!uploadImage[platform] && (
+                    {selectedFiles[platform] && (
                       <Button
                         variant="contained"
                         color="primary"
@@ -317,9 +320,9 @@ export default function Details({ postId }) {
                         Upload {platform} Image
                       </Button>
                     )}
-                    {uploadImage[platform] && (
+                    {selectedFiles[platform] && (
                       <img
-                        src={uploadImage[platform]}
+                        src={URL.createObjectURL(selectedFiles[platform])}
                         style={{ width: "100%", height: "100%" }}
                       />
                     )}
