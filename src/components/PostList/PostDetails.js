@@ -1,12 +1,6 @@
-import { Button } from "@mui/base";
-import { CheckBox } from "@mui/icons-material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { Avatar, Box, Checkbox, TableCell, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import {Checkbox, Typography} from "@mui/material";
+import React, {useEffect, useState} from "react";
+
 const token = localStorage.getItem("token");
 export const PostDetails = ({ postUserId,handleAddPost }) => {
   const [postData, setPostData] = useState([]);
@@ -68,7 +62,7 @@ export const PostDetails = ({ postUserId,handleAddPost }) => {
   };
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{display: "flex", flexDirection: "column", marginTop: 10}}>
         <Typography variant="h3">Post Details</Typography>
         <Typography variant="h5">Note: {postData.note}</Typography>
         <Typography variant="h5">

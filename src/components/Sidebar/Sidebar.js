@@ -57,7 +57,7 @@ export const Sidebar = ({onLinkClick, isOpen}) => {
     }, [token]);
 
     return (
-        <div style={{width: isOpen ? "280px" : "50px", marginTop: '20px'}} className="sidebar">
+        <div style={{width: isOpen ? "280px" : "50px"}} className="sidebar">
             <div className="top_section">
                 <DashboardIcon style={{fontSize: "30px", position: 'relative', right: 5}}/>
                 <h1 style={{display: isOpen ? "block" : "none"}} className="logo mt-2 ms-2">

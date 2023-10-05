@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { About } from "../About/About.js";
-import { Category } from "../Category/Category";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
+import {About} from "../About/About.js";
+import {Category} from "../Category/Category";
 import ChangePassword from "../ChangePassword/ChangePassword";
-import { ProfileEdit } from "../ProfileEdit/ProfileEdit.js";
-import { Sidebar } from "../Sidebar/Sidebar";
-import { Topbar } from "../Topbar/Topbar";
+import {ProfileEdit} from "../ProfileEdit/ProfileEdit.js";
+import {Sidebar} from "../Sidebar/Sidebar";
+import {Topbar} from "../Topbar/Topbar";
 import "./Home.css";
 import Company from "../Company/Company";
 import AddCompany from "../Company/AddCompany";
 import UserMenu from "../UserMenu";
 import PostList from "../PostList/PostList";
-import { AddPost } from "../PostList/AddPost";
+import {AddPost} from "../PostList/AddPost";
 import Post from "../AdminPost/Post";
 import Details from "../AdminPost/Details";
-import { PostDetails } from "../PostList/PostDetails.js";
+import {PostDetails} from "../PostList/PostDetails.js";
 
 let isMounted = true;
 export const Home = () => {
@@ -117,21 +117,25 @@ export const Home = () => {
     navigate("/post-list");
   };
 
+  const handleStatus = () => {
+    setActiveContent('post')
+    navigate('/post')
+  }
   return (
-    <>
-      <div className="fixed-container">
-        <div className="topbar">
-          <Topbar
-            onLinkClick={handleLinkClick}
-            currentUser={currentUser}
-            toggleSidebar={toggleSidebar}
-          />
-        </div>
+      <>
+        <div className="fixed-container">
+          <div className="topbar">
+            <Topbar
+                onLinkClick={handleLinkClick}
+                currentUser={currentUser}
+                toggleSidebar={toggleSidebar}
+            />
+          </div>
         <div className="sidebarlayout">
           <Sidebar onLinkClick={handleLinkClick} isOpen={isOpen} />
           <div
-            className="content-wrapper"
-            style={{ marginLeft: isOpen ? "280px" : "30px", height: "100vh" }}
+              className="content-wrapper"
+              style={{marginLeft: isOpen ? "280px" : "40px", height: "50vh"}}
           >
             {userRole === "admin" && activeContent === "category" && (
               <Category />
@@ -141,7 +145,7 @@ export const Home = () => {
             )}
             {userRole === "admin" && activeContent === "user" && <UserMenu />}
             {activeContent.startsWith("details") && (
-              <Details postId={activeContent.split("/")[1]} />
+                <Details postId={activeContent.split("/")[1]} handleStatus={handleStatus}/>
             )}
             {userRole === "user" && activeContent === "company" && (
               <Company onLinkClick={handleLinkClick} />
@@ -162,24 +166,29 @@ export const Home = () => {
               <AddCompany handleAddCompanySuccess={handleAddCompanySuccess} />
             )}
             {activeContent.startsWith("editCompany") && (
-              <AddCompany
-                handleAddCompanySuccess={handleAddCompanySuccess}
-                editCompanyId={activeContent.split("/")[1]}
-              />
+                <AddCompany
+                    handleAddCompanySuccess={handleAddCompanySuccess}
+                    editCompanyId={activeContent.split("/")[1]}
+                />
             )}
             {userRole === "user" && activeContent.startsWith("add-post") && (
-              <AddPost handleAddPost={handleAddPost} />
+                <AddPost handleAddPost={handleAddPost}/>
+            )}
+            {userRole === "user" && activeContent.startsWith("add-post") && (
+                <AddPost
+                    handleAddPost={handleAddPost}
+                />
             )}
             {userRole === "user" && activeContent.startsWith("post-edit") && (
-              <AddPost
-                handleAddPost={handleAddPost}
-                editPostId={activeContent.split("/")[1]}
-              />
+                <AddPost
+                    handleAddPost={handleAddPost}
+                    editPostId={activeContent.split("/")[1]}
+                />
             )}
             {userRole === "user" &&
-              activeContent.startsWith("post-details") && (
-                <PostDetails postUserId={activeContent.split("/")[1]} handleAddPost={handleAddPost} />
-              )}
+                activeContent.startsWith("post-details") && (
+                    <PostDetails postUserId={activeContent.split("/")[1]} handleAddPost={handleAddPost}/>
+                )}
           </div>
         </div>
       </div>

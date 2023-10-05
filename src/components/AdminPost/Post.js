@@ -47,6 +47,7 @@ const Post = ({onLinkClick}) => {
             }
         };
 
+
         const showRequest = async () => {
             try {
                 const request = await axios.get("http://192.168.29.12:3000/api/admin/request", {
@@ -59,7 +60,6 @@ const Post = ({onLinkClick}) => {
                 console.log('Error getting request', error)
             }
         }
-
 
         fetchData();
         showRequest()
@@ -297,19 +297,23 @@ const Post = ({onLinkClick}) => {
                                                 </Typography>
                                             </TableCell>
                                             <FormControl sx={{m: 1, minWidth: 100, marginTop: 2}}>
-                                                <Select
-                                                    native
-                                                    value={selectedValue[user.id]}
-                                                    onChange={(event) => handleChange(user.id, event)}
-                                                    id="grouped-native-select"
-                                                >
-                                                    {options.map((option) => (
-                                                        <option key={option.id} value={option.id}
-                                                                selected={user.post_status.id === option.id}>
-                                                            {option.name}
-                                                        </option>
-                                                    ))}
-                                                </Select>
+
+                                                {user.post_status && (user.post_status.name === 'Verified' || user.post_status.name === 'Completed') ? <></> :
+                                                    <Select
+                                                        native
+                                                        value={selectedValue[user.id]}
+                                                        onChange={(event) => handleChange(user.id, event)}
+                                                        id="grouped-native-select"
+                                                    >
+                                                        {options.map((option) => (
+                                                            <option key={option.id} value={option.id}
+                                                                    selected={user.post_status.id === option.id}
+                                                                    disabled={option.id === 7 || option.id === 5}>
+                                                                {option.name}
+                                                            </option>
+                                                        ))}
+                                                    </Select>
+                                                }
                                             </FormControl>
                                             <InfoIcon onClick={() => postId(user.id)}/>
                                         </TableRow>

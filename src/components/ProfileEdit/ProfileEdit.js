@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import React, {useEffect, useState} from "react";
+import {toast} from "react-toastify";
 import "./ProfileEdit.css";
 
 export const ProfileEdit = ({
-  fetchUserProfile,
-  currentUser,
-  setCurrentUser,
-}) => {
+                              fetchUserProfile,
+                              currentUser,
+                              setCurrentUser,
+
+                            }) => {
   const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem("token");
   const upadateProfile = async (event) => {
@@ -18,20 +19,18 @@ export const ProfileEdit = ({
         email: currentUser.email,
         phoneNumber: parseInt(currentUser.phoneNumber),
         address: currentUser.address,
-        company_name: currentUser.company_name,
-        linkedin: currentUser.linkedin || null,
-        instagram: currentUser.instagram || null,
-        facebook: currentUser.facebook || null,
-        twitter: currentUser.twitter || null,
       };
-      const response = await fetch("http://localhost:3000/api/auth/update", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedUserData),
-      });
+      const response = await fetch(
+          "http://localhost:3000/api/auth/update",
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedUserData),
+          }
+      );
       if (response.ok) {
         const apiMessage = await response.json();
         toast.success(apiMessage.message);
@@ -104,24 +103,24 @@ export const ProfileEdit = ({
                 <div className="input-box1">
                   <span className="details">Phone Number</span>
                   <input
-                    required
-                    onChange={getInput}
-                    placeholder="Phone Number"
-                    name="phoneNumber"
-                    value={currentUser.phoneNumber}
+                      required
+                      onChange={getInput}
+                      placeholder="Phone Number"
+                      name="phoneNumber"
+                      value={currentUser.phoneNumber}
                   />
                 </div>
-                <div className="input-box1">
-                  <span className="details">Address</span>
-                  <textarea
+              </div>
+              <div className="gender-details">
+                <span className="details">Address</span>
+                <textarea
                     required
                     onChange={getInput}
                     className="common-textArea w-100 p-3 mt-2"
                     placeholder="Address"
                     name="address"
                     value={currentUser.address}
-                  />
-                </div>
+                />
               </div>
               <div className="save-container">
                 <button className="save-btn btn-primary p-3 w-25 text-center">
