@@ -6,7 +6,7 @@
 .top_section {
   display: flex;
   align-items: center;
-  padding: 20px 15px;
+  padding: 40px 15px;
   height: auto;
 }
 
@@ -51,26 +51,6 @@
   .log {
     font-size: 0;
     display: none;
-  }
-}
-
-.bars {
-  display: flex;
-  font-size: 25px;
-}
-
-@media only screen and (max-width: 400px) {
-  .bars {
-    position: relative;
-    right: 15px;
-    font-size: 25px;
-  }
-}
-
-@media only screen and (max-width: 340px) {
-  .bars {
-    font-size: 25px;
-    position: relative;
   }
 }
 

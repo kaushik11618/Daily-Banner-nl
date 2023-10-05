@@ -96,6 +96,9 @@ const Post = ({onLinkClick}) => {
         }
     }
 
+    const postId = (id) => {
+        onLinkClick(`details/${id}`)
+    }
 
     return (
         <>
@@ -308,7 +311,7 @@ const Post = ({onLinkClick}) => {
                                                     ))}
                                                 </Select>
                                             </FormControl>
-                                            <InfoIcon onClick={() => onLinkClick('details')}/>
+                                            <InfoIcon onClick={() => postId(user.id)}/>
                                         </TableRow>
                                     );
                                 })}

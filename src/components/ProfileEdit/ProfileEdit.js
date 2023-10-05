@@ -6,7 +6,8 @@ export const ProfileEdit = ({
   fetchUserProfile,
   currentUser,
   setCurrentUser,
-}) => {
+
+                            }) => {
   const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem("token");
   const upadateProfile = async (event) => {

@@ -87,8 +87,8 @@ export const Home = () => {
       navigate(`/${activeContent}`);
     } else if (activeContent === 'add-post') {
       navigate('/add-post')
-    } else if (activeContent === 'details') {
-      navigate('/details')
+    } else if (activeContent.startsWith('details')) {
+      navigate(`/${activeContent}`)
     }
     fetchUserProfile();
   }, [activeContent, navigate]);
@@ -114,13 +114,12 @@ export const Home = () => {
       <>
         <div className="fixed-container">
           <div className="topbar">
-            <Topbar onLinkClick={handleLinkClick} currentUser={currentUser}/>
+            <Topbar onLinkClick={handleLinkClick} currentUser={currentUser} toggleSidebar={toggleSidebar}/>
           </div>
           <div className="sidebarlayout">
             <Sidebar
                 onLinkClick={handleLinkClick}
                 isOpen={isOpen}
-                toggleSidebar={toggleSidebar}
             />
             <div
                 className="content-wrapper"
@@ -142,15 +141,15 @@ export const Home = () => {
               {activeContent === "about" && <About/>}
               {activeContent === "profile" && (
                   <ProfileEdit
-                    fetchUserProfile={fetchUserProfile}
-                    currentUser={currentUser}
-                    setCurrentUser={setCurrentUser}
-                />
-            )}
-            {activeContent === "password" && <ChangePassword/>}
-            {activeContent === "addCompany" && (
-                <AddCompany handleAddCompanySuccess={handleAddCompanySuccess}/>
-            )}
+                      fetchUserProfile={fetchUserProfile}
+                      currentUser={currentUser}
+                      setCurrentUser={setCurrentUser}
+                  />
+              )}
+              {activeContent === "password" && <ChangePassword/>}
+              {activeContent === "addCompany" && (
+                  <AddCompany handleAddCompanySuccess={handleAddCompanySuccess}/>
+              )}
               {activeContent.startsWith("editCompany") && (
                   <AddCompany
                       handleAddCompanySuccess={handleAddCompanySuccess}
@@ -160,8 +159,8 @@ export const Home = () => {
               {activeContent === 'add-post' && (
                   <AddPost handleAddPost={handleAddPost}/>
               )}
-              {activeContent === 'details' && (
-                  <Details onLinkClick={handleLinkClick}/>
+              {activeContent.startsWith('details') && (
+                  <Details postId={activeContent.split('/')[1]}/>
               )}
             </div>
         </div>
