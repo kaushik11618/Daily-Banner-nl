@@ -34,6 +34,7 @@ const UserMenu = () => {
   }, []);
 
   const toggleDetails = async (user) => {
+    console.log(user.id);
     user.status = user.status === "active" ? "inactive" : "active";
 
     try {

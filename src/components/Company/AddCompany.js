@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
   const [name, setName] = useState("");
@@ -39,41 +40,53 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
 
     if (editCompanyId) {
       try {
-        const response = await axios.patch(
+        const response = await fetch(
           `http://192.168.29.12:3000/api/company/${editCompanyId}`,
-          formData,
           {
+            method: "PUT", // Use PUT method for updating
             headers: {
               Authorization: `Bearer ${token}`,
             },
+            body: formData,
           }
         );
-        if (response.status === 200) {
+
+        if (response.ok) {
+          const data = await response.json();
+          toast.success(data.message);
           handleAddCompanySuccess();
+        } else {
+          console.error(`HTTP Error: ${response.status}`);
         }
       } catch (error) {
         console.error("Error updating company:", error);
       }
     } else {
       try {
-        const response = await axios.post(
+        const response = await fetch(
           "http://192.168.29.12:3000/api/company/add",
-          formData,
           {
+            method: "POST",
             headers: {
               Authorization: `Bearer ${token}`,
             },
+            body: formData,
           }
         );
-        console.log(response.status);
-        if (response.status === 201) {
+
+        if (response.ok) {
+          const data = await response.json();
+          toast.success(data.message);
           handleAddCompanySuccess();
+        } else {
+          console.error(`HTTP Error: ${response.status}`);
         }
       } catch (error) {
         console.error("Error adding company:", error);
       }
     }
   };
+
   useEffect(() => {
     if (editCompanyId) {
       const fetchData = async () => {
@@ -89,7 +102,6 @@ const AddCompany = ({ handleAddCompanySuccess, editCompanyId }) => {
           );
           if (response.ok) {
             const companyData = await response.json();
-            console.log(companyData);
             setName(companyData.name);
             setEmail(companyData.email);
             setPhonenumber(companyData.phoneNumber);

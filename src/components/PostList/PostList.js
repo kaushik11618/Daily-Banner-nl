@@ -118,10 +118,14 @@ const PostList = ({ onLinkClick }) => {
                       Company
                     </Typography>
                   </TableCell>
-
                   <TableCell align="left" sx={{ minWidth: "100px" }}>
                     <Typography gutterBottom variant="h4" component="div">
                       Description
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="left" sx={{ minWidth: "100px" }}>
+                    <Typography gutterBottom variant="h4" component="div">
+                      Status
                     </Typography>
                   </TableCell>
                   <TableCell align="left" sx={{ minWidth: "100px" }}>
@@ -159,10 +163,14 @@ const PostList = ({ onLinkClick }) => {
                           {user.company.name}
                         </Typography>
                       </TableCell>
-
                       <TableCell align="left">
                         <Typography variant="h5" className="ms-3">
                           {user.description}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography variant="h5" className="ms-3">
+                          {user.post_status&& user.post_status.name}
                         </Typography>
                       </TableCell>
                       <TableCell align="left">
@@ -172,7 +180,7 @@ const PostList = ({ onLinkClick }) => {
                       </TableCell>
                       <TableCell align="left">
                         <Stack spacing={2} direction="row">
-                          {user.post_status.id === 7 ? (
+                          {user.post_status.id === 6 ? (
                             <></>
                           ) : (
                             <DeleteIcon
@@ -180,7 +188,7 @@ const PostList = ({ onLinkClick }) => {
                               onClick={() => deleteUser(user.id)}
                             />
                           )}{" "}
-                          {user.post_status.id === 7 ? (
+                          {user.post_status.id === 6 ? (
                             <></>
                           ) : (
                             <ModeEditIcon
@@ -209,12 +217,4 @@ const PostList = ({ onLinkClick }) => {
 };
 
 export default PostList;
-{
-  /* <DeleteIcon
-sx={{ fontSize: "30px", color: "red" }}
-onClick={() => deleteUser(user.id)}
-/>
-<ModeEditIcon onClick={()=>{
-editUser(user.id)
-}}/> */
-}
+

@@ -1,6 +1,7 @@
 import { Autocomplete, Container, TextField } from "@mui/material";
 import { checkGridRowIdIsValid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import "./Post.css";
 
 export const AddPost = ({ handleAddPost, editPostId }) => {
@@ -46,7 +47,7 @@ export const AddPost = ({ handleAddPost, editPostId }) => {
           setSelectedId(data.company.id);
           setDescription(data.description);
           setNote(data.note);
-          setSocialMedia(data.social_media);console.log(setSelectedId);
+          setSocialMedia(data.social_media);
           setEmail(data.email);
           setPhone(data.phone_number);
           setAddress(data.address);
@@ -154,9 +155,9 @@ export const AddPost = ({ handleAddPost, editPostId }) => {
               body: JSON.stringify(postData),
             }
           );
-
-          console.log(response.status);
           if (response.status === 200) {
+            const data = await response.json();
+            toast.success(data.message);
             handleAddPost();
           }
         } catch (error) {
@@ -172,9 +173,9 @@ export const AddPost = ({ handleAddPost, editPostId }) => {
             },
             body: JSON.stringify(postData),
           });
-
-          console.log(response.status);
           if (response.status === 201) {
+            const data = await response.json();
+            toast.success(data.message);
             handleAddPost();
           }
         } catch (error) {
