@@ -8,9 +8,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import {FormControl, Select} from "@mui/material";
+import {Avatar, Checkbox, FormControl, Select} from "@mui/material";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import FacebookIcon from '@mui/icons-material/Facebook';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import {toast} from "react-toastify";
 import InfoIcon from "@mui/icons-material/Info";
 

@@ -1,8 +1,9 @@
-import {Checkbox, Typography} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import { Checkbox, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const token = localStorage.getItem("token");
-export const PostDetails = ({ postUserId,handleAddPost }) => {
+export const PostDetails = ({ postUserId, handleAddPost }) => {
   const [postData, setPostData] = useState([]);
   const [imageURL, setImageURL] = useState("");
   useEffect(() => {
@@ -39,30 +40,51 @@ export const PostDetails = ({ postUserId,handleAddPost }) => {
   const handleVarified = async () => {
     const varifiedData = {
       post_id: postUserId,
-      requestStatus: 7,
+      requestStatus: 6,
     };
     try {
-      const response = await fetch(
-        "http://192.168.29.12:3000/api/admin/completed",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(varifiedData),
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to reverse this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d55",
+        confirmButtonText: "Verified",
+      });
+      
+      if (result.isConfirmed) {
+        // API call logic goes here
+        const response = await fetch(
+          "http://192.168.29.12:3000/api/admin/completed",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(varifiedData),
+          }
+        );
+        
+        if (response.status === 201) {
+          // Handle success
+          handleAddPost();
+        } else {
+          // Handle API call failure
+          // You can display an error message or take appropriate action here
         }
-      );
-      if(response.status === 201){
-        handleAddPost()
-      }else{}
+      } else {
+        // Handle user cancellation if needed
+      }
     } catch (error) {
       console.error("Error:", error);
     }
   };
+  
   return (
     <>
-      <div style={{display: "flex", flexDirection: "column", marginTop: 10}}>
+      <div style={{ display: "flex", flexDirection: "column", marginTop: 10 }}>
         <Typography variant="h3">Post Details</Typography>
         <Typography variant="h5">Note: {postData.note}</Typography>
         <Typography variant="h5">
