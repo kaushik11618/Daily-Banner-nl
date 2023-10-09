@@ -21,7 +21,7 @@ const Item = styled(Paper)(({theme}) => ({
     color: theme.palette.text.secondary,
 }));
 
-export default function Details({postId, handleStatus}) {
+export default function Details({postId}) {
     const [show, setShow] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState({});
 
@@ -91,7 +91,6 @@ export default function Details({postId, handleStatus}) {
                 console.error("Error fetching data:", error);
             }
         };
-
         showDetails();
     }, []);
 
@@ -102,9 +101,7 @@ export default function Details({postId, handleStatus}) {
             requestStatus: parseInt(5)
         }
 
-
         try {
-            console.log('heregfhghgh')
             const response = await fetch('http://192.168.29.12:3000/api/admin/completed', {
                 method: 'POST',
                 headers: {
@@ -115,8 +112,6 @@ export default function Details({postId, handleStatus}) {
             })
             const data = await response.json();
             toast.success(data.message)
-            //handleStatus()
-
         } catch (error) {
             toast.error(error)
         }
@@ -354,6 +349,7 @@ export default function Details({postId, handleStatus}) {
                                         )}
                                         {selectedFiles[platform] && (
                                             <img
+                                                require
                                                 src={URL.createObjectURL(selectedFiles[platform])}
                                                 style={{width: "100%", height: "100%"}}
                                             />
@@ -364,8 +360,11 @@ export default function Details({postId, handleStatus}) {
                     </Grid>
                 </Grid>
             </Grid>
-            {show.post_status && show.post_status.name === "Completed" ? <></> :
-                <Button variant='contained' onClick={handleClick}>Submit</Button>}
+            {show.post_status && show.post_status.name === "Processing" ?
+                <><Button variant='contained' onClick={handleClick}>Submit</Button></>
+                :
+                <></>}
+
         </Box>
     );
 }

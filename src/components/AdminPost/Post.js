@@ -8,14 +8,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import {Avatar, Checkbox, FormControl, Select} from "@mui/material";
+import {FormControl, Select} from "@mui/material";
 import Box from "@mui/material/Box";
 import axios from "axios";
-import FacebookIcon from '@mui/icons-material/Facebook';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import {toast} from "react-toastify";
 import InfoIcon from "@mui/icons-material/Info";
 
@@ -75,25 +70,33 @@ const Post = ({onLinkClick}) => {
             [user.id]: postStatus,
         }));
 
+
         const updateStatus = {
             id: userId,
             requestStatus: postStatus
         }
-        const response = await fetch('http://192.168.29.12:3000/api/admin/request-status-change', {
-            method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(updateStatus)
-        })
-        if (response.ok) {
-            const apiMessage = await response.json();
-            toast.success(apiMessage.message);
-        } else {
-            const errorMessage = await response.json();
-            toast.error(errorMessage.message);
+
+        let confirmationMessage = 'Are you sure you want to'
+        const userConfirmed = window.confirm(confirmationMessage);
+
+        if (userConfirmed) {
+            const response = await fetch('http://192.168.29.12:3000/api/admin/request-status-change', {
+                method: 'PATCH',
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(updateStatus)
+            })
+            if (response.ok) {
+                const apiMessage = await response.json();
+                toast.success(apiMessage.message);
+            } else {
+                const errorMessage = await response.json();
+                toast.error(errorMessage.message);
+            }
         }
+
     }
 
     const postId = (id) => {
@@ -124,69 +127,9 @@ const Post = ({onLinkClick}) => {
                                             Full Name
                                         </Typography>
                                     </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '100px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Category
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '100px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Sub Category
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '100px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Company
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '100px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Note
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '100px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Description
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '100px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Due Date
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '100px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Post Date
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '100px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Social Media
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '100px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Email
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '100px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Address
-                                        </Typography>
-                                    </TableCell>
                                     <TableCell align='left' sx={{minWidth: '50px'}}>
                                         <Typography gutterBottom variant='h5' component='div'>
-                                            Phone
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '50px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Post Plate-form
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align='left' sx={{minWidth: '50px'}}>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Field
+                                            For More Details
                                         </Typography>
                                     </TableCell>
                                 </TableRow>
@@ -205,117 +148,31 @@ const Post = ({onLinkClick}) => {
                                                     {user.user.first_name + ' ' + user.user.last_name}
                                                 </Typography>
                                             </TableCell>
-
                                             <TableCell align='left'>
                                                 <Typography variant='h5'>
-                                                    {user.category.name}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5'>
-                                                    {user.sub_category.name}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5'>
-                                                    {user.company.name}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5'>
-                                                    {user.note}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5' className='ms-3'>
-                                                    {user.description}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5' className='ms-3'>
-                                                    {user.ending_date}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5' className='ms-3'>
-                                                    {user.posting_date}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5' className='ms-3'>
-                                                    <Checkbox checked={parseInt(user.social_media) === 1}/>
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5' className='ms-3'>
-                                                    <Checkbox checked={parseInt(user.email) === 1}/>
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5' className='ms-3'>
-                                                    <Checkbox checked={parseInt(user.address) === 1}/>
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5' className='ms-3'>
-                                                    <Checkbox checked={parseInt(user.phone_number) === 1}/>
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align='left'>
-                                                <Typography variant='h5'>
-                                                    <Box sx={{display: 'flex', gap: '8px', flexWrap: 'wrap'}}>
-                                                        {user.post_platform.map(platform => (
-                                                            <Avatar
-                                                                label={platform}
-                                                                variant="outlined"
-                                                                key={platform} sx={{width: '35px', height: '35px',}}
+                                                    <h5 onClick={() => postId(user.id)}> Click for Details &nbsp;
+                                                        <InfoIcon/>
+                                                    </h5>
+                                                    <FormControl sx={{m: 1, marginTop: 2}}>
+                                                        {user.post_status && (user.post_status.name === 'Verified' || user.post_status.name === 'Completed') ? <></> :
+                                                            <Select
+                                                                native
+                                                                value={selectedValue[user.id]}
+                                                                onChange={(event) => handleChange(user.id, event)}
+                                                                id="grouped-native-select"
                                                             >
-                                                                {platform === 'facebook' ? (
-                                                                    <Avatar>
-                                                                        <FacebookIcon/>
-                                                                    </Avatar>
-                                                                ) : platform === 'twitter' ? (
-                                                                    <Avatar>
-                                                                        <TwitterIcon/>
-                                                                    </Avatar>
-                                                                ) : platform === 'instagram' ? (
-                                                                    <Avatar>
-                                                                        <InstagramIcon/>
-                                                                    </Avatar>
-                                                                ) : platform === 'linkedIn' ? (
-                                                                    <Avatar>
-                                                                        <LinkedInIcon/>
-                                                                    </Avatar>
-                                                                ) : platform === 'whatsapp' ? (
-                                                                    <Avatar>
-                                                                        <WhatsAppIcon/>
-                                                                    </Avatar>
-                                                                ) : null}
-                                                            </Avatar>
-                                                        ))}
-                                                    </Box>
+                                                                {options.map((option) => (
+                                                                    <option key={option.id} value={option.id}
+                                                                            selected={user.post_status.id === option.id}
+                                                                            disabled={option.id === 6 || option.id === 5}>
+                                                                        {option.name}
+                                                                    </option>
+                                                                ))}
+                                                            </Select>
+                                                        }
+                                                    </FormControl>
                                                 </Typography>
                                             </TableCell>
-                                            <FormControl sx={{m: 1, minWidth: 100, marginTop: 2}}>
-
-                                                {user.post_status && (user.post_status.name === 'Verified' || user.post_status.name === 'Completed') ? <></> :
-                                                    <Select
-                                                        native
-                                                        value={selectedValue[user.id]}
-                                                        onChange={(event) => handleChange(user.id, event)}
-                                                        id="grouped-native-select"
-                                                    >
-                                                        {options.map((option) => (
-                                                            <option key={option.id} value={option.id}
-                                                                    selected={user.post_status.id === option.id}
-                                                                    disabled={option.id === 7 || option.id === 5}>
-                                                                {option.name}
-                                                            </option>
-                                                        ))}
-                                                    </Select>
-                                                }
-                                            </FormControl>
-                                            <InfoIcon onClick={() => postId(user.id)}/>
                                         </TableRow>
                                     );
                                 })}
